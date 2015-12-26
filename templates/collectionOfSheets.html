@@ -1,0 +1,14 @@
+<a *ngFor="#sheet of sheets" class="floating-box gridCard" href="#">
+	<div class="gridImageFrame">
+		<div class="gradient"></div>
+		<img height="230" width="230" src={{sheet.imageUrl}}>
+		<div class="imageOverlay">
+			<span class="name sheetLink">{{sheet.title}}</span>
+			<span class="creatorName">Created By: Picci</span>
+		</div>
+	</div>
+	<div class="metrics">
+		<div class="metricLabel">One Month Return</div>
+		<div class="metricValue"><span class="percentageArrow large up"><span>{{sheet.oneMonthReturn}}</span></span></div>
+	</div>
+</a>

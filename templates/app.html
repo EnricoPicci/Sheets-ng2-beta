@@ -1,0 +1,14 @@
+		<div id="content" class="container">
+			<div id="pageHeading"></div>
+			<div id="sidebarGroup">
+				<sheetSearchCmp #search (sheetsRetrieved)="updateSheets(search.searchResult)"></sheetSearchCmp>
+			</div>
+			<div id="main">
+				<collection-of-sheets-cmp [sheets]="sheets"></collection-of-sheets-cmp>
+			</div>
+			<div id="pageFooter"></div>
+		</div>
+		
+		<!--h1>{{title}}</h1>
+		<collection-of-sheets-cmp [sheets]="sheets"></collection-of-sheets-cmp>
+		<input type="button" value="Load" (click)="load()"-->

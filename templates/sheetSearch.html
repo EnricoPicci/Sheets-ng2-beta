@@ -1,0 +1,46 @@
+<div id="freeSearchHeader">
+	<h3>Search</h3>
+</div>
+<div id="freeSearchBody">
+	<input type="text" name="query" id="query" placeholder="Company, ticker, or keyword" autocomplete="off">
+	<a id="querySubmit"></a>
+</div>
+<div id="narrowResultHeader">
+	<h3>Refine Selection</h3>
+	<div id="general">
+		<div class="sectionHeader">General</div>
+		<div class="sectionBody">
+			<ul *ngFor="#criterium of sheetSearchCriteria.getGeneralDomain()">
+				<li>
+					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
+						(change)="onChange(angularcb.checked, criterium)">
+					<label for="featured">{{criterium.name}}</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="valueBased">
+		<div class="sectionHeader">Value based</div>
+		<div class="sectionBody">
+			<ul *ngFor="#criterium of sheetSearchCriteria.getValueBasedDomain()">
+				<li>
+					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
+						(change)="onChange(angularcb.checked, criterium)">
+					<label for="featured">{{criterium.name}}</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="sectors">
+		<div class="sectionHeader">Sectors</div>
+		<div class="sectionBody">
+			<ul *ngFor="#criterium of sheetSearchCriteria.getSectorsDomain()">
+				<li>
+					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
+						(change)="onChange(angularcb.checked, criterium)">
+					<label for="featured">{{criterium.name}}</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
