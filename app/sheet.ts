@@ -1,5 +1,6 @@
 export class Sheet { 
-	public title: string;
+	public id: number;
+    public title: string;
 	public longTitle: string;
 	public imageUrl: string;
 	public description: string;
@@ -10,8 +11,9 @@ export class Sheet {
 	public valueBased: string;
 	public sector: string;
 
-	public constructor(inTitle: string, inLongTitle: string, inImageUrl: string, inOneMonthReturn: string) {
-		this.title = inTitle;
+	public constructor(inId: number, inTitle: string, inLongTitle: string, inImageUrl: string, inOneMonthReturn: string) {
+		this.id = inId;
+        this.title = inTitle;
 		this.longTitle = inLongTitle;
 		this.imageUrl = inImageUrl;
 		this.oneMonthReturn= inOneMonthReturn

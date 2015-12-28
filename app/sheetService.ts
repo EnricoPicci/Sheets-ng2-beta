@@ -1,7 +1,7 @@
-import {Sheet} from '../app/Sheet';
+import {Sheet} from './sheet';
 
 export interface SheetService {
-	getSheet(inId: string) : Sheet;
+	getSheet(inId: number) : Sheet;
 	getSomeSheets(inFromPosition: number, inMaxNumebrOfSheets: number) : Sheet[];
 	
 	getGeneralSearchCriteriaDomain() : string[];

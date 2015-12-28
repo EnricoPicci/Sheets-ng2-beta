@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1) {
+System.register(['angular2/core', './sheetSummary.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,12 +8,15 @@ System.register(['angular2/core'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, sheetSummary_component_1;
     var CollectionOfSheetsCmp;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (sheetSummary_component_1_1) {
+                sheetSummary_component_1 = sheetSummary_component_1_1;
             }],
         execute: function() {
             CollectionOfSheetsCmp = (function () {
@@ -29,6 +32,7 @@ System.register(['angular2/core'], function(exports_1) {
                         providers: [],
                         templateUrl: '../templates/collectionOfSheets.html',
                         styleUrls: ['../styles/table.css'],
+                        directives: [sheetSummary_component_1.SheetSummaryComponent],
                         inputs: ['sheets'],
                     }), 
                     __metadata('design:paramtypes', [])
@@ -39,4 +43,4 @@ System.register(['angular2/core'], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=CollectionOfSheetsCmp.js.map
+//# sourceMappingURL=collectionOfSheetsCmp.js.map

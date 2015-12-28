@@ -1,6 +1,6 @@
-import {SheetService} from '../app/SheetService';
-import {SheetFactory} from '../app/SheetFactory';
-import {SearchSelection} from '../app/SearchSelection';
+import {SheetService} from '../app/sheetService';
+import {SheetFactory} from '../app/sheetFactory';
+import {SearchSelection} from '../app/searchSelection';
 
 
 export class SheetSearchCriteria { 

@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../app/Sheet'], function(exports_1) {
+System.register(['angular2/core', '../app/sheet'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,15 +8,15 @@ System.register(['angular2/core', '../app/Sheet'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, Sheet_1;
+    var core_1, sheet_1;
     var SheetCmp;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (Sheet_1_1) {
-                Sheet_1 = Sheet_1_1;
+            function (sheet_1_1) {
+                sheet_1 = sheet_1_1;
             }],
         execute: function() {
             SheetCmp = (function () {
@@ -24,7 +24,7 @@ System.register(['angular2/core', '../app/Sheet'], function(exports_1) {
                 }
                 __decorate([
                     core_1.Input(), 
-                    __metadata('design:type', Sheet_1.Sheet)
+                    __metadata('design:type', sheet_1.Sheet)
                 ], SheetCmp.prototype, "sheet", void 0);
                 SheetCmp = __decorate([
                     core_1.Component({
@@ -40,4 +40,4 @@ System.register(['angular2/core', '../app/Sheet'], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=SheetCmp.js.map
+//# sourceMappingURL=sheetCmp.js.map

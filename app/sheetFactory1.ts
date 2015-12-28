@@ -1,20 +1,20 @@
-import {Sheet} from '../app/Sheet';
-import {SheetService} from '../app/SheetService';
+import {Sheet} from '../app/sheet';
+import {SheetService} from '../app/sheetService';
 
 export class SheetFactory1 implements SheetService {
-	getSheet(inId: string) {
+	getSheet(inId: number) {
 		var title = inId + ' SHEET1';
 		var longTitle = 'I am the SHEET1 ' + inId;
 		var urlString = '../images/' + inId;
 		var sheet: Sheet;
-		sheet = new Sheet(title, longTitle, urlString, '1');
+		sheet = new Sheet(inId, title, longTitle, urlString, '1');
 		return sheet;
 	}
 
 	getSomeSheets(inFromPosition: number, inMaxNumebrOfSheets: number) {
 		var sheets: Sheet[] = new Array<Sheet>();
 		for (var i = 3; i < 0; i--) {
-			sheets[i] = this.getSheet('sheet' + i);
+			sheets[i] = this.getSheet(i);
 		}
 		return sheets;
 	}

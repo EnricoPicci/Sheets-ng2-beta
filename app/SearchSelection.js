@@ -14,4 +14,4 @@ System.register([], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=SearchSelection.js.map
+//# sourceMappingURL=searchSelection.js.map

@@ -1,10 +1,10 @@
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 
-import {SheetSearchCriteria} from '../app/SheetSearchCriteria';
-import {SearchSelection} from '../app/SearchSelection';
-import {SheetService} from '../app/SheetService';
-import {SheetFactory} from '../app/SheetFactory';
-import {Sheet} from '../app/Sheet';
+import {SheetSearchCriteria} from '../app/sheetSearchCriteria';
+import {SearchSelection} from '../app/searchSelection';
+import {SheetService} from '../app/sheetService';
+import {SheetFactory} from '../app/sheetFactory';
+import {Sheet} from '../app/sheet';
 
 @Component({
     selector: 'sheetSearchCmp',

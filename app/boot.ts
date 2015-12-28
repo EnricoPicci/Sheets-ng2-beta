@@ -1,5 +1,8 @@
-import {bootstrap}    from 'angular2/platform/browser'
-import {AppComponent} from './appCmp'
-import {SheetFactory} from './SheetFactory';
+import {provide}    from 'angular2/core';
+import {bootstrap}    from 'angular2/platform/browser';
+import {ROUTER_PROVIDERS} from 'angular2/router';
 
-bootstrap(AppComponent, [SheetFactory]);
+import {AppComponent} from './app.component';
+import {SheetFactory} from './sheetFactory';
+
+bootstrap(AppComponent, [ROUTER_PROVIDERS, provide(SheetFactory, {useClass: SheetFactory})]);

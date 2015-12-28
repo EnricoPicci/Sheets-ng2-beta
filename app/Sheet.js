@@ -4,7 +4,8 @@ System.register([], function(exports_1) {
         setters:[],
         execute: function() {
             Sheet = (function () {
-                function Sheet(inTitle, inLongTitle, inImageUrl, inOneMonthReturn) {
+                function Sheet(inId, inTitle, inLongTitle, inImageUrl, inOneMonthReturn) {
+                    this.id = inId;
                     this.title = inTitle;
                     this.longTitle = inLongTitle;
                     this.imageUrl = inImageUrl;
@@ -19,4 +20,4 @@ System.register([], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=Sheet.js.map
+//# sourceMappingURL=sheet.js.map

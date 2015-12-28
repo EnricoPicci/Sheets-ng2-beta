@@ -1,7 +1,7 @@
 import {Component, Input} from 'angular2/core';
 
 
-import {Sheet} from '../app/Sheet';
+import {Sheet} from '../app/sheet';
 
 @Component({
     selector: 'sheetCmp',

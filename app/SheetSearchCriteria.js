@@ -1,10 +1,10 @@
-System.register(['../app/SearchSelection'], function(exports_1) {
-    var SearchSelection_1;
+System.register(['../app/searchSelection'], function(exports_1) {
+    var searchSelection_1;
     var SheetSearchCriteria;
     return {
         setters:[
-            function (SearchSelection_1_1) {
-                SearchSelection_1 = SearchSelection_1_1;
+            function (searchSelection_1_1) {
+                searchSelection_1 = searchSelection_1_1;
             }],
         execute: function() {
             SheetSearchCriteria = (function () {
@@ -18,7 +18,7 @@ System.register(['../app/SearchSelection'], function(exports_1) {
                     if (this.general == null) {
                         this.general = new Array();
                         for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
-                            this.general[i] = new SearchSelection_1.SearchSelection(SheetSearchCriteria.generalDomain[i]);
+                            this.general[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.generalDomain[i]);
                         }
                     }
                     return this.general;
@@ -30,7 +30,7 @@ System.register(['../app/SearchSelection'], function(exports_1) {
                     if (this.valueBased == null) {
                         this.valueBased = new Array();
                         for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
-                            this.valueBased[i] = new SearchSelection_1.SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
+                            this.valueBased[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
                         }
                     }
                     return this.valueBased;
@@ -42,7 +42,7 @@ System.register(['../app/SearchSelection'], function(exports_1) {
                     if (this.sectors == null) {
                         this.sectors = new Array();
                         for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {
-                            this.sectors[i] = new SearchSelection_1.SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
+                            this.sectors[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
                         }
                     }
                     return this.sectors;
@@ -53,4 +53,4 @@ System.register(['../app/SearchSelection'], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=SheetSearchCriteria.js.map
+//# sourceMappingURL=sheetSearchCriteria.js.map

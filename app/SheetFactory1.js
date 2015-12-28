@@ -1,10 +1,10 @@
-System.register(['../app/Sheet'], function(exports_1) {
-    var Sheet_1;
+System.register(['../app/sheet'], function(exports_1) {
+    var sheet_1;
     var SheetFactory1;
     return {
         setters:[
-            function (Sheet_1_1) {
-                Sheet_1 = Sheet_1_1;
+            function (sheet_1_1) {
+                sheet_1 = sheet_1_1;
             }],
         execute: function() {
             SheetFactory1 = (function () {
@@ -15,13 +15,13 @@ System.register(['../app/Sheet'], function(exports_1) {
                     var longTitle = 'I am the SHEET1 ' + inId;
                     var urlString = '../images/' + inId;
                     var sheet;
-                    sheet = new Sheet_1.Sheet(title, longTitle, urlString, '1');
+                    sheet = new sheet_1.Sheet(inId, title, longTitle, urlString, '1');
                     return sheet;
                 };
                 SheetFactory1.prototype.getSomeSheets = function (inFromPosition, inMaxNumebrOfSheets) {
                     var sheets = new Array();
                     for (var i = 3; i < 0; i--) {
-                        sheets[i] = this.getSheet('sheet' + i);
+                        sheets[i] = this.getSheet(i);
                     }
                     return sheets;
                 };
@@ -60,4 +60,4 @@ System.register(['../app/Sheet'], function(exports_1) {
         }
     }
 });
-//# sourceMappingURL=SheetFactory1.js.map
+//# sourceMappingURL=sheetFactory1.js.map

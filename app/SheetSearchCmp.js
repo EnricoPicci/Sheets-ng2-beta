@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../app/SheetSearchCriteria', '../app/SheetFactory'], function(exports_1) {
+System.register(['angular2/core', '../app/sheetSearchCriteria', '../app/sheetFactory'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,24 +8,24 @@ System.register(['angular2/core', '../app/SheetSearchCriteria', '../app/SheetFac
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, SheetSearchCriteria_1, SheetFactory_1;
+    var core_1, sheetSearchCriteria_1, sheetFactory_1;
     var SheetSearchCmp;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (SheetSearchCriteria_1_1) {
-                SheetSearchCriteria_1 = SheetSearchCriteria_1_1;
+            function (sheetSearchCriteria_1_1) {
+                sheetSearchCriteria_1 = sheetSearchCriteria_1_1;
             },
-            function (SheetFactory_1_1) {
-                SheetFactory_1 = SheetFactory_1_1;
+            function (sheetFactory_1_1) {
+                sheetFactory_1 = sheetFactory_1_1;
             }],
         execute: function() {
             SheetSearchCmp = (function () {
                 function SheetSearchCmp(inSheetService) {
                     this.sheetsRetrieved = new core_1.EventEmitter();
-                    this.sheetSearchCriteria = new SheetSearchCriteria_1.SheetSearchCriteria(inSheetService);
+                    this.sheetSearchCriteria = new sheetSearchCriteria_1.SheetSearchCriteria(inSheetService);
                 }
                 SheetSearchCmp.prototype.onChange = function (selected, selection) {
                     selection.selected = selected;
@@ -45,7 +45,7 @@ System.register(['angular2/core', '../app/SheetSearchCriteria', '../app/SheetFac
                     this.retrieveSelectedCriteria(criteria, sectorsTags);
                     console.log('sectorsTags');
                     console.log(sectorsTags);
-                    var fact = new SheetFactory_1.SheetFactory();
+                    var fact = new sheetFactory_1.SheetFactory();
                     this.searchResult = fact.fetchSheets(null, generalTags, valueBasedTags, sectorsTags);
                     this.sheetsRetrieved.next(this.searchResult);
                 };
@@ -70,7 +70,7 @@ System.register(['angular2/core', '../app/SheetSearchCriteria', '../app/SheetFac
                         templateUrl: '../templates/sheetSearch.html',
                         styleUrls: ['../styles/sheetSearch.css'],
                     }), 
-                    __metadata('design:paramtypes', [SheetFactory_1.SheetFactory])
+                    __metadata('design:paramtypes', [sheetFactory_1.SheetFactory])
                 ], SheetSearchCmp);
                 return SheetSearchCmp;
             })();
@@ -78,4 +78,4 @@ System.register(['angular2/core', '../app/SheetSearchCriteria', '../app/SheetFac
         }
     }
 });
-//# sourceMappingURL=SheetSearchCmp.js.map
+//# sourceMappingURL=sheetSearchCmp.js.map

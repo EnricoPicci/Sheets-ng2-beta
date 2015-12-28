@@ -1,20 +1,22 @@
 import {Component, Input} from 'angular2/core';
 
-import {Sheet} from '../app/Sheet';
-import {SheetService} from '../app/SheetService';
-import {SheetFactory} from '../app/SheetFactory';
-import {SheetFactory1} from '../app/SheetFactory1';
+import {Sheet} from './sheet';
+import {SheetService} from './sheetService';
+import {SheetFactory} from './sheetFactory';
+import {SheetFactory1} from './sheetFactory1';
+import {SheetSummaryComponent} from './sheetSummary.component';
 
 @Component({
     selector: 'collection-of-sheets-cmp',
 	providers: [],
     templateUrl: '../templates/collectionOfSheets.html',
 	styleUrls: ['../styles/table.css'],
+    directives: [SheetSummaryComponent],
 	inputs: ['sheets'],
 })
 export class CollectionOfSheetsCmp { 
 	@Input() sheets: Sheet[];
-	sheetService: SheetService;
+	//sheetService: SheetService;
 
 	/*constructor(inSheetService: SheetFactory) {
 		this.sheetService = inSheetService;

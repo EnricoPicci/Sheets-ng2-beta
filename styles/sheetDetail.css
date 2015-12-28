@@ -1,0 +1,39 @@
+#header {
+    background-color: transparent;
+    border: none !important;
+    box-shadow: none !important;
+    width: 100%;
+    position: absolute;
+    z-index: 100000;
+    height: 80px;
+    transition: all 0.4s ease;
+    font-size: 13px;
+}
+
+#banner {
+background-image: url("https://d1aujam1f2f3cr.cloudfront.net/data/img/motif/12731");
+background-position: 50% 50%;
+background-repeat: no-repeat;
+background-size:cover;
+box-sizing:border-box;
+color:rgb(92, 94, 95);
+display:block;
+filter:none;
+font-family:'Open Sans', arial;
+font-size:12px;
+height:350px;
+margin-bottom:0px;
+margin-left:0px;
+margin-right:0px;
+margin-top:-27px;
+opacity:0.64;
+padding-bottom:0px;
+padding-left:0px;
+padding-right:0px;
+padding-top:0px;
+position: absolute;
+top:0px;
+width:1349px;
+z-index:1;
+-webkit-filter:blur(22px);
+}
