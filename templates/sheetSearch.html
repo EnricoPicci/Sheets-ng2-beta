@@ -7,40 +7,18 @@
 </div>
 <div id="narrowResultHeader">
 	<h3>Refine Selection</h3>
-	<div id="general">
-		<div class="sectionHeader">General</div>
-		<div class="sectionBody">
-			<ul *ngFor="#criterium of sheetSearchCriteria.getGeneralDomain()">
-				<li>
-					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
-						(change)="onChange(angularcb.checked, criterium)">
-					<label for="featured">{{criterium.name}}</label>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div id="valueBased">
-		<div class="sectionHeader">Value based</div>
-		<div class="sectionBody">
-			<ul *ngFor="#criterium of sheetSearchCriteria.getValueBasedDomain()">
-				<li>
-					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
-						(change)="onChange(angularcb.checked, criterium)">
-					<label for="featured">{{criterium.name}}</label>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div id="sectors">
-		<div class="sectionHeader">Sectors</div>
-		<div class="sectionBody">
-			<ul *ngFor="#criterium of sheetSearchCriteria.getSectorsDomain()">
-				<li>
-					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
-						(change)="onChange(angularcb.checked, criterium)">
-					<label for="featured">{{criterium.name}}</label>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <!--div *ngFor="#searchCriteria of sheetSearchCriteria.searchCriteria">
+        <searchCriteria [searchCriteria]="searchCriteria" (selectionCriteriaChanged)="onChange(searchCriteria)">
+        </searchCriteria>
+    </div-->
+    <table *ngFor="#searchCriteria of sheetSearchCriteria.searchCriteria">
+        <tr>
+            <td>
+                <div>
+                    <searchCriteria [searchCriteria]="searchCriteria" (selectionCriteriaChanged)="onChange(searchCriteria)">
+                    </searchCriteria>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>

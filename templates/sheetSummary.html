@@ -1,16 +1,16 @@
-<!--a [routerLink]="['SheetDetail', {id:sheet.id}]"-->
-<div (mousedown)="onMouseDown()">
+<a [routerLink]="['SheetDetail', {id:sheet.id}]">
+<!--div (mousedown)="onMouseDown()"-->
 	<div class="gridImageFrame">
 		<div class="gradient"></div>
 		<img height="230" width="230" src={{sheet.imageUrl}}>
 		<div class="imageOverlay">
 			<span class="name sheetLink">{{sheet.title}}</span>
-			<span class="creatorName">Created By: CocoonTechies</span>
+			<span class="creatorName">Created By: {{sheet.createdBy}}</span>
 		</div>
 	</div>
 	<div class="metrics">
 		<div class="metricLabel">One Month Return</div>
 		<div class="metricValue"><span class="percentageArrow large up"><span>{{sheet.oneMonthReturn}}</span></span></div>
 	</div>
-</div>
-<!--/a-->
+<!--/div-->
+</a>

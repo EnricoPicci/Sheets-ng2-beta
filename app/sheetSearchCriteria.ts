@@ -1,13 +1,14 @@
-import {SheetService} from '../app/sheetService';
-import {SheetFactory} from '../app/sheetFactory';
-import {SearchSelection} from '../app/searchSelection';
+import {SheetService} from './sheetService';
+import {SheetFactory} from './sheetFactory';
+import {SearchCriteria} from './searchCriteria';
+import {SearchSelection} from './searchSelection';
 
 
 export class SheetSearchCriteria { 
 	public freeSearchText: string;
-	public general: SearchSelection[];
-	public valueBased: SearchSelection[];
-	public sectors: SearchSelection[];
+    public searchCriteria: SearchCriteria[] = new Array<SearchCriteria>();
+    
+    public open: boolean = false;
 	
 	static generalDomain: string[];
 	static valueBasedDomain: string[];
@@ -18,46 +19,36 @@ export class SheetSearchCriteria {
 	constructor(inSheetService: SheetFactory) {
 		this.sheetService = inSheetService;
 	}
-	
-	public getGeneralDomain() {
+    
+	public initializeSearchCriteria() {
 		if (SheetSearchCriteria.generalDomain == null) {
 			SheetSearchCriteria.generalDomain = this.sheetService.getGeneralSearchCriteriaDomain();
 		}
-		if (this.general == null) {
-			this.general = new Array<SearchSelection>();
-			for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
-				this.general[i] = new SearchSelection(SheetSearchCriteria.generalDomain[i]);
-			}
-		}
-		return this.general;
-	}
-	
-	public getValueBasedDomain() {
+        let general = new Array<SearchSelection>();
+        for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
+            general[i] = new SearchSelection(SheetSearchCriteria.generalDomain[i]);
+        }
+        this.searchCriteria[0] = new SearchCriteria('General', general);
+        
 		if (SheetSearchCriteria.valueBasedDomain == null) {
 			SheetSearchCriteria.valueBasedDomain = this.sheetService.getValueBasedSearchCriteriaDomain();
 		}
-		if (this.valueBased == null) {
-			this.valueBased = new Array<SearchSelection>();
-			for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
-				this.valueBased[i] = new SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
-				//console.log(this.valueBased[i]);
-			}
-		}
-		return this.valueBased;
-	}
-	
-	public getSectorsDomain() {
-		if (SheetSearchCriteria.sectorsDomain == null) {
+        let valueBased = new Array<SearchSelection>();
+        for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
+            valueBased[i] = new SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
+        }
+        this.searchCriteria[1] = new SearchCriteria('Value Based', valueBased);
+        
+        if (SheetSearchCriteria.sectorsDomain == null) {
 			SheetSearchCriteria.sectorsDomain = this.sheetService.getSectorsSearchCriteriaDomain();
 		}
-		if (this.sectors == null) {
-			this.sectors = new Array<SearchSelection>();
-			for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {
-				this.sectors[i] = new SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
-				//console.log(this.sectors[i]);
-			}
-		}
-		return this.sectors;
+        let sectors = new Array<SearchSelection>();
+        for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {
+            sectors[i] = new SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
+        }
+        this.searchCriteria[2] = new SearchCriteria('Sectors', sectors);
+        
+		return this.searchCriteria;
 	}
 
 }

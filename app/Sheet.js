@@ -11,9 +11,6 @@ System.register([], function(exports_1) {
                     this.imageUrl = inImageUrl;
                     this.oneMonthReturn = inOneMonthReturn;
                 }
-                Sheet.prototype.setDescription = function (inDescription) {
-                    this.description = inDescription;
-                };
                 return Sheet;
             })();
             exports_1("Sheet", Sheet);

@@ -1,51 +1,47 @@
-System.register(['../app/searchSelection'], function(exports_1) {
-    var searchSelection_1;
+System.register(['./searchCriteria', './searchSelection'], function(exports_1) {
+    var searchCriteria_1, searchSelection_1;
     var SheetSearchCriteria;
     return {
         setters:[
+            function (searchCriteria_1_1) {
+                searchCriteria_1 = searchCriteria_1_1;
+            },
             function (searchSelection_1_1) {
                 searchSelection_1 = searchSelection_1_1;
             }],
         execute: function() {
             SheetSearchCriteria = (function () {
                 function SheetSearchCriteria(inSheetService) {
+                    this.searchCriteria = new Array();
+                    this.open = false;
                     this.sheetService = inSheetService;
                 }
-                SheetSearchCriteria.prototype.getGeneralDomain = function () {
+                SheetSearchCriteria.prototype.initializeSearchCriteria = function () {
                     if (SheetSearchCriteria.generalDomain == null) {
                         SheetSearchCriteria.generalDomain = this.sheetService.getGeneralSearchCriteriaDomain();
                     }
-                    if (this.general == null) {
-                        this.general = new Array();
-                        for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
-                            this.general[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.generalDomain[i]);
-                        }
+                    var general = new Array();
+                    for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
+                        general[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.generalDomain[i]);
                     }
-                    return this.general;
-                };
-                SheetSearchCriteria.prototype.getValueBasedDomain = function () {
+                    this.searchCriteria[0] = new searchCriteria_1.SearchCriteria('General', general);
                     if (SheetSearchCriteria.valueBasedDomain == null) {
                         SheetSearchCriteria.valueBasedDomain = this.sheetService.getValueBasedSearchCriteriaDomain();
                     }
-                    if (this.valueBased == null) {
-                        this.valueBased = new Array();
-                        for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
-                            this.valueBased[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
-                        }
+                    var valueBased = new Array();
+                    for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
+                        valueBased[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.valueBasedDomain[i]);
                     }
-                    return this.valueBased;
-                };
-                SheetSearchCriteria.prototype.getSectorsDomain = function () {
+                    this.searchCriteria[1] = new searchCriteria_1.SearchCriteria('Value Based', valueBased);
                     if (SheetSearchCriteria.sectorsDomain == null) {
                         SheetSearchCriteria.sectorsDomain = this.sheetService.getSectorsSearchCriteriaDomain();
                     }
-                    if (this.sectors == null) {
-                        this.sectors = new Array();
-                        for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {
-                            this.sectors[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
-                        }
+                    var sectors = new Array();
+                    for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {
+                        sectors[i] = new searchSelection_1.SearchSelection(SheetSearchCriteria.sectorsDomain[i]);
                     }
-                    return this.sectors;
+                    this.searchCriteria[2] = new searchCriteria_1.SearchCriteria('Sectors', sectors);
+                    return this.searchCriteria;
                 };
                 return SheetSearchCriteria;
             })();

@@ -1,4 +1,5 @@
-		<div id="content" class="container">
+		<div id="header" class="header"></div>
+        <div id="content" class="container">
 			<div id="pageHeading"></div>
 			<div id="sidebarGroup">
 				<sheetSearchCmp #search (sheetsRetrieved)="updateSheets(search.searchResult)"></sheetSearchCmp>
@@ -7,7 +8,6 @@
 				<collection-of-sheets-cmp [sheets]="sheets"></collection-of-sheets-cmp>
 			</div>
 			<div id="pageFooter"></div>
-            <router-outlet></router-outlet>
 		</div>
 		
 		<!--h1>{{title}}</h1>

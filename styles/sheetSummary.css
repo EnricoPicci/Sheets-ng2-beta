@@ -18,7 +18,7 @@
 }
 
 .metrics {
-	//vertical-align: top;
+    width: 229px;
 	display: block;
     line-height: 18px;
     margin-top: 210px;
@@ -32,16 +32,6 @@
 
 .metricValue {
     margin-top: 8px;
-}
-
-.percentageArrow.large {
-    font-size: 26px;
-    font-weight: normal;
-}
-.percentageArrow.up {
-	background: url(/images/catalogSprite.png) -184px -432px no-repeat;
-    padding-left: 22px;
-    color: #3ba729 !important;
 }
 
 .imageOverlay {

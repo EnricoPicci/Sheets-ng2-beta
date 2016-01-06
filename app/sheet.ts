@@ -1,10 +1,17 @@
+import{AssetGroup} from './assetGroup';
+import{Asset} from './asset';
+
 export class Sheet { 
 	public id: number;
     public title: string;
 	public longTitle: string;
 	public imageUrl: string;
+    public createdBy: string;
 	public description: string;
-	public oneMonthReturn: string;
+	public oneYearReturn: string;
+    public oneMonthReturn: string;
+    public dailyChange: string;
+    public assetGroups: AssetGroup[];
 
 	// tags used as filter in search
 	public general: string;
@@ -17,10 +24,6 @@ export class Sheet {
 		this.longTitle = inLongTitle;
 		this.imageUrl = inImageUrl;
 		this.oneMonthReturn= inOneMonthReturn
-	}
-
-	public setDescription(inDescription: string) {
-		this.description = inDescription;
 	}
 
 }

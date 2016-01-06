@@ -1,18 +1,21 @@
-import {Component, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, OnInit, Output, EventEmitter} from 'angular2/core';
 
-import {SheetSearchCriteria} from '../app/sheetSearchCriteria';
-import {SearchSelection} from '../app/searchSelection';
-import {SheetService} from '../app/sheetService';
-import {SheetFactory} from '../app/sheetFactory';
-import {Sheet} from '../app/sheet';
+import {SheetSearchCriteria} from './sheetSearchCriteria';
+import {SearchCriteriaComponent} from './searchCriteria.component';
+import {SearchCriteria} from './searchCriteria';
+import {SearchSelection} from './searchSelection';
+import {SheetService} from './sheetService';
+import {SheetFactory} from './sheetFactory';
+import {Sheet} from './sheet';
 
 @Component({
     selector: 'sheetSearchCmp',
 	providers: [],
     templateUrl: '../templates/sheetSearch.html', 
 	styleUrls: ['../styles/sheetSearch.css'],
+    directives: [SearchCriteriaComponent],
 })
-export class SheetSearchCmp { 
+export class SheetSearchCmp implements OnInit { 
 	sheetSearchCriteria: SheetSearchCriteria;
 	public searchResult: Sheet[];
 	@Output() sheetsRetrieved: EventEmitter<any> = new EventEmitter();
@@ -20,24 +23,28 @@ export class SheetSearchCmp {
 	constructor(inSheetService: SheetFactory) {
 		this.sheetSearchCriteria = new SheetSearchCriteria(inSheetService);
 	}
+    
+    ngOnInit() {
+        this.sheetSearchCriteria.initializeSearchCriteria();
+        console.log(this.sheetSearchCriteria);
+    }
 
-	onChange(selected: boolean, selection: SearchSelection) {
-		selection.selected = selected;
-		var criteria: SearchSelection[];
+	onChange(inSearchCriteria: SearchCriteria) {
+		let criteria: SearchCriteria;
 		
-		criteria = this.sheetSearchCriteria.getGeneralDomain();
+		criteria = this.sheetSearchCriteria.searchCriteria[0];
 		var generalTags: string[] = new Array<string>();
 		this.retrieveSelectedCriteria(criteria, generalTags);
 		console.log('generalTags');
 		console.log(generalTags);
 
-		criteria = this.sheetSearchCriteria.getValueBasedDomain();
+		criteria = this.sheetSearchCriteria.searchCriteria[1];
 		var valueBasedTags: string[] = new Array<string>();
 		this.retrieveSelectedCriteria(criteria, valueBasedTags);
 		console.log('valueBasedTags');
 		console.log(valueBasedTags);
 		
-		criteria = this.sheetSearchCriteria.getSectorsDomain();
+		criteria = this.sheetSearchCriteria.searchCriteria[2];;
 		var sectorsTags: string[] = new Array<string>();
 		this.retrieveSelectedCriteria(criteria, sectorsTags);
 		console.log('sectorsTags');
@@ -48,17 +55,13 @@ export class SheetSearchCmp {
 		this.sheetsRetrieved.next(this.searchResult);
 	}
 	
-	retrieveSelectedCriteria(inCriteria: SearchSelection[], inTags: string[]) {
-		for (var i = 0; i < inCriteria.length; i++) {
-			if (inCriteria[i].selected) {
-				inTags[i] = inCriteria[i].name;
+	retrieveSelectedCriteria(inCriteria: SearchCriteria, inTags: string[]) {
+		for (var i = 0; i < inCriteria.selections.length; i++) {
+			if (inCriteria.selections[i].selected) {
+				inTags[i] = inCriteria.selections[i].name;
 				//console.log(inCriteria[i].name + ' ' + inCriteria[i].selected);
 			}
 		}
-	}
-
-	onClick() {
-		console.log('click');
 	}
 	
 }
