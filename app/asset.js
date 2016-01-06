@@ -5,6 +5,7 @@ System.register([], function(exports_1) {
         execute: function() {
             Asset = (function () {
                 function Asset(inName, inSymbol, inWeight, inOneMonthRet, inOneYearRet) {
+                    this.locked = false;
                     this.name = inName;
                     this.symbol = inSymbol;
                     this.weight = inWeight;

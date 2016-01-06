@@ -5,6 +5,8 @@ export class Asset {
     public oneMonthRet: string;
     public oneYearRet: string;
     
+    public locked: boolean = false;
+    
     public constructor(inName: string, inSymbol: string, inWeight: string, inOneMonthRet: string, inOneYearRet: string) {
         this.name = inName;
         this.symbol = inSymbol;

@@ -172,6 +172,20 @@ z-index: 100;
     width: 25%;
 }
 
+.lockClass {
+    height: 25px;
+    width: 5%;
+    cursor: pointer;
+}
+
+.lockClass.unlocked {
+    background: url("/images/customizeSprite.png") 0 -32px no-repeat;
+}
+
+.lockClass.locked {
+    background: url("/images/customizeSprite.png") 0 -124px no-repeat;
+}
+
 .assetGroupClass {
     background-color: #eeeeee;
     background: linear-gradient(to bottom, #ffffff 0, #eeeeee 100%);
@@ -198,7 +212,7 @@ z-index: 100;
 
 .assetClass {
     background-color: #fff;
-    height: auto;
+    height: 25px; /*to keep same heigth of the lock symbol of .lockClass.unlocked*/
 }
 
 .assetClass td {

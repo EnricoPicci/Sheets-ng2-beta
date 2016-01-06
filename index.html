@@ -26,9 +26,13 @@
       System.import('app/boot')
             .then(null, console.error.bind(console));
     </script>
-  </head>
+    <!-- Load NoUiSlider specific stuff -->
+    <link href="./lib/NoUISlider/nouislider.min.css" rel="stylesheet">
+    </head>
   <!-- 3. Display the application -->
   <body>
     <my-app>Loading...</my-app>
+    <!-- Load NoUiSlider specific stuff -->
+    <script src="./lib/NoUISlider/nouislider.min.js"></script>
   </body>
 </html>

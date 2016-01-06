@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utilities/shortLongText.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utilities/shortLongText.component', '../utilities/slider.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sheetFactory_1, shortLongText_component_1;
+    var core_1, router_1, sheetFactory_1, shortLongText_component_1, slider_component_1;
     var SheetDetailComponent;
     return {
         setters:[
@@ -23,6 +23,9 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
             },
             function (shortLongText_component_1_1) {
                 shortLongText_component_1 = shortLongText_component_1_1;
+            },
+            function (slider_component_1_1) {
+                slider_component_1 = slider_component_1_1;
             }],
         execute: function() {
             SheetDetailComponent = (function () {
@@ -31,6 +34,11 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                     this._sheetFactory = _sheetFactory;
                     this.shortDescriptionTextLength = 250;
                     this.editStatus = false;
+                    this.start = [30];
+                    this.range = { 'min': 10, 'max': 50 };
+                    this.pips = { mode: 'values',
+                        values: [10, 20, 30, 40, 50],
+                        density: 10 };
                 }
                 SheetDetailComponent.prototype.ngOnInit = function () {
                     var id = +this._routeParams.get('id');
@@ -53,13 +61,20 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                     }
                     return ret;
                 };
+                SheetDetailComponent.prototype.onToggleLock = function (inAsset) {
+                    inAsset.locked = !inAsset.locked;
+                };
+                SheetDetailComponent.prototype.onEnd = function (inEvent) {
+                    console.log('app');
+                    console.log(inEvent);
+                };
                 SheetDetailComponent = __decorate([
                     core_1.Component({
                         selector: 'sheet-detail',
                         providers: [],
                         templateUrl: '../templates/sheetDetail.html',
                         styleUrls: ['../styles/common.css', '../styles/sheetDetail.css'],
-                        directives: [shortLongText_component_1.ShortLongTextComponent],
+                        directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider],
                         inputs: ['sheet'],
                     }), 
                     __metadata('design:paramtypes', [router_1.RouteParams, sheetFactory_1.SheetFactory])
