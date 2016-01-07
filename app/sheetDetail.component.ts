@@ -4,6 +4,7 @@ import {RouteParams} from 'angular2/router';
 import {Sheet} from './sheet';
 import {AssetGroup} from './assetGroup';
 import {Asset} from './asset';
+import {AssetAbstract} from './assetAbstract';
 import {SheetFactory} from './sheetFactory';
 
 import {ShortLongTextComponent} from '../utilities/shortLongText.component';
@@ -52,18 +53,41 @@ export class SheetDetailComponent implements OnInit {
         return ret;
     }
     
-    onToggleLock(inAsset: Asset) {
+    onToggleLock(inAsset: AssetAbstract) {
         inAsset.locked = !inAsset.locked;
     }
     
-    start: number[] = [30];
-    range: any = {'min': 10, 'max': 50};
-    pips: any = {mode: 'values',
-                values: [10, 20, 30, 40, 50],
-				density: 10}
+    getStart(inAsset: Asset) {
+        return inAsset.weight;
+    }
     
-    onEnd(inEvent: number[]) {
-        console.log('app');
+    getRange(inAsset: AssetAbstract) {
+        return inAsset.range;
+    }
+    
+    getPips(inAsset: AssetAbstract) {
+        return inAsset.pips;
+    }
+    
+    //start: number[] = [30];
+    //range: any = {'min': 10, 'max': 50};
+    /*pips: any = {mode: 'values',
+                values: [10, 20, 30, 40, 50],
+				density: 10}*/
+    
+    onEndOnAssetGroup(inEvent: number[], inAssetGroup: AssetGroup) {
+        let newWeightValue = inEvent[0];
+        let difference = newWeightValue - inAssetGroup.weight;
+        let changeRatio = (newWeightValue - difference)/inAssetGroup.weight;
+        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+            let oldAssetWeight = inAssetGroup.assets[i].weight;
+            inAssetGroup.assets[i].weight = oldAssetWeight*changeRatio;
+        }
+        inAssetGroup.weight = newWeightValue;
+    }
+    
+    onEndOnAsset(inEvent: number[]) {
+        console.log('end on asset');
         console.log(inEvent);
     }
 }

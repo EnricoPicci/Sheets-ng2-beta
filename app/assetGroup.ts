@@ -1,19 +1,19 @@
+import{AssetAbstract} from './assetAbstract';
 import{Asset} from './asset';
 
-export class AssetGroup {
-    public name: string;
-    public weight: string;
-    public oneMonthRet: string;
-    public oneYearRet: string;
+export class AssetGroup extends AssetAbstract {
     public assets: Asset[];
     
-    public show: boolean= true;
-    
-    public constructor(inName: string, inWeight: string, inOneMonthRet: string, inOneYearRet: string, inAssets: Asset[]) {
-        this.name = inName;
-        this.weight = inWeight;
-        this.oneMonthRet = inOneMonthRet;
-        this.oneYearRet = inOneYearRet;
+    public constructor(inName: string, 
+                        inWeight: number, 
+                        inOneMonthRet: string, 
+                        inOneYearRet: string, 
+                        inAssets: Asset[], 
+                        inMinWeigth: number, 
+                        inMaxWeigth: number) {
+        super(inName, inWeight, inOneMonthRet, inOneYearRet, 
+                        inMinWeigth, inMaxWeigth);
         this.assets = inAssets;
-    }
+   }
+   
 }

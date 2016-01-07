@@ -34,11 +34,6 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                     this._sheetFactory = _sheetFactory;
                     this.shortDescriptionTextLength = 250;
                     this.editStatus = false;
-                    this.start = [30];
-                    this.range = { 'min': 10, 'max': 50 };
-                    this.pips = { mode: 'values',
-                        values: [10, 20, 30, 40, 50],
-                        density: 10 };
                 }
                 SheetDetailComponent.prototype.ngOnInit = function () {
                     var id = +this._routeParams.get('id');
@@ -64,8 +59,32 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                 SheetDetailComponent.prototype.onToggleLock = function (inAsset) {
                     inAsset.locked = !inAsset.locked;
                 };
-                SheetDetailComponent.prototype.onEnd = function (inEvent) {
-                    console.log('app');
+                SheetDetailComponent.prototype.getStart = function (inAsset) {
+                    return inAsset.weight;
+                };
+                SheetDetailComponent.prototype.getRange = function (inAsset) {
+                    return inAsset.range;
+                };
+                SheetDetailComponent.prototype.getPips = function (inAsset) {
+                    return inAsset.pips;
+                };
+                //start: number[] = [30];
+                //range: any = {'min': 10, 'max': 50};
+                /*pips: any = {mode: 'values',
+                            values: [10, 20, 30, 40, 50],
+                            density: 10}*/
+                SheetDetailComponent.prototype.onEndOnAssetGroup = function (inEvent, inAssetGroup) {
+                    var newWeightValue = inEvent[0];
+                    var difference = newWeightValue - inAssetGroup.weight;
+                    var changeRatio = (newWeightValue - difference) / inAssetGroup.weight;
+                    for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                        var oldAssetWeight = inAssetGroup.assets[i].weight;
+                        inAssetGroup.assets[i].weight = oldAssetWeight * changeRatio;
+                    }
+                    inAssetGroup.weight = newWeightValue;
+                };
+                SheetDetailComponent.prototype.onEndOnAsset = function (inEvent) {
+                    console.log('end on asset');
                     console.log(inEvent);
                 };
                 SheetDetailComponent = __decorate([

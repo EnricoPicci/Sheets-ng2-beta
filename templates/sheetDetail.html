@@ -52,9 +52,9 @@
                         </tr>
                     </thead>
                     <tbody *ngFor="#assetGroup of sheet.assetGroups">
-                        <tr class="assetGroupClass" (click)="onAssetGroupClick(assetGroup)">
+                        <tr class="assetGroupClass">
                             <th class="weightClass"><span>{{assetGroup.weight}}</span></th>
-                            <th id="assetGroupNameClass" colspan="2">
+                            <th id="assetGroupNameClass" colspan="2" (click)="onAssetGroupClick(assetGroup)">
                                 <span class="arrow" [class.open]="assetGroup.show"></span>
                                 <span>{{assetGroup.name}}</span>
                             </th>
@@ -62,7 +62,11 @@
                                 <span style="display: none;" class="percentageArrow up small">{{assetGroup.oneMonthRet}}</span>
                                 <span style="display: inline;" class="percentageArrow up small">{{assetGroup.oneYearRet}}</span>
                             </th>
-                            <th colspan="3" [style.display]="editStatus ? 'table-cell' : 'none'"></th>
+                            <td class="newWeightSliderClass" [style.display]="editStatus ? 'table-cell' : 'none'">
+                                <my-slider [start]="getStart(assetGroup)" [range]="getRange(assetGroup)" [pips]="getPips(assetGroup)" (end)="onEndOnAssetGroup($event, assetGroup)"></my-slider>
+                            </td>
+                            <th class="newWeightClass" [style.display]="editStatus ? 'table-cell' : 'none'"></th>
+                            <th [style.display]="editStatus ? 'table-cell' : 'none'" [class]="assetGroup.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(assetGroup)"></th>
                         </tr>
                         <tr>
                             <td colspan="4">
@@ -93,11 +97,10 @@
                                     <table width=100%>
                                         <tr class="assetClass">
                                             <td class="newWeightSliderClass">
-                                                <my-slider #slider [start]="start" [range]="range" [pips]="pips" (end)="onEnd($event)"></my-slider>
+                                                <my-slider [start]="getStart(asset)" [range]="getRange(asset)" [pips]="getPips(asset)" (end)="onEndOnAsset($event)"></my-slider>
                                             </td>
-                                            <td class="newWeightClass">NW</td>
-                                            <td [class]="asset.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(asset)">
-                                            </td>                                            
+                                            <td class="newWeightClass"></td>
+                                            <td [class]="asset.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(asset)"></td>                                            
                                         </tr>                                        
                                     </table>
                                 </div>                                

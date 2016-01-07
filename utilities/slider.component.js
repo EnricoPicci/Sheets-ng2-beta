@@ -34,7 +34,8 @@ System.register(['angular2/core'], function(exports_1) {
                         pips: this.pips
                     });
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
-                    this.noUiSlider.on('end', this.onEnd);
+                    this.noUiSlider.on('change', this.onEnd);
+                    //this.noUiSlider.on('tap', this.onEnd);
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 

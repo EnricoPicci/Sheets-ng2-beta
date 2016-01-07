@@ -1,17 +1,17 @@
-export class Asset {
-    public name: string;
+import{AssetAbstract} from './assetAbstract';
+
+export class Asset extends AssetAbstract {
     public symbol: string;
-    public weight: string;
-    public oneMonthRet: string;
-    public oneYearRet: string;
-    
-    public locked: boolean = false;
-    
-    public constructor(inName: string, inSymbol: string, inWeight: string, inOneMonthRet: string, inOneYearRet: string) {
-        this.name = inName;
+
+    public constructor(inName: string, 
+                        inSymbol: string,
+                        inWeight: number, 
+                        inOneMonthRet: string, 
+                        inOneYearRet: string, 
+                        inMinWeigth: number, 
+                        inMaxWeigth: number) {
+        super(inName, inWeight, inOneMonthRet, inOneYearRet, 
+                        inMinWeigth, inMaxWeigth);
         this.symbol = inSymbol;
-        this.weight = inWeight;
-        this.oneMonthRet = inOneMonthRet;
-        this.oneYearRet = inOneYearRet;
     }
 }

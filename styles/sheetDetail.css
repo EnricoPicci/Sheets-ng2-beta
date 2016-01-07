@@ -119,7 +119,7 @@ z-index: 100;
     width: calc(100% - 180px);
     margin-bottom: 30px;
     margin-top: 30px;
-    overflow: auto;
+    /*overflow: auto;*/
     min-width: 475px;
 }
 
@@ -179,11 +179,11 @@ z-index: 100;
 }
 
 .lockClass.unlocked {
-    background: url("/images/customizeSprite.png") 0 -32px no-repeat;
+    background: url("/images/unlocked.png") 0 -10px no-repeat;
 }
 
 .lockClass.locked {
-    background: url("/images/customizeSprite.png") 0 -124px no-repeat;
+    background: url("/images/locked.png") 0 -7px no-repeat;
 }
 
 .assetGroupClass {
@@ -191,7 +191,6 @@ z-index: 100;
     background: linear-gradient(to bottom, #ffffff 0, #eeeeee 100%);
     border-bottom: 1px solid #B9B9B9;
     line-height: 39px;
-    cursor: pointer;
 }
 
 
@@ -199,6 +198,7 @@ z-index: 100;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .assetGroupClass th {
@@ -208,6 +208,12 @@ z-index: 100;
     white-space: nowrap;
     text-align: center;
     vertical-align: middle;
+    background-position-y: -1px;
+}
+
+.assetGroupClass td {
+    padding-right: 12px;
+    padding-left: 6px;
 }
 
 .assetClass {
