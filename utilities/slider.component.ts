@@ -1,6 +1,6 @@
 ///<reference path="../typings/nouislider/nouislider.d.ts" />
 
-import {Component, ViewChild, AfterViewInit, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmitter} from 'angular2/core';
 
 @Component({
   selector: 'my-slider',
@@ -10,12 +10,14 @@ import {Component, ViewChild, AfterViewInit, Input, Output, EventEmitter} from '
   `,
 })
 
-export class Slider implements AfterViewInit { 
+export class Slider implements AfterViewInit, OnChanges { 
     @ViewChild('sliderDomElement') sliderDomElement;
     noUiSlider: any;
     @Input() start: number[];
     @Input() range: any;  //e.g. {'min': 0,'max': 100}
     @Input() pips: any; //e.g. {mode: 'values', values: [10, 20, 30, 40, 50, 60, 70, 80, 90], density: 10}
+    @Input() newValue: number;
+    @Input() locked: boolean = false;
     @Output() end: EventEmitter<any> = new EventEmitter();
     public values: any[];
     
@@ -35,6 +37,20 @@ export class Slider implements AfterViewInit {
         this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
         this.noUiSlider.on('change', this.onEnd);
         //this.noUiSlider.on('tap', this.onEnd);
+    }
+    
+    ngOnChanges() {
+        if (this.noUiSlider != null) {
+            if(this.newValue != null) {
+                this.noUiSlider.set(this.newValue);
+            }
+            if (this.locked) {
+                this.sliderDomElement.nativeElement.setAttribute('disabled', true);
+            } else {
+                this.sliderDomElement.nativeElement.removeAttribute('disabled');
+            } 
+        }
+        console.log(this.locked);
     }
 
 }

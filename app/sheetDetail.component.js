@@ -76,10 +76,29 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                 SheetDetailComponent.prototype.onEndOnAssetGroup = function (inEvent, inAssetGroup) {
                     var newWeightValue = inEvent[0];
                     var difference = newWeightValue - inAssetGroup.weight;
-                    var changeRatio = (newWeightValue - difference) / inAssetGroup.weight;
-                    for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                        var oldAssetWeight = inAssetGroup.assets[i].weight;
-                        inAssetGroup.assets[i].weight = oldAssetWeight * changeRatio;
+                    if (difference > 0) {
+                        var totalSpaceBelowMaxAvailabelForIncrease = 0;
+                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                            var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                            totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                        }
+                        var increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
+                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                            var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                            inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease * increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+                        }
+                    }
+                    else {
+                        var totalSpaceBelowMaxAvailabelForDecrease = 0;
+                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                            var spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                            totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+                        }
+                        var decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
+                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                            var spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                            inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease * decreaseOveraAvailableSpaceRatio;
+                        }
                     }
                     inAssetGroup.weight = newWeightValue;
                 };

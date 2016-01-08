@@ -12,6 +12,8 @@ export abstract class AssetAbstract {
     
     public pips: any;
     
+    public newValue: number;
+    
     constructor(inName: string, 
                         inWeight: number, 
                         inOneMonthRet: string, 

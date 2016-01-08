@@ -20,6 +20,7 @@ System.register(['angular2/core'], function(exports_1) {
             Slider = (function () {
                 function Slider() {
                     var _this = this;
+                    this.locked = false;
                     this.end = new core_1.EventEmitter();
                     this.onEnd = function (inValues) {
                         _this.values = inValues;
@@ -36,6 +37,20 @@ System.register(['angular2/core'], function(exports_1) {
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
                     this.noUiSlider.on('change', this.onEnd);
                     //this.noUiSlider.on('tap', this.onEnd);
+                };
+                Slider.prototype.ngOnChanges = function () {
+                    if (this.noUiSlider != null) {
+                        if (this.newValue != null) {
+                            this.noUiSlider.set(this.newValue);
+                        }
+                        if (this.locked) {
+                            this.sliderDomElement.nativeElement.setAttribute('disabled', true);
+                        }
+                        else {
+                            this.sliderDomElement.nativeElement.removeAttribute('disabled');
+                        }
+                    }
+                    console.log(this.locked);
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 
@@ -56,6 +71,14 @@ System.register(['angular2/core'], function(exports_1) {
                 ], Slider.prototype, "pips", void 0);
                 __decorate([
                     //e.g. {mode: 'values', values: [10, 20, 30, 40, 50, 60, 70, 80, 90], density: 10}
+                    core_1.Input(), 
+                    __metadata('design:type', Number)
+                ], Slider.prototype, "newValue", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], Slider.prototype, "locked", void 0);
+                __decorate([
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
                 ], Slider.prototype, "end", void 0);

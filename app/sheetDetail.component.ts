@@ -78,10 +78,28 @@ export class SheetDetailComponent implements OnInit {
     onEndOnAssetGroup(inEvent: number[], inAssetGroup: AssetGroup) {
         let newWeightValue = inEvent[0];
         let difference = newWeightValue - inAssetGroup.weight;
-        let changeRatio = (newWeightValue - difference)/inAssetGroup.weight;
-        for (var i = 0; i < inAssetGroup.assets.length; i++) {
-            let oldAssetWeight = inAssetGroup.assets[i].weight;
-            inAssetGroup.assets[i].weight = oldAssetWeight*changeRatio;
+        if (difference > 0) {
+            let totalSpaceBelowMaxAvailabelForIncrease = 0;
+            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+            }
+            let increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
+            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease*increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+            }
+        } else {
+            let totalSpaceBelowMaxAvailabelForDecrease = 0;
+            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                let spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+            }
+            let decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
+            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                let spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease*decreaseOveraAvailableSpaceRatio;
+            }
         }
         inAssetGroup.weight = newWeightValue;
     }
