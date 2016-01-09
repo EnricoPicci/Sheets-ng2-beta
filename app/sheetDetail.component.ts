@@ -54,7 +54,8 @@ export class SheetDetailComponent implements OnInit {
     }
     
     onToggleLock(inAsset: AssetAbstract) {
-        inAsset.locked = !inAsset.locked;
+        //inAsset.locked = !inAsset.locked;
+        inAsset.setLocked(!inAsset.locked);
     }
     
     getStart(inAsset: Asset) {
@@ -78,34 +79,62 @@ export class SheetDetailComponent implements OnInit {
     onEndOnAssetGroup(inEvent: number[], inAssetGroup: AssetGroup) {
         let newWeightValue = inEvent[0];
         let difference = newWeightValue - inAssetGroup.weight;
-        if (difference > 0) {
+        if (difference > 0) {  // the difference is positivie; we are increasing
             let totalSpaceBelowMaxAvailabelForIncrease = 0;
             for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
-                totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                if (!inAssetGroup.assets[i].locked) {  // assets locked are not considered
+                    let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                    totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                }
             }
-            let increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
-            for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
-                inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease*increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+            if (totalSpaceBelowMaxAvailabelForIncrease > 0) {  // only if there is space to decrease we will change the weights of the assets
+                let increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
+                for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                    if (!inAssetGroup.assets[i].locked) { // assets locked are not considered
+                        let spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                        inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease*increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+                        if (inAssetGroup.assets[i].weight > inAssetGroup.assets[i].maxWeight) {  // we can not move behind max
+                            inAssetGroup.assets[i].weight = inAssetGroup.assets[i].maxWeight
+                        }
+                    }
+                }
             }
-        } else {
+        } else {  // the difference is negative; we are decreasing
             let totalSpaceBelowMaxAvailabelForDecrease = 0;
             for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                let spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
-                totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+                if (!inAssetGroup.assets[i].locked) { // assets locked are not considered
+                    let spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                    totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+                }
             }
-            let decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
-            for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                let spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
-                inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease*decreaseOveraAvailableSpaceRatio;
+            if (totalSpaceBelowMaxAvailabelForDecrease > 0) {  // only if there is space to increase we will change the weights of the assets
+                let decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
+                for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                    if (!inAssetGroup.assets[i].locked) {  // assets locked are not considered
+                        let spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                        inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease*decreaseOveraAvailableSpaceRatio;
+                        if (inAssetGroup.assets[i].weight < inAssetGroup.assets[i].minWeight) {  // we can not move below min
+                            inAssetGroup.assets[i].weight = inAssetGroup.assets[i].minWeight
+                        }
+                    }
+                }
             }
         }
-        inAssetGroup.weight = newWeightValue;
+        let realNewWeightValue = 0;  // considering that we may have adjusted the weights of the single assets based on their min&max, we need to recalculate te weight of the assetGroup
+        for (var i = 0; i < inAssetGroup.assets.length; i++) {
+            realNewWeightValue = realNewWeightValue + inAssetGroup.assets[i].weight;
+        }
+        inAssetGroup.weight = realNewWeightValue;
+        inAssetGroup.newValue = realNewWeightValue;  // I need to simplify; if I change the value of the assetGroup I need to update the slider with no need of using newValue
     }
     
-    onEndOnAsset(inEvent: number[]) {
-        console.log('end on asset');
-        console.log(inEvent);
-    }
+    onEndOnAsset(inEvent: number[], inAsset: Asset) {
+        let newWeightValue = inEvent[0];
+        let difference = newWeightValue - inAsset.weight;
+        if (difference > 0) {  // the difference is positivie; we are increasing
+            
+        } else {  // the difference is negative; we are decreasing
+            
+        }
+     }
 }

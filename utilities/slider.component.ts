@@ -10,7 +10,7 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
   `,
 })
 
-export class Slider implements AfterViewInit, OnChanges { 
+export class Slider implements AfterViewInit { 
     @ViewChild('sliderDomElement') sliderDomElement;
     noUiSlider: any;
     @Input() start: number[];
@@ -24,6 +24,15 @@ export class Slider implements AfterViewInit, OnChanges {
     public onEnd = (inValues: any[]) => {
         this.values = inValues;
         this.end.next(inValues);
+        console.log('on end new value ---' + this.newValue);
+        if (this.noUiSlider != null) {
+            //console.log(this.noUiSlider.get());
+            if (this.newValue != this.noUiSlider.get()) {
+                console.log('on end - get ---' + this.noUiSlider.get());
+                console.log('on end - new value ---' + this.newValue);
+                this.noUiSlider.set(this.newValue);
+            }
+        }
     }
     
     ngAfterViewInit() {
@@ -35,14 +44,16 @@ export class Slider implements AfterViewInit, OnChanges {
            pips: this.pips
         });
         this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
-        this.noUiSlider.on('change', this.onEnd);
+        this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
         //this.noUiSlider.on('tap', this.onEnd);
+        //console.log('after view init ---' + this.start);
     }
     
     ngOnChanges() {
         if (this.noUiSlider != null) {
             if(this.newValue != null) {
                 this.noUiSlider.set(this.newValue);
+                console.log('on change new value ---' + this.newValue);
             }
             if (this.locked) {
                 this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -50,7 +61,34 @@ export class Slider implements AfterViewInit, OnChanges {
                 this.sliderDomElement.nativeElement.removeAttribute('disabled');
             } 
         }
-        console.log(this.locked);
+        //console.log('changes ---' + this.start);
     }
+    
+    ngAfterContentInit() {
+        //console.log('content checked ---' + this.start);
+        if (this.noUiSlider != null) {
+            //console.log(this.noUiSlider.get());
+            if (this.newValue != this.noUiSlider.get()) {
+                console.log('after content cheched - get ---' + this.noUiSlider.get());
+                console.log('after content cheched - new value ---' + this.newValue);
+            }
+        }
+    }
+    
+    /*ngOnInit() {
+        console.log('init ---' + this.start);
+    }
+    
+    ngAfterContentInit() {
+        console.log('content init ---' + this.start);
+    }
+    
+    ngAfterContentChecked() {
+        console.log('content checked ---' + this.start);
+    }
+    
+    ngAfterViewChecked() {
+        console.log('view checked ---' + this.start);
+    }*/
 
 }

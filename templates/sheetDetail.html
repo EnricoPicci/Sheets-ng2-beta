@@ -53,7 +53,7 @@
                     </thead>
                     <tbody *ngFor="#assetGroup of sheet.assetGroups">
                         <tr class="assetGroupClass">
-                            <th class="weightClass"><span>{{assetGroup.weight}}%</span></th>
+                            <th class="weightClass"><span>{{assetGroup.weight.toFixed(2)}}%</span></th>
                             <th id="assetGroupNameClass" colspan="2" (click)="onAssetGroupClick(assetGroup)">
                                 <span class="arrow" [class.open]="assetGroup.show"></span>
                                 <span>{{assetGroup.name}}</span>
@@ -63,7 +63,7 @@
                                 <span style="display: inline;" class="percentageArrow up small">{{assetGroup.oneYearRet}}</span>
                             </th>
                             <td class="newWeightSliderClass" [style.display]="editStatus ? 'table-cell' : 'none'">
-                                <my-slider [start]="getStart(assetGroup)" [range]="getRange(assetGroup)" [pips]="getPips(assetGroup)" (end)="onEndOnAssetGroup($event, assetGroup)" [newValue]="assetGroup.weight"></my-slider>
+                                <my-slider [start]="getStart(assetGroup)" [range]="getRange(assetGroup)" [pips]="getPips(assetGroup)" (end)="onEndOnAssetGroup($event, assetGroup)" [newValue]="assetGroup.weight" [locked]="assetGroup.locked"></my-slider>
                             </td>
                             <th class="newWeightClass" [style.display]="editStatus ? 'table-cell' : 'none'"></th>
                             <th [style.display]="editStatus ? 'table-cell' : 'none'" [class]="assetGroup.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(assetGroup)"></th>

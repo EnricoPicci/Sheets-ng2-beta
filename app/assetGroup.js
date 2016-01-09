@@ -18,6 +18,12 @@ System.register(['./assetAbstract'], function(exports_1) {
                     _super.call(this, inName, inWeight, inOneMonthRet, inOneYearRet, inMinWeigth, inMaxWeigth);
                     this.assets = inAssets;
                 }
+                AssetGroup.prototype.setLocked = function (inLocked) {
+                    _super.prototype.setLocked.call(this, inLocked);
+                    for (var i = 0; i < this.assets.length; i++) {
+                        this.assets[i].setLocked(inLocked);
+                    }
+                };
                 return AssetGroup;
             })(assetAbstract_1.AssetAbstract);
             exports_1("AssetGroup", AssetGroup);

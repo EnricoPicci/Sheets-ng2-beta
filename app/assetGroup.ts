@@ -16,4 +16,11 @@ export class AssetGroup extends AssetAbstract {
         this.assets = inAssets;
    }
    
+   setLocked(inLocked: boolean) {
+       super.setLocked(inLocked);
+       for (var i = 0; i < this.assets.length; i++) {
+           this.assets[i].setLocked(inLocked);
+       }
+   }
+   
 }

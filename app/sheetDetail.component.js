@@ -57,7 +57,8 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                     return ret;
                 };
                 SheetDetailComponent.prototype.onToggleLock = function (inAsset) {
-                    inAsset.locked = !inAsset.locked;
+                    //inAsset.locked = !inAsset.locked;
+                    inAsset.setLocked(!inAsset.locked);
                 };
                 SheetDetailComponent.prototype.getStart = function (inAsset) {
                     return inAsset.weight;
@@ -79,32 +80,59 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                     if (difference > 0) {
                         var totalSpaceBelowMaxAvailabelForIncrease = 0;
                         for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                            var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
-                            totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                            if (!inAssetGroup.assets[i].locked) {
+                                var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                                totalSpaceBelowMaxAvailabelForIncrease = totalSpaceBelowMaxAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                            }
                         }
-                        var increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
-                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                            var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
-                            inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease * increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+                        if (totalSpaceBelowMaxAvailabelForIncrease > 0) {
+                            var increaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForIncrease;
+                            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                                if (!inAssetGroup.assets[i].locked) {
+                                    var spaceBelowMaxAvailabelForIncrease = inAssetGroup.assets[i].maxWeight - inAssetGroup.assets[i].weight;
+                                    inAssetGroup.assets[i].weight = spaceBelowMaxAvailabelForIncrease * increaseOveraAvailableSpaceRatio + inAssetGroup.assets[i].weight;
+                                    if (inAssetGroup.assets[i].weight > inAssetGroup.assets[i].maxWeight) {
+                                        inAssetGroup.assets[i].weight = inAssetGroup.assets[i].maxWeight;
+                                    }
+                                }
+                            }
                         }
                     }
                     else {
                         var totalSpaceBelowMaxAvailabelForDecrease = 0;
                         for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                            var spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
-                            totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+                            if (!inAssetGroup.assets[i].locked) {
+                                var spaceBelowMaxAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                                totalSpaceBelowMaxAvailabelForDecrease = totalSpaceBelowMaxAvailabelForDecrease + spaceBelowMaxAvailabelForDecrease;
+                            }
                         }
-                        var decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
-                        for (var i = 0; i < inAssetGroup.assets.length; i++) {
-                            var spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
-                            inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease * decreaseOveraAvailableSpaceRatio;
+                        if (totalSpaceBelowMaxAvailabelForDecrease > 0) {
+                            var decreaseOveraAvailableSpaceRatio = difference / totalSpaceBelowMaxAvailabelForDecrease;
+                            for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                                if (!inAssetGroup.assets[i].locked) {
+                                    var spaceAboveMinAvailabelForDecrease = inAssetGroup.assets[i].weight - inAssetGroup.assets[i].minWeight;
+                                    inAssetGroup.assets[i].weight = inAssetGroup.assets[i].weight + spaceAboveMinAvailabelForDecrease * decreaseOveraAvailableSpaceRatio;
+                                    if (inAssetGroup.assets[i].weight < inAssetGroup.assets[i].minWeight) {
+                                        inAssetGroup.assets[i].weight = inAssetGroup.assets[i].minWeight;
+                                    }
+                                }
+                            }
                         }
                     }
-                    inAssetGroup.weight = newWeightValue;
+                    var realNewWeightValue = 0; // considering that we may have adjusted the weights of the single assets based on their min&max, we need to recalculate te weight of the assetGroup
+                    for (var i = 0; i < inAssetGroup.assets.length; i++) {
+                        realNewWeightValue = realNewWeightValue + inAssetGroup.assets[i].weight;
+                    }
+                    inAssetGroup.weight = realNewWeightValue;
+                    inAssetGroup.newValue = realNewWeightValue; // I need to simplify; if I change the value of the assetGroup I need to update the slider with no need of using newValue
                 };
-                SheetDetailComponent.prototype.onEndOnAsset = function (inEvent) {
-                    console.log('end on asset');
-                    console.log(inEvent);
+                SheetDetailComponent.prototype.onEndOnAsset = function (inEvent, inAsset) {
+                    var newWeightValue = inEvent[0];
+                    var difference = newWeightValue - inAsset.weight;
+                    if (difference > 0) {
+                    }
+                    else {
+                    }
                 };
                 SheetDetailComponent = __decorate([
                     core_1.Component({

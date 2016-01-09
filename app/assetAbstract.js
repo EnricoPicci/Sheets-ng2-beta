@@ -18,6 +18,9 @@ System.register([], function(exports_1) {
                         values: [inMinWeight, inMaxWeight],
                         density: 10 };
                 }
+                AssetAbstract.prototype.setLocked = function (inLocked) {
+                    this.locked = inLocked;
+                };
                 return AssetAbstract;
             })();
             exports_1("AssetAbstract", AssetAbstract);

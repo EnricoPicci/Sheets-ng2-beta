@@ -163,13 +163,13 @@ private description: string = 'The morning has the sun in its mouth. The morning
         let assetGroup: AssetGroup;
         let assets1 = new Array<Asset>();
         assets1[0] = new Asset('Diamond Inc.', 'SAD', 10, '6%', '42%', 10, 30);
-        assets1[1] = new Asset('Indian African Co.', 'IAC', 5, '2%', '12%', 0, 40);
+        assets1[1] = new Asset('Indian African Co.', 'IAC', 13, '2%', '12%', 0, 40);
         assets1[2] = new Asset('Plutonion International', 'PLI', 7, '1%', '15%', 0, 10);
         assetGroup = new AssetGroup('South Africa', 30, '11%', '4%', assets1, 10, 50);
         ret[0] = assetGroup;
         let assets2 = new Array<Asset>();
         assets2[0] = new Asset('Tea and Coffee Inc.', 'TCI', 20, '12%', '32%', 0, 25);
-        assets2[1] = new Asset('Caribe Banana Co.', 'CBC', 25, '12%', '22%', 10, 40);
+        assets2[1] = new Asset('Caribe Banana Co.', 'CBC', 15, '12%', '22%', 10, 40);
         assets2[2] = new Asset('Rasta Co', 'RCO', 15, '2%', '20%', 10, 30);
         assetGroup = new AssetGroup('Jamaica', 50, '21%', '2%', assets2, 20, 60);
         ret[1] = assetGroup;

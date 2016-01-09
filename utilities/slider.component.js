@@ -25,6 +25,15 @@ System.register(['angular2/core'], function(exports_1) {
                     this.onEnd = function (inValues) {
                         _this.values = inValues;
                         _this.end.next(inValues);
+                        console.log('on end new value ---' + _this.newValue);
+                        if (_this.noUiSlider != null) {
+                            //console.log(this.noUiSlider.get());
+                            if (_this.newValue != _this.noUiSlider.get()) {
+                                console.log('on end - get ---' + _this.noUiSlider.get());
+                                console.log('on end - new value ---' + _this.newValue);
+                                _this.noUiSlider.set(_this.newValue);
+                            }
+                        }
                     };
                 }
                 Slider.prototype.ngAfterViewInit = function () {
@@ -35,13 +44,15 @@ System.register(['angular2/core'], function(exports_1) {
                         pips: this.pips
                     });
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
-                    this.noUiSlider.on('change', this.onEnd);
+                    this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
                     //this.noUiSlider.on('tap', this.onEnd);
+                    //console.log('after view init ---' + this.start);
                 };
                 Slider.prototype.ngOnChanges = function () {
                     if (this.noUiSlider != null) {
                         if (this.newValue != null) {
                             this.noUiSlider.set(this.newValue);
+                            console.log('on change new value ---' + this.newValue);
                         }
                         if (this.locked) {
                             this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -50,7 +61,17 @@ System.register(['angular2/core'], function(exports_1) {
                             this.sliderDomElement.nativeElement.removeAttribute('disabled');
                         }
                     }
-                    console.log(this.locked);
+                    //console.log('changes ---' + this.start);
+                };
+                Slider.prototype.ngAfterContentInit = function () {
+                    //console.log('content checked ---' + this.start);
+                    if (this.noUiSlider != null) {
+                        //console.log(this.noUiSlider.get());
+                        if (this.newValue != this.noUiSlider.get()) {
+                            console.log('after content cheched - get ---' + this.noUiSlider.get());
+                            console.log('after content cheched - new value ---' + this.newValue);
+                        }
+                    }
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 

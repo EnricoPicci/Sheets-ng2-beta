@@ -32,13 +32,8 @@ export abstract class AssetAbstract {
 				density: 10};
     }
     
-   /* name: string;
-    weight: string;
-    oneMonthRet: string;
-    oneYearRet: string;
-    minWeight: number;
-    maxWeight: number;
-    
-    show: boolean;
-    locked: boolean; */
+   setLocked(inLocked: boolean) {
+       this.locked = inLocked;
+   }
+   
 }
