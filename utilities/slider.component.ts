@@ -46,7 +46,7 @@ export class Slider implements AfterViewInit {
         this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
         this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
         //this.noUiSlider.on('tap', this.onEnd);
-        //console.log('after view init ---' + this.start);
+        console.log('after view init ---' + this.start);
     }
     
     ngOnChanges() {
@@ -64,7 +64,7 @@ export class Slider implements AfterViewInit {
         //console.log('changes ---' + this.start);
     }
     
-    ngAfterContentInit() {
+    /*ngAfterContentInit() {
         //console.log('content checked ---' + this.start);
         if (this.noUiSlider != null) {
             //console.log(this.noUiSlider.get());
@@ -73,7 +73,7 @@ export class Slider implements AfterViewInit {
                 console.log('after content cheched - new value ---' + this.newValue);
             }
         }
-    }
+    }*/
     
     /*ngOnInit() {
         console.log('init ---' + this.start);

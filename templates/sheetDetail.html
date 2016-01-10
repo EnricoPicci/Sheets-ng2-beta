@@ -97,7 +97,7 @@
                                     <table width=100%>
                                         <tr class="assetClass">
                                             <td class="newWeightSliderClass">
-                                                <my-slider [start]="getStart(asset)" [range]="getRange(asset)" [pips]="getPips(asset)" (end)="onEndOnAsset($event)"  [newValue]="asset.weight" [locked]="asset.locked"></my-slider>
+                                                <my-slider [start]="getStart(asset)" [range]="getRange(asset)" [pips]="getPips(asset)" (end)="onEndOnAsset($event, asset)"  [newValue]="asset.weight" [locked]="asset.locked"></my-slider>
                                             </td>
                                             <td class="newWeightClass"></td>
                                             <td [class]="asset.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(asset)"></td>                                            

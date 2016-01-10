@@ -46,7 +46,7 @@ System.register(['angular2/core'], function(exports_1) {
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
                     this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
                     //this.noUiSlider.on('tap', this.onEnd);
-                    //console.log('after view init ---' + this.start);
+                    console.log('after view init ---' + this.start);
                 };
                 Slider.prototype.ngOnChanges = function () {
                     if (this.noUiSlider != null) {
@@ -62,16 +62,6 @@ System.register(['angular2/core'], function(exports_1) {
                         }
                     }
                     //console.log('changes ---' + this.start);
-                };
-                Slider.prototype.ngAfterContentInit = function () {
-                    //console.log('content checked ---' + this.start);
-                    if (this.noUiSlider != null) {
-                        //console.log(this.noUiSlider.get());
-                        if (this.newValue != this.noUiSlider.get()) {
-                            console.log('after content cheched - get ---' + this.noUiSlider.get());
-                            console.log('after content cheched - new value ---' + this.newValue);
-                        }
-                    }
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 

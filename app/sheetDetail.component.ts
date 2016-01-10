@@ -79,7 +79,7 @@ export class SheetDetailComponent implements OnInit {
     onEndOnAssetGroup(inEvent: number[], inAssetGroup: AssetGroup) {
         let newWeightValue = inEvent[0];
         let difference = newWeightValue - inAssetGroup.weight;
-        if (difference > 0) {  // the difference is positivie; we are increasing
+        if (difference > 0) {  // the difference is positive; we are increasing
             let totalSpaceBelowMaxAvailabelForIncrease = 0;
             for (var i = 0; i < inAssetGroup.assets.length; i++) {
                 if (!inAssetGroup.assets[i].locked) {  // assets locked are not considered
@@ -130,11 +130,79 @@ export class SheetDetailComponent implements OnInit {
     
     onEndOnAsset(inEvent: number[], inAsset: Asset) {
         let newWeightValue = inEvent[0];
-        let difference = newWeightValue - inAsset.weight;
-        if (difference > 0) {  // the difference is positivie; we are increasing
-            
-        } else {  // the difference is negative; we are decreasing
-            
+        let change = newWeightValue - inAsset.weight;
+        if (change > 0) {  // the difference is positive; we are increasing the weight of one asset change and need to decrease the weight of the others to maintain Asset Group total weight unchanged
+            let totalSpaceAvailableForDecrease = 0;
+            let assetsOfGroup = inAsset.assetGroup.assets;
+            for (var i = 0; i < assetsOfGroup.length; i++) {
+                if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
+                    let spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
+                    totalSpaceAvailableForDecrease = totalSpaceAvailableForDecrease + spaceAboveMinAvailabelForDecrease;
+                }
+            }  
+            console.log('total space 2 decrease --' + totalSpaceAvailableForDecrease);
+            let decreaseCorrectionFactor = 0;
+            if (totalSpaceAvailableForDecrease < change) {
+                decreaseCorrectionFactor = change - totalSpaceAvailableForDecrease;
+            }
+            console.log('decrease correction factor --' + decreaseCorrectionFactor);
+            let decreaseOveraAvailableSpaceRatio = (change - decreaseCorrectionFactor) / totalSpaceAvailableForDecrease;
+            console.log('decrease ratio --' + decreaseOveraAvailableSpaceRatio);  
+            for (var i = 0; i < assetsOfGroup.length; i++) {
+                if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
+                    let spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
+                    let variation = spaceAboveMinAvailabelForDecrease*decreaseOveraAvailableSpaceRatio;
+                    assetsOfGroup[i].weight = assetsOfGroup[i].weight - variation;
+                    console.log('asset weight ' + i + '--' + assetsOfGroup[i].weight);
+                }
+            }
+            inAsset.weight = inAsset.weight + change - decreaseCorrectionFactor;
+            console.log('asset changed weight --' + inAsset.weight);
+            /*if (totalSpaceAvailableForDecrease > 0) { // only if there is space to decrease we change the weights of the assets
+                let increaseOveraAvailableSpaceRatio = change / totalSpaceAvailableForDecrease;
+                for (var i = 0; i < assetsOfGroup.length; i++) {
+                    if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
+                        let spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
+                        assetsOfGroup[i].weight = assetsOfGroup[i].weight - spaceAboveMinAvailabelForDecrease*increaseOveraAvailableSpaceRatio;
+                        if (assetsOfGroup[i].weight < assetsOfGroup[i].minWeight) {  // we can not move below min
+                            assetsOfGroup[i].weight = assetsOfGroup[i].maxWeight
+                        }
+                    }
+                }                
+            }*/          
+        } else {  // the difference is negative; we are decreasing the weight of one asset change and need to increase the weight of the others to maintain Asset Group total weight unchanged
+            let totalSpaceAvailabelForIncrease = 0;
+            let assetsOfGroup = inAsset.assetGroup.assets;
+            for (var i = 0; i < assetsOfGroup.length; i++) {
+                if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
+                    let spaceBelowMaxAvailabelForIncrease = assetsOfGroup[i].maxWeight - assetsOfGroup[i].weight;
+                    totalSpaceAvailabelForIncrease = totalSpaceAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                }
+            }  
+            console.log('total space 2 increase --' + totalSpaceAvailabelForIncrease);
+            let increaseCorrectionFactor = 0;
+            if (totalSpaceAvailabelForIncrease < -change) {
+                increaseCorrectionFactor = -change - totalSpaceAvailabelForIncrease;
+            }
+            console.log('increase correction factor --' + increaseCorrectionFactor);    
+            let increaseOveraAvailableSpaceRatio = (change + increaseCorrectionFactor) / totalSpaceAvailabelForIncrease;       
+            console.log('increase ratio --' + increaseOveraAvailableSpaceRatio);  
+            for (var i = 0; i < assetsOfGroup.length; i++) {
+                if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
+                    let spaceBelowMaxAvailabelForIncrease = assetsOfGroup[i].maxWeight - assetsOfGroup[i].weight;
+                    let variation = spaceBelowMaxAvailabelForIncrease*increaseOveraAvailableSpaceRatio;
+                    assetsOfGroup[i].weight = assetsOfGroup[i].weight - variation;
+                    console.log('asset weight ' + i + '--' + assetsOfGroup[i].weight);
+                }
+            }
+            inAsset.weight = inAsset.weight + change + increaseCorrectionFactor;
+            console.log('asset changed weight --' + inAsset.weight);            
         }
+        
+let assetsOfGroup = inAsset.assetGroup.assets;
+for (var i = 0; i < assetsOfGroup.length; i++) {
+    console.log(assetsOfGroup[i].weight);
+} 
+        
      }
 }

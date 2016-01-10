@@ -128,10 +128,66 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                 };
                 SheetDetailComponent.prototype.onEndOnAsset = function (inEvent, inAsset) {
                     var newWeightValue = inEvent[0];
-                    var difference = newWeightValue - inAsset.weight;
-                    if (difference > 0) {
+                    var change = newWeightValue - inAsset.weight;
+                    if (change > 0) {
+                        var totalSpaceAvailableForDecrease = 0;
+                        var assetsOfGroup_1 = inAsset.assetGroup.assets;
+                        for (var i = 0; i < assetsOfGroup_1.length; i++) {
+                            if (!assetsOfGroup_1[i].locked && !(assetsOfGroup_1[i] == inAsset)) {
+                                var spaceAboveMinAvailabelForDecrease = assetsOfGroup_1[i].weight - assetsOfGroup_1[i].minWeight;
+                                totalSpaceAvailableForDecrease = totalSpaceAvailableForDecrease + spaceAboveMinAvailabelForDecrease;
+                            }
+                        }
+                        console.log('total space 2 decrease --' + totalSpaceAvailableForDecrease);
+                        var decreaseCorrectionFactor = 0;
+                        if (totalSpaceAvailableForDecrease < change) {
+                            decreaseCorrectionFactor = change - totalSpaceAvailableForDecrease;
+                        }
+                        console.log('decrease correction factor --' + decreaseCorrectionFactor);
+                        var decreaseOveraAvailableSpaceRatio = (change - decreaseCorrectionFactor) / totalSpaceAvailableForDecrease;
+                        console.log('decrease ratio --' + decreaseOveraAvailableSpaceRatio);
+                        for (var i = 0; i < assetsOfGroup_1.length; i++) {
+                            if (!assetsOfGroup_1[i].locked && !(assetsOfGroup_1[i] == inAsset)) {
+                                var spaceAboveMinAvailabelForDecrease = assetsOfGroup_1[i].weight - assetsOfGroup_1[i].minWeight;
+                                var variation = spaceAboveMinAvailabelForDecrease * decreaseOveraAvailableSpaceRatio;
+                                assetsOfGroup_1[i].weight = assetsOfGroup_1[i].weight - variation;
+                                console.log('asset weight ' + i + '--' + assetsOfGroup_1[i].weight);
+                            }
+                        }
+                        inAsset.weight = inAsset.weight + change - decreaseCorrectionFactor;
+                        console.log('asset changed weight --' + inAsset.weight);
                     }
                     else {
+                        var totalSpaceAvailabelForIncrease = 0;
+                        var assetsOfGroup_2 = inAsset.assetGroup.assets;
+                        for (var i = 0; i < assetsOfGroup_2.length; i++) {
+                            if (!assetsOfGroup_2[i].locked && !(assetsOfGroup_2[i] == inAsset)) {
+                                var spaceBelowMaxAvailabelForIncrease = assetsOfGroup_2[i].maxWeight - assetsOfGroup_2[i].weight;
+                                totalSpaceAvailabelForIncrease = totalSpaceAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
+                            }
+                        }
+                        console.log('total space 2 increase --' + totalSpaceAvailabelForIncrease);
+                        var increaseCorrectionFactor = 0;
+                        if (totalSpaceAvailabelForIncrease < -change) {
+                            increaseCorrectionFactor = -change - totalSpaceAvailabelForIncrease;
+                        }
+                        console.log('increase correction factor --' + increaseCorrectionFactor);
+                        var increaseOveraAvailableSpaceRatio = (change + increaseCorrectionFactor) / totalSpaceAvailabelForIncrease;
+                        console.log('increase ratio --' + increaseOveraAvailableSpaceRatio);
+                        for (var i = 0; i < assetsOfGroup_2.length; i++) {
+                            if (!assetsOfGroup_2[i].locked && !(assetsOfGroup_2[i] == inAsset)) {
+                                var spaceBelowMaxAvailabelForIncrease = assetsOfGroup_2[i].maxWeight - assetsOfGroup_2[i].weight;
+                                var variation = spaceBelowMaxAvailabelForIncrease * increaseOveraAvailableSpaceRatio;
+                                assetsOfGroup_2[i].weight = assetsOfGroup_2[i].weight - variation;
+                                console.log('asset weight ' + i + '--' + assetsOfGroup_2[i].weight);
+                            }
+                        }
+                        inAsset.weight = inAsset.weight + change + increaseCorrectionFactor;
+                        console.log('asset changed weight --' + inAsset.weight);
+                    }
+                    var assetsOfGroup = inAsset.assetGroup.assets;
+                    for (var i = 0; i < assetsOfGroup.length; i++) {
+                        console.log(assetsOfGroup[i].weight);
                     }
                 };
                 SheetDetailComponent = __decorate([
