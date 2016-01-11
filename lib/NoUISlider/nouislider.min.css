@@ -1,7 +1,11 @@
 /*! nouislider - 8.2.1 - 2015-12-02 21:43:15 */
 
 
-.noUi-target,.noUi-target *{-webkit-touch-callout:none;-webkit-user-select:none;-ms-touch-action:none;touch-action:none;-ms-user-select:none;-moz-user-select:none;-moz-box-sizing:border-box;box-sizing:border-box}.noUi-target{position:relative;direction:ltr}.noUi-base{width:100%;height:100%;position:relative;z-index:1}.noUi-origin{position:absolute;right:0;top:0;left:0;bottom:0}
+.noUi-target,.noUi-target *{-webkit-touch-callout:none;-webkit-user-select:none;-ms-touch-action:none;touch-action:none;-ms-user-select:none;-moz-user-select:none;-moz-box-sizing:border-box;box-sizing:border-box}.noUi-target{position:relative;direction:ltr}
+
+.noUi-base{width:100%;height:100%;position:relative;z-index:1; background-color: blueviolet}
+
+.noUi-origin{position:absolute;right:0;top:0;left:0;bottom:0; background-color: beige}
 
 .noUi-handle{position:relative;z-index:1;margin-left:10px}
 

@@ -71,13 +71,37 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                 };
                 SheetDetailComponent.prototype.onEndOnAssetGroup = function (inEvent, inAssetGroup) {
                     var newWeightValue = inEvent[0];
-                    var change = newWeightValue - inAssetGroup.weight;
+                    var change = 0;
+                    var requestedChange = newWeightValue - inAssetGroup.weight;
+                    var availableSpaceForChange = 0;
+                    var assets = inAssetGroup.assets;
+                    if (requestedChange > 0) {
+                        availableSpaceForChange = this.calculateSpaceBelowMaxAvailabelForIncrease(inAssetGroup);
+                        if (requestedChange < availableSpaceForChange) {
+                            change = requestedChange;
+                        }
+                        else {
+                            change = availableSpaceForChange;
+                        }
+                    }
+                    else {
+                        availableSpaceForChange = -this.calculateSpaceAboveMinAvailabelForDecrease(inAssetGroup);
+                        if (requestedChange > availableSpaceForChange) {
+                            change = requestedChange;
+                        }
+                        else {
+                            change = availableSpaceForChange;
+                        }
+                    }
                     var assetGroups = inAssetGroup.sheet.assetGroups;
-                    if (change > 0) {
+                    if (change == 0) {
+                        inAssetGroup.weight = this.calculateWeight(inAssetGroup); // we recalculate the weight to override what has been set by the change input by the user
+                    }
+                    else if (change > 0) {
                         var totalSpaceAvailableForDecrease = 0;
                         for (var i = 0; i < assetGroups.length; i++) {
                             if (!assetGroups[i].locked && !(assetGroups[i] == inAssetGroup)) {
-                                var spaceAboveMinAvailabelForDecrease = assetGroups[i].weight - assetGroups[i].minWeight;
+                                var spaceAboveMinAvailabelForDecrease = this.calculateSpaceAboveMinAvailabelForDecrease(assetGroups[i]);
                                 totalSpaceAvailableForDecrease = totalSpaceAvailableForDecrease + spaceAboveMinAvailabelForDecrease;
                             }
                         }
@@ -94,31 +118,32 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                                 console.log('asset group weight ' + i + '--' + assetGroups[i].weight);
                                 console.log('asset group max weight ' + i + '--' + assetGroups[i].maxWeight);
                                 var spaceToIncreaseForAssetGroup_1 = assetGroups[i].maxWeight - assetGroups[i].weight;
-                                //let spaceToDecreaseForAssetGroup = assetGroups[i].weight - assetGroups[i].minWeight;
                                 console.log('spaceToIncreaseForAssetGroup ' + i + '--' + spaceToIncreaseForAssetGroup_1);
                                 //console.log('spaceToDecreaseForAssetGroup ' + i + '--' + spaceToDecreaseForAssetGroup);
                                 for (var j = 0; j < assetGroups[i].assets.length; j++) {
                                     var asset = assetGroups[i].assets[j];
-                                    var variation_1 = (asset.weight - asset.minWeight) * decreaseOveraAvailableSpaceRatio;
-                                    console.log('asset variation ' + asset.name + '--' + variation_1);
-                                    /*let spaceToIncreaseForAsset = asset.maxWeight - asset.weight;
-                                    console.log('asset spaceToIncreaseForAsset ' + asset.name + '--' + spaceToIncreaseForAsset);
-                                    let variation = spaceToIncreaseForAsset/spaceToIncreaseForAssetGroup*(change - decreaseCorrectionFactor);
-                                    console.log('asset variation ' + asset.name + '--' + variation);*/
-                                    asset.weight = asset.weight - variation_1;
-                                    console.log('asset weight ' + asset.name + '--' + asset.weight);
+                                    if (!asset.locked) {
+                                        var variation_1 = (asset.weight - asset.minWeight) * decreaseOveraAvailableSpaceRatio;
+                                        console.log('asset variation ' + asset.name + '--' + variation_1);
+                                        asset.weight = asset.weight - variation_1;
+                                        console.log('asset weight ' + asset.name + '--' + asset.weight);
+                                    }
                                 }
-                                var spaceAboveMinAvailabelForDecrease = assetGroups[i].weight - assetGroups[i].minWeight;
+                                //let spaceAboveMinAvailabelForDecrease = assetGroups[i].weight - assetGroups[i].minWeight;
+                                var spaceAboveMinAvailabelForDecrease = this.calculateSpaceAboveMinAvailabelForDecrease(assetGroups[i]);
                                 var variation = spaceAboveMinAvailabelForDecrease * decreaseOveraAvailableSpaceRatio;
                                 assetGroups[i].weight = assetGroups[i].weight - variation;
                             }
                         }
-                        var spaceToIncreaseForAssetGroup = inAssetGroup.maxWeight - inAssetGroup.weight;
+                        //let spaceToIncreaseForAssetGroup = inAssetGroup.maxWeight - inAssetGroup.weight;
+                        var spaceToIncreaseForAssetGroup = this.calculateSpaceBelowMaxAvailabelForIncrease(inAssetGroup);
                         for (var j = 0; j < inAssetGroup.assets.length; j++) {
                             var asset = inAssetGroup.assets[j];
-                            var spaceToIncreaseForAsset = asset.maxWeight - asset.weight;
-                            var variation = spaceToIncreaseForAsset / spaceToIncreaseForAssetGroup * (change - decreaseCorrectionFactor);
-                            asset.weight = asset.weight + variation;
+                            if (!asset.locked) {
+                                var spaceToIncreaseForAsset = asset.maxWeight - asset.weight;
+                                var variation = spaceToIncreaseForAsset / spaceToIncreaseForAssetGroup * (change - decreaseCorrectionFactor);
+                                asset.weight = asset.weight + variation;
+                            }
                         }
                         inAssetGroup.weight = inAssetGroup.weight + change - decreaseCorrectionFactor;
                     }
@@ -126,7 +151,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                         var totalSpaceAvailabelForIncrease = 0;
                         for (var i = 0; i < assetGroups.length; i++) {
                             if (!assetGroups[i].locked && !(assetGroups[i] == inAssetGroup)) {
-                                var spaceBelowMaxAvailabelForIncrease = assetGroups[i].maxWeight - assetGroups[i].weight;
+                                var spaceBelowMaxAvailabelForIncrease = this.calculateSpaceBelowMaxAvailabelForIncrease(assetGroups[i]);
                                 totalSpaceAvailabelForIncrease = totalSpaceAvailabelForIncrease + spaceBelowMaxAvailabelForIncrease;
                             }
                         }
@@ -135,35 +160,38 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                         if (totalSpaceAvailabelForIncrease < -change) {
                             increaseCorrectionFactor = -change - totalSpaceAvailabelForIncrease;
                         }
-                        console.log('increase correction factor --' + increaseCorrectionFactor);
+                        //console.log('increase correction factor --' + increaseCorrectionFactor);    
                         var increaseOveraAvailableSpaceRatio = (change + increaseCorrectionFactor) / totalSpaceAvailabelForIncrease;
-                        console.log('increase ratio --' + increaseOveraAvailableSpaceRatio);
+                        //console.log('increase ratio --' + increaseOveraAvailableSpaceRatio);  
                         for (var i = 0; i < assetGroups.length; i++) {
                             if (!assetGroups[i].locked && !(assetGroups[i] == inAssetGroup)) {
-                                console.log('asset group weight ' + i + '--' + assetGroups[i].weight);
-                                var spaceToDecreaseForAssetGroup_1 = assetGroups[i].weight - assetGroups[i].minWeight;
-                                //let spaceToIncreaseForAssetGroup = assetGroups[i].maxWeight - assetGroups[i].weight;
-                                console.log('spaceToDecreaseForAssetGroup ' + i + '--' + spaceToDecreaseForAssetGroup_1);
+                                //console.log('asset group weight ' + i + '--' + assetGroups[i].weight);
+                                //let spaceToDecreaseForAssetGroup = assetGroups[i].weight - assetGroups[i].minWeight;
+                                var spaceToDecreaseForAssetGroup_1 = this.calculateSpaceAboveMinAvailabelForDecrease(assetGroups[i]);
+                                //console.log('spaceToDecreaseForAssetGroup ' + i + '--' + spaceToDecreaseForAssetGroup);
                                 for (var j = 0; j < assetGroups[i].assets.length; j++) {
                                     var asset = assetGroups[i].assets[j];
-                                    var variation_2 = (asset.maxWeight - asset.weight) * increaseOveraAvailableSpaceRatio;
-                                    /*let spaceToDecreaseForAsset = asset.weight - asset.minWeight;
-                                    console.log('asset spaceToDecreaseForAsset ' + asset.name + '--' + spaceToDecreaseForAsset);
-                                    let variation = spaceToDecreaseForAsset/spaceToDecreaseForAssetGroup*(change - increaseCorrectionFactor);*/
-                                    asset.weight = asset.weight - variation_2;
-                                    console.log('asset weight ' + asset.name + '--' + asset.weight);
+                                    if (!asset.locked) {
+                                        var variation_2 = (asset.maxWeight - asset.weight) * increaseOveraAvailableSpaceRatio;
+                                        asset.weight = asset.weight - variation_2;
+                                        console.log('asset weight ' + asset.name + '--' + asset.weight);
+                                    }
                                 }
-                                var spaceBelowMaxAvailabelForIncrease = assetGroups[i].maxWeight - assetGroups[i].weight;
+                                //let spaceBelowMaxAvailabelForIncrease = assetGroups[i].maxWeight - assetGroups[i].weight;
+                                var spaceBelowMaxAvailabelForIncrease = this.calculateSpaceBelowMaxAvailabelForIncrease(assetGroups[i]);
                                 var variation = spaceBelowMaxAvailabelForIncrease * increaseOveraAvailableSpaceRatio;
                                 assetGroups[i].weight = assetGroups[i].weight - variation;
                             }
                         }
-                        var spaceToDecreaseForAssetGroup = inAssetGroup.weight - inAssetGroup.minWeight;
+                        //let spaceToDecreaseForAssetGroup = inAssetGroup.weight - inAssetGroup.minWeight;
+                        var spaceToDecreaseForAssetGroup = this.calculateSpaceAboveMinAvailabelForDecrease(inAssetGroup);
                         for (var j = 0; j < inAssetGroup.assets.length; j++) {
                             var asset = inAssetGroup.assets[j];
-                            var spaceToDecreaseForAsset = asset.weight - asset.minWeight;
-                            var variation = spaceToDecreaseForAsset / spaceToDecreaseForAssetGroup * (change - increaseCorrectionFactor);
-                            asset.weight = asset.weight + variation;
+                            if (!asset.locked) {
+                                var spaceToDecreaseForAsset = asset.weight - asset.minWeight;
+                                var variation = spaceToDecreaseForAsset / spaceToDecreaseForAssetGroup * (change - increaseCorrectionFactor);
+                                asset.weight = asset.weight + variation;
+                            }
                         }
                         inAssetGroup.weight = inAssetGroup.weight + change - increaseCorrectionFactor;
                     }
@@ -227,6 +255,34 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                         inAsset.weight = inAsset.weight + change + increaseCorrectionFactor;
                     }
                     inAsset.assetGroup.checkConsistency();
+                };
+                SheetDetailComponent.prototype.calculateSpaceBelowMaxAvailabelForIncrease = function (inAssetGroup) {
+                    var availableSpaceForChange = 0;
+                    var assets = inAssetGroup.assets;
+                    for (var i = 0; i < assets.length; i++) {
+                        if (!assets[i].locked) {
+                            availableSpaceForChange = availableSpaceForChange + (assets[i].maxWeight - assets[i].weight);
+                        }
+                    }
+                    return availableSpaceForChange;
+                };
+                SheetDetailComponent.prototype.calculateSpaceAboveMinAvailabelForDecrease = function (inAssetGroup) {
+                    var availableSpaceForChange = 0;
+                    var assets = inAssetGroup.assets;
+                    for (var i = 0; i < assets.length; i++) {
+                        if (!assets[i].locked) {
+                            availableSpaceForChange = availableSpaceForChange + (assets[i].weight - assets[i].minWeight);
+                        }
+                    }
+                    return availableSpaceForChange;
+                };
+                SheetDetailComponent.prototype.calculateWeight = function (inAssetGroup) {
+                    var realWeight = 0;
+                    var assets = inAssetGroup.assets;
+                    for (var i = 0; i < assets.length; i++) {
+                        realWeight = realWeight + assets[i].weight;
+                    }
+                    return realWeight;
                 };
                 SheetDetailComponent = __decorate([
                     core_1.Component({

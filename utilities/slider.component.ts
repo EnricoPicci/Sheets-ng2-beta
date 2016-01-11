@@ -5,8 +5,9 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
 @Component({
   selector: 'my-slider',
   template: `
-    <div #sliderDomElement id="slider">
-    </div>
+    <div id="preSlider"></div>
+    <div #sliderDomElement id="slider" [style.left]="getLeft()" [style.width]="getWidth()"></div>
+    <div id="postSlider"></div>
   `,
 })
 
@@ -24,16 +25,6 @@ export class Slider {
     public onEnd = (inValues: any[]) => {
         this.values = inValues;
         this.end.next(inValues);
-        //this.noUiSlider.set(this.newValue);
-        /*console.log('on end new value ---' + this.newValue);
-        if (this.noUiSlider != null) {
-            //console.log(this.noUiSlider.get());
-            if (this.newValue != this.noUiSlider.get()) {
-                console.log('on end - get ---' + this.noUiSlider.get());
-                console.log('on end - new value ---' + this.newValue);
-                this.noUiSlider.set(this.newValue);
-            }
-        }*/
     }
     
     ngAfterViewInit() {
@@ -46,8 +37,7 @@ export class Slider {
         });
         this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
         this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
-        //this.noUiSlider.on('tap', this.onEnd);
-        console.log('after view init ---' + this.start);
+        //console.log('after view init ---' + this.start);
     }
     
     ngOnChanges() {
@@ -62,34 +52,18 @@ export class Slider {
                 this.sliderDomElement.nativeElement.removeAttribute('disabled');
             } 
         }
-        //console.log('changes ---' + this.start);
     }
     
-    /*ngAfterContentInit() {
-        //console.log('content checked ---' + this.start);
-        if (this.noUiSlider != null) {
-            //console.log(this.noUiSlider.get());
-            if (this.newValue != this.noUiSlider.get()) {
-                console.log('after content cheched - get ---' + this.noUiSlider.get());
-                console.log('after content cheched - new value ---' + this.newValue);
-            }
-        }
-    }*/
-    
-    /*ngOnInit() {
-        console.log('init ---' + this.start);
+    getLeft() {
+        let ret = this.range.min + '%';
+        //console.log('left:  ' + ret);
+        return ret;
     }
     
-    ngAfterContentInit() {
-        console.log('content init ---' + this.start);
-    }
+    getWidth() {
+        let ret = (this.range.max - this.range.min) + '%';
+        //console.log('width:  ' + ret);
+        return ret;
+    }    
     
-    ngAfterContentChecked() {
-        console.log('content checked ---' + this.start);
-    }
-    
-    ngAfterViewChecked() {
-        console.log('view checked ---' + this.start);
-    }*/
-
 }

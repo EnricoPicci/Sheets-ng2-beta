@@ -25,16 +25,6 @@ System.register(['angular2/core'], function(exports_1) {
                     this.onEnd = function (inValues) {
                         _this.values = inValues;
                         _this.end.next(inValues);
-                        //this.noUiSlider.set(this.newValue);
-                        /*console.log('on end new value ---' + this.newValue);
-                        if (this.noUiSlider != null) {
-                            //console.log(this.noUiSlider.get());
-                            if (this.newValue != this.noUiSlider.get()) {
-                                console.log('on end - get ---' + this.noUiSlider.get());
-                                console.log('on end - new value ---' + this.newValue);
-                                this.noUiSlider.set(this.newValue);
-                            }
-                        }*/
                     };
                 }
                 Slider.prototype.ngAfterViewInit = function () {
@@ -46,8 +36,7 @@ System.register(['angular2/core'], function(exports_1) {
                     });
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
                     this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
-                    //this.noUiSlider.on('tap', this.onEnd);
-                    console.log('after view init ---' + this.start);
+                    //console.log('after view init ---' + this.start);
                 };
                 Slider.prototype.ngOnChanges = function () {
                     if (this.noUiSlider != null) {
@@ -62,7 +51,16 @@ System.register(['angular2/core'], function(exports_1) {
                             this.sliderDomElement.nativeElement.removeAttribute('disabled');
                         }
                     }
-                    //console.log('changes ---' + this.start);
+                };
+                Slider.prototype.getLeft = function () {
+                    var ret = this.range.min + '%';
+                    //console.log('left:  ' + ret);
+                    return ret;
+                };
+                Slider.prototype.getWidth = function () {
+                    var ret = (this.range.max - this.range.min) + '%';
+                    //console.log('width:  ' + ret);
+                    return ret;
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 
@@ -97,7 +95,7 @@ System.register(['angular2/core'], function(exports_1) {
                 Slider = __decorate([
                     core_1.Component({
                         selector: 'my-slider',
-                        template: "\n    <div #sliderDomElement id=\"slider\">\n    </div>\n  ",
+                        template: "\n    <div id=\"preSlider\"></div>\n    <div #sliderDomElement id=\"slider\" [style.left]=\"getLeft()\" [style.width]=\"getWidth()\"></div>\n    <div id=\"postSlider\"></div>\n  ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Slider);
