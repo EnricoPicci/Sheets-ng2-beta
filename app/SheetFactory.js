@@ -269,6 +269,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 10, 20);
                     assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 15, 30);
                     assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 30, 75);
+                    assetGroup.sheet = inSheet;
                     assets1[0].assetGroup = assetGroup;
                     assets1[1].assetGroup = assetGroup;
                     assets1[2].assetGroup = assetGroup;
@@ -279,6 +280,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 10, 25);
                     assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 5, 7);
                     assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 15, 42);
+                    assetGroup.sheet = inSheet;
                     assets2[0].assetGroup = assetGroup;
                     assets2[1].assetGroup = assetGroup;
                     assets2[2].assetGroup = assetGroup;
@@ -288,6 +290,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
                     assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 10);
                     assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 5, 50);
+                    assetGroup.sheet = inSheet;
                     assets3[0].assetGroup = assetGroup;
                     assets3[1].assetGroup = assetGroup;
                     assets3[2].assetGroup = assetGroup;
@@ -296,6 +299,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 5, 30);
                     assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 20);
                     assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 5, 50);
+                    assetGroup.sheet = inSheet;
                     assets4[0].assetGroup = assetGroup;
                     assets4[1].assetGroup = assetGroup;
                     ret[3] = assetGroup;

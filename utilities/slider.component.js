@@ -25,15 +25,16 @@ System.register(['angular2/core'], function(exports_1) {
                     this.onEnd = function (inValues) {
                         _this.values = inValues;
                         _this.end.next(inValues);
-                        console.log('on end new value ---' + _this.newValue);
-                        if (_this.noUiSlider != null) {
+                        //this.noUiSlider.set(this.newValue);
+                        /*console.log('on end new value ---' + this.newValue);
+                        if (this.noUiSlider != null) {
                             //console.log(this.noUiSlider.get());
-                            if (_this.newValue != _this.noUiSlider.get()) {
-                                console.log('on end - get ---' + _this.noUiSlider.get());
-                                console.log('on end - new value ---' + _this.newValue);
-                                _this.noUiSlider.set(_this.newValue);
+                            if (this.newValue != this.noUiSlider.get()) {
+                                console.log('on end - get ---' + this.noUiSlider.get());
+                                console.log('on end - new value ---' + this.newValue);
+                                this.noUiSlider.set(this.newValue);
                             }
-                        }
+                        }*/
                     };
                 }
                 Slider.prototype.ngAfterViewInit = function () {

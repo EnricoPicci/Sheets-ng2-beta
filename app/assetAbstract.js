@@ -21,6 +21,14 @@ System.register([], function(exports_1) {
                 AssetAbstract.prototype.setLocked = function (inLocked) {
                     this.locked = inLocked;
                 };
+                AssetAbstract.prototype.checkConsistency = function () {
+                    if (this.weight < this.minWeight) {
+                        console.error(this.name + ': Weight less than allowed min');
+                    }
+                    if (this.weight > this.maxWeight) {
+                        console.error(this.name + ': Weight more than allowed max');
+                    }
+                };
                 return AssetAbstract;
             })();
             exports_1("AssetAbstract", AssetAbstract);

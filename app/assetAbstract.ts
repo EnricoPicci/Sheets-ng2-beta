@@ -36,4 +36,13 @@ export abstract class AssetAbstract {
        this.locked = inLocked;
    }
    
+   checkConsistency() {
+       if (this.weight < this.minWeight) {
+           console.error(this.name + ': Weight less than allowed min');
+       }
+       if (this.weight > this.maxWeight) {
+           console.error(this.name + ': Weight more than allowed max');
+       }
+   }
+   
 }

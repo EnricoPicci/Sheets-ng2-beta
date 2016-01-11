@@ -10,7 +10,7 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
   `,
 })
 
-export class Slider implements AfterViewInit { 
+export class Slider { 
     @ViewChild('sliderDomElement') sliderDomElement;
     noUiSlider: any;
     @Input() start: number[];
@@ -24,7 +24,8 @@ export class Slider implements AfterViewInit {
     public onEnd = (inValues: any[]) => {
         this.values = inValues;
         this.end.next(inValues);
-        console.log('on end new value ---' + this.newValue);
+        //this.noUiSlider.set(this.newValue);
+        /*console.log('on end new value ---' + this.newValue);
         if (this.noUiSlider != null) {
             //console.log(this.noUiSlider.get());
             if (this.newValue != this.noUiSlider.get()) {
@@ -32,7 +33,7 @@ export class Slider implements AfterViewInit {
                 console.log('on end - new value ---' + this.newValue);
                 this.noUiSlider.set(this.newValue);
             }
-        }
+        }*/
     }
     
     ngAfterViewInit() {

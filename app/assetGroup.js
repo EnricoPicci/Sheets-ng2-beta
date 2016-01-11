@@ -24,6 +24,12 @@ System.register(['./assetAbstract'], function(exports_1) {
                         this.assets[i].setLocked(inLocked);
                     }
                 };
+                AssetGroup.prototype.checkConsistency = function () {
+                    _super.prototype.checkConsistency.call(this);
+                    for (var i = 0; i < this.assets.length; i++) {
+                        this.assets[i].checkConsistency();
+                    }
+                };
                 return AssetGroup;
             })(assetAbstract_1.AssetAbstract);
             exports_1("AssetGroup", AssetGroup);
