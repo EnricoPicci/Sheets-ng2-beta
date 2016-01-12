@@ -27,9 +27,18 @@ export class AssetGroup extends AssetAbstract {
    
    checkConsistency() {
        super.checkConsistency();
+       let sumOfRelativeStartOfScale = 0;
        for (var i = 0; i < this.assets.length; i++) {
-           this.assets[i].checkConsistency();
+           let asset = this.assets[i];
+           asset.checkConsistency();
+           sumOfRelativeStartOfScale = sumOfRelativeStartOfScale + asset.relativeStartOfScale;
        }
+      /* if (this.assets.length > 0) {
+           sumOfRelativeStartOfScale = sumOfRelativeStartOfScale + this.assets[this.assets.length - 1].weight;
+           if (sumOfRelativeStartOfScale != this.weight) {
+               console.error('Range of Asset Group ' + this.name + 'not equal to the sum of relative lenghts of its assets');
+           }
+       }*/
    }
    
 }

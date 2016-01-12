@@ -26,9 +26,18 @@ System.register(['./assetAbstract'], function(exports_1) {
                 };
                 AssetGroup.prototype.checkConsistency = function () {
                     _super.prototype.checkConsistency.call(this);
+                    var sumOfRelativeStartOfScale = 0;
                     for (var i = 0; i < this.assets.length; i++) {
-                        this.assets[i].checkConsistency();
+                        var asset = this.assets[i];
+                        asset.checkConsistency();
+                        sumOfRelativeStartOfScale = sumOfRelativeStartOfScale + asset.relativeStartOfScale;
                     }
+                    /* if (this.assets.length > 0) {
+                         sumOfRelativeStartOfScale = sumOfRelativeStartOfScale + this.assets[this.assets.length - 1].weight;
+                         if (sumOfRelativeStartOfScale != this.weight) {
+                             console.error('Range of Asset Group ' + this.name + 'not equal to the sum of relative lenghts of its assets');
+                         }
+                     }*/
                 };
                 return AssetGroup;
             })(assetAbstract_1.AssetAbstract);

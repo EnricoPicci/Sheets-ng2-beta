@@ -11,8 +11,9 @@ export abstract class AssetAbstract {
     public locked: boolean = false;
     
     public pips: any;
+    public relativeStartOfScale: number = 0;
     
-    public newValue: number;
+    public newWeight: any;
     
     constructor(inName: string, 
                         inWeight: number, 
@@ -32,17 +33,27 @@ export abstract class AssetAbstract {
 				density: 10};
     }
     
-   setLocked(inLocked: boolean) {
-       this.locked = inLocked;
-   }
-   
-   checkConsistency() {
-       if (this.weight < this.minWeight) {
-           console.error(this.name + ': Weight less than allowed min');
-       }
-       if (this.weight > this.maxWeight) {
-           console.error(this.name + ': Weight more than allowed max');
-       }
-   }
+    setWeight(inWeight: number) {
+        this.newWeight = {newWeight: inWeight};
+        this.weight = inWeight;    
+    }
+    
+    setLocked(inLocked: boolean) {
+        this.locked = inLocked;
+    }
+
+    checkConsistency() {
+        if (this.weight < this.minWeight) {
+            console.error(this.name + ': Weight less than allowed min');
+        }
+        if (this.weight > this.maxWeight) {
+            console.error(this.name + ': Weight more than allowed max');
+        }
+    }
+    
+    getRangeLength() {
+        let ret = this.range.max - this.range.min;
+        return ret;
+    }
    
 }

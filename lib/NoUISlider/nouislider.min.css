@@ -53,9 +53,14 @@
 }
 
 
-#slider {
+.slider {
     height: 5px;
     margin-top: -8px;
     line-height: 5px;
     margin-left: 5px;
+}
+
+.slider.back {
+    height: 2px;
+    background-color: blue;
 }

@@ -68,7 +68,6 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     }
                     var i = 0;
                     for (var key in tempArr) {
-                        //console.log(tempArr[key]);
                         ret[i] = tempArr[key];
                         i++;
                     }
@@ -304,6 +303,17 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     assets4[1].assetGroup = assetGroup;
                     ret[3] = assetGroup;
                     return ret;
+                };
+                SheetFactory.prototype.setRelativeStartOfScale = function (inAssetGroups) {
+                    var relativeStartOfScale = 0;
+                    for (var i = 0; i < inAssetGroups.length; i++) {
+                        var assets = inAssetGroups[i].assets;
+                        for (var j = 0; j < assets.length; j++) {
+                            var asset = assets[j];
+                            asset.relativeStartOfScale = relativeStartOfScale;
+                            relativeStartOfScale = relativeStartOfScale + asset.range.max;
+                        }
+                    }
                 };
                 return SheetFactory;
             })();

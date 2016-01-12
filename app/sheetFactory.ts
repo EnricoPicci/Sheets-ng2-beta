@@ -61,7 +61,6 @@ export class SheetFactory implements SheetService {
 		
 		var i: number = 0;
 		for (var key in tempArr) {
-			//console.log(tempArr[key]);
 			ret[i] = tempArr[key];
 			i++;
 		}
@@ -202,6 +201,18 @@ private description: string = 'The morning has the sun in its mouth. The morning
         assets4[1].assetGroup = assetGroup;
         ret[3] = assetGroup;
         return ret;
+    }
+    
+    setRelativeStartOfScale(inAssetGroups: AssetGroup[]) {
+        let relativeStartOfScale = 0;
+        for (var i = 0; i < inAssetGroups.length; i++) {
+            let assets = inAssetGroups[i].assets;
+            for (var j = 0; j < assets.length; j++) {
+                let asset = assets[j];
+                asset.relativeStartOfScale = relativeStartOfScale;
+                relativeStartOfScale = relativeStartOfScale + asset.range.max;
+            }
+        }
     }
 
 }

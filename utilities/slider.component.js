@@ -21,6 +21,7 @@ System.register(['angular2/core'], function(exports_1) {
                 function Slider() {
                     var _this = this;
                     this.locked = false;
+                    this.relativeStartOfScale = 0;
                     this.end = new core_1.EventEmitter();
                     this.onEnd = function (inValues) {
                         _this.values = inValues;
@@ -36,13 +37,11 @@ System.register(['angular2/core'], function(exports_1) {
                     });
                     this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
                     this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
-                    //console.log('after view init ---' + this.start);
                 };
                 Slider.prototype.ngOnChanges = function () {
                     if (this.noUiSlider != null) {
                         if (this.newValue != null) {
-                            this.noUiSlider.set(this.newValue);
-                            console.log('on change new value ---' + this.newValue);
+                            this.noUiSlider.set(this.newValue.newWeight);
                         }
                         if (this.locked) {
                             this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -53,14 +52,23 @@ System.register(['angular2/core'], function(exports_1) {
                     }
                 };
                 Slider.prototype.getLeft = function () {
-                    var ret = this.range.min + '%';
-                    //console.log('left:  ' + ret);
-                    return ret;
+                    var ret = this.relativeStartOfScale + this.range.min;
+                    return ret + '%';
+                };
+                Slider.prototype.getLeftForPreDiv = function () {
+                    var ret = this.relativeStartOfScale;
+                    return ret + '%';
                 };
                 Slider.prototype.getWidth = function () {
                     var ret = (this.range.max - this.range.min) + '%';
-                    //console.log('width:  ' + ret);
                     return ret;
+                };
+                Slider.prototype.getWidthFromZero = function () {
+                    var ret = this.range.max + '%';
+                    return ret;
+                };
+                Slider.prototype.displayPreDiv = function () {
+                    return (this.relativeStartOfScale == 0);
                 };
                 __decorate([
                     core_1.ViewChild('sliderDomElement'), 
@@ -82,12 +90,16 @@ System.register(['angular2/core'], function(exports_1) {
                 __decorate([
                     //e.g. {mode: 'values', values: [10, 20, 30, 40, 50, 60, 70, 80, 90], density: 10}
                     core_1.Input(), 
-                    __metadata('design:type', Number)
+                    __metadata('design:type', Object)
                 ], Slider.prototype, "newValue", void 0);
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
                 ], Slider.prototype, "locked", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Number)
+                ], Slider.prototype, "relativeStartOfScale", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', core_1.EventEmitter)
@@ -95,7 +107,7 @@ System.register(['angular2/core'], function(exports_1) {
                 Slider = __decorate([
                     core_1.Component({
                         selector: 'my-slider',
-                        template: "\n    <div id=\"preSlider\"></div>\n    <div #sliderDomElement id=\"slider\" [style.left]=\"getLeft()\" [style.width]=\"getWidth()\"></div>\n    <div id=\"postSlider\"></div>\n  ",
+                        template: "\n    <!--div id=\"preSlider\" class=\"slider back noUi-base\" [style.width]=\"getWidthFromZero()\" [style.display]=\"displayPreDiv() ? 'block' : 'none'\"-->\n    <div id=\"preSlider\" class=\"slider back noUi-base\" [style.width]=\"getWidthFromZero()\" [style.left]=\"getLeftForPreDiv()\">\n        <div class=\"noUi-marker noUi-marker-horizontal noUi-marker-large\"></div>\n        <div class=\"noUi-value noUi-value-horizontal noUi-value-large\">0</div>\n    </div>\n    <div #sliderDomElement id=\"slider\" class=\"slider\" [style.left]=\"getLeft()\" [style.width]=\"getWidth()\"></div>\n    <div id=\"postSlider\"></div>\n  ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Slider);

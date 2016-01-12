@@ -7,6 +7,7 @@ System.register([], function(exports_1) {
                 function AssetAbstract(inName, inWeight, inOneMonthRet, inOneYearRet, inMinWeight, inMaxWeight) {
                     this.show = true;
                     this.locked = false;
+                    this.relativeStartOfScale = 0;
                     this.name = inName;
                     this.weight = inWeight;
                     this.oneMonthRet = inOneMonthRet;
@@ -18,6 +19,10 @@ System.register([], function(exports_1) {
                         values: [inMinWeight, inMaxWeight],
                         density: 10 };
                 }
+                AssetAbstract.prototype.setWeight = function (inWeight) {
+                    this.newWeight = { newWeight: inWeight };
+                    this.weight = inWeight;
+                };
                 AssetAbstract.prototype.setLocked = function (inLocked) {
                     this.locked = inLocked;
                 };
@@ -28,6 +33,10 @@ System.register([], function(exports_1) {
                     if (this.weight > this.maxWeight) {
                         console.error(this.name + ': Weight more than allowed max');
                     }
+                };
+                AssetAbstract.prototype.getRangeLength = function () {
+                    var ret = this.range.max - this.range.min;
+                    return ret;
                 };
                 return AssetAbstract;
             })();

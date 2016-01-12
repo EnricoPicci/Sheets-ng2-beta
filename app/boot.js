@@ -1,5 +1,5 @@
-System.register(['angular2/core', 'angular2/platform/browser', 'angular2/router', './app.component', './sheetFactory'], function(exports_1) {
-    var core_1, browser_1, router_1, app_component_1, sheetFactory_1;
+System.register(['angular2/core', 'angular2/platform/browser', 'angular2/router', './app.component', './sheetFactory', './sheetWeightAdjuster.service'], function(exports_1) {
+    var core_1, browser_1, router_1, app_component_1, sheetFactory_1, sheetWeightAdjuster_service_1;
     return {
         setters:[
             function (core_1_1) {
@@ -16,9 +16,12 @@ System.register(['angular2/core', 'angular2/platform/browser', 'angular2/router'
             },
             function (sheetFactory_1_1) {
                 sheetFactory_1 = sheetFactory_1_1;
+            },
+            function (sheetWeightAdjuster_service_1_1) {
+                sheetWeightAdjuster_service_1 = sheetWeightAdjuster_service_1_1;
             }],
         execute: function() {
-            browser_1.bootstrap(app_component_1.AppComponent, [router_1.ROUTER_PROVIDERS, core_1.provide(sheetFactory_1.SheetFactory, { useClass: sheetFactory_1.SheetFactory })]);
+            browser_1.bootstrap(app_component_1.AppComponent, [router_1.ROUTER_PROVIDERS, core_1.provide(sheetFactory_1.SheetFactory, { useClass: sheetFactory_1.SheetFactory }), sheetWeightAdjuster_service_1.SheetWeightAdjuster]);
         }
     }
 });

@@ -5,8 +5,12 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
 @Component({
   selector: 'my-slider',
   template: `
-    <div id="preSlider"></div>
-    <div #sliderDomElement id="slider" [style.left]="getLeft()" [style.width]="getWidth()"></div>
+    <!--div id="preSlider" class="slider back noUi-base" [style.width]="getWidthFromZero()" [style.display]="displayPreDiv() ? 'block' : 'none'"-->
+    <div id="preSlider" class="slider back noUi-base" [style.width]="getWidthFromZero()" [style.left]="getLeftForPreDiv()">
+        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large"></div>
+        <div class="noUi-value noUi-value-horizontal noUi-value-large">0</div>
+    </div>
+    <div #sliderDomElement id="slider" class="slider" [style.left]="getLeft()" [style.width]="getWidth()"></div>
     <div id="postSlider"></div>
   `,
 })
@@ -17,8 +21,9 @@ export class Slider {
     @Input() start: number[];
     @Input() range: any;  //e.g. {'min': 0,'max': 100}
     @Input() pips: any; //e.g. {mode: 'values', values: [10, 20, 30, 40, 50, 60, 70, 80, 90], density: 10}
-    @Input() newValue: number;
+    @Input() newValue: any;
     @Input() locked: boolean = false;
+    @Input() relativeStartOfScale: number = 0;
     @Output() end: EventEmitter<any> = new EventEmitter();
     public values: any[];
     
@@ -37,14 +42,12 @@ export class Slider {
         });
         this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
         this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
-        //console.log('after view init ---' + this.start);
     }
     
     ngOnChanges() {
         if (this.noUiSlider != null) {
             if(this.newValue != null) {
-                this.noUiSlider.set(this.newValue);
-                console.log('on change new value ---' + this.newValue);
+                this.noUiSlider.set(this.newValue.newWeight);
             }
             if (this.locked) {
                 this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -55,15 +58,27 @@ export class Slider {
     }
     
     getLeft() {
-        let ret = this.range.min + '%';
-        //console.log('left:  ' + ret);
-        return ret;
+        let ret = this.relativeStartOfScale + this.range.min;
+        return ret + '%';
+    }
+    
+    getLeftForPreDiv() {
+        let ret = this.relativeStartOfScale;
+        return ret + '%';
     }
     
     getWidth() {
         let ret = (this.range.max - this.range.min) + '%';
-        //console.log('width:  ' + ret);
         return ret;
     }    
+    
+    getWidthFromZero() {
+        let ret = this.range.max + '%';
+        return ret;
+    }
+    
+    displayPreDiv() {
+        return (this.relativeStartOfScale == 0);
+    }
     
 }

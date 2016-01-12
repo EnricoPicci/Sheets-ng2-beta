@@ -234,3 +234,13 @@ z-index: 100;
     left: 0;
     background-color: azure;
 }
+
+#relativeScaleButton {
+    height: 20px;
+    width: 110px;
+    float: left;
+    /*position: absolute;*/
+    bottom: 0;
+    left: 0;
+    background-color: azure;
+}
