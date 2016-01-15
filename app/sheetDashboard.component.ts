@@ -1,13 +1,11 @@
 import {Component} from 'angular2/core';
-//import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {SheetService} from './sheetService';
-import {SheetFactory} from './sheetFactory';
-import {SheetFactory1} from './sheetFactory1';
-import {SheetCmp} from './sheetCmp';
+import {SheetBackEnd} from './sheetBackEnd.service';
+import {SheetCmp} from './sheet.component';
 import {Sheet} from './sheet';
 import {CollectionOfSheetsCmp} from './collectionOfSheetsCmp';
-import {SheetSearchCmp} from './sheetSearchCmp';
+import {SheetSearchCmp} from './sheetSearch.component';
 import {SheetSummaryComponent} from './sheetSummary.component';
 import {SheetDetailComponent} from './sheetDetail.component';
 
@@ -18,19 +16,15 @@ import {SheetDetailComponent} from './sheetDetail.component';
     styleUrls: ['../styles/app.css'],
 	directives: [CollectionOfSheetsCmp, SheetSearchCmp],
 })
-/*@RouteConfig([
-  {path: '/Sheet/:id', name: 'SheetSummary', component: SheetSummaryComponent},
-  {path: '/SheetDetail/:id', name: 'SheetDetail', component: SheetDetailComponent},
-])*/
+
 export class SheetDashboardComponent { 
 	public title: string = 'Sheets';
 	public firstSheet: Sheet;
 	public sheets: Sheet[];
 	sheetService: SheetService;
 
-	constructor(inSheetService: SheetFactory) {
+	constructor(inSheetService: SheetBackEnd) {
 		this.sheetService = inSheetService;
-		//this.firstSheet = inSheetService.getSheet('sheet1.jpg');
 		this.sheets = inSheetService.getSomeSheets(0, 16);
 	}
 
@@ -44,12 +38,7 @@ export class SheetDashboardComponent {
 	}
 
 	updateSheets(searchResult: Sheet[]) {
-		//console.log('it is me');
-		//console.log(searchResult);
 		this.sheets = searchResult;
 	}
 }
 
-
-//bootstrap(AppComponent, [provide(SheetFactory, {useClass: SheetFactory})]);
-//bootstrap(AppComponent, [SheetFactory]);

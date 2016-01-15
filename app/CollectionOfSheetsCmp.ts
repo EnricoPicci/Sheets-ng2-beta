@@ -1,9 +1,6 @@
 import {Component, Input} from 'angular2/core';
 
 import {Sheet} from './sheet';
-import {SheetService} from './sheetService';
-import {SheetFactory} from './sheetFactory';
-import {SheetFactory1} from './sheetFactory1';
 import {SheetSummaryComponent} from './sheetSummary.component';
 
 @Component({
@@ -16,13 +13,6 @@ import {SheetSummaryComponent} from './sheetSummary.component';
 })
 export class CollectionOfSheetsCmp { 
 	@Input() sheets: Sheet[];
-	//sheetService: SheetService;
-
-	/*constructor(inSheetService: SheetFactory) {
-		this.sheetService = inSheetService;
-		this.sheets = inSheetService.getSomeSheets(0, 8);
-	}*/
-
 
 }
 

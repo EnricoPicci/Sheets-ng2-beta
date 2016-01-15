@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sheetFactory'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory'], function
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sheetFactory_1;
+    var core_1, router_1, sheetBackEnd_service_1;
     var SheetSummaryComponent;
     return {
         setters:[
@@ -18,13 +18,13 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory'], function
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (sheetFactory_1_1) {
-                sheetFactory_1 = sheetFactory_1_1;
+            function (sheetBackEnd_service_1_1) {
+                sheetBackEnd_service_1 = sheetBackEnd_service_1_1;
             }],
         execute: function() {
             SheetSummaryComponent = (function () {
-                function SheetSummaryComponent(inService, inRouter, inRouteParams) {
-                    this._service = inService;
+                function SheetSummaryComponent(inBackEnd, inRouter, inRouteParams) {
+                    this._backEnd = inBackEnd;
                     this._router = inRouter;
                     this._routeParams = inRouteParams;
                 }
@@ -35,7 +35,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory'], function
                     // this is because if the routeParameter is not null, it means we have been called via routing (or url on the browser)
                     // if id is null it means we have been called within the single-page (and we hope we have been passed the full Sheet instance)
                     if (id) {
-                        this.sheet = this._service.getSomeSheets(id, 1)[0];
+                        this.sheet = this._backEnd.getSomeSheets(id, 1)[0];
                         console.log(this.sheet);
                     }
                 };
@@ -52,7 +52,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory'], function
                         directives: [router_1.ROUTER_DIRECTIVES],
                         inputs: ['sheet', 'sheetId'],
                     }), 
-                    __metadata('design:paramtypes', [sheetFactory_1.SheetFactory, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [sheetBackEnd_service_1.SheetBackEnd, router_1.Router, router_1.RouteParams])
                 ], SheetSummaryComponent);
                 return SheetSummaryComponent;
             })();

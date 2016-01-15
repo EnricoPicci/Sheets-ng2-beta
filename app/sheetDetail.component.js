@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sheetFactory_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1;
+    var core_1, router_1, sheetBackEnd_service_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1;
     var SheetDetailComponent;
     return {
         setters:[
@@ -18,8 +18,8 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (sheetFactory_1_1) {
-                sheetFactory_1 = sheetFactory_1_1;
+            function (sheetBackEnd_service_1_1) {
+                sheetBackEnd_service_1 = sheetBackEnd_service_1_1;
             },
             function (shortLongText_component_1_1) {
                 shortLongText_component_1 = shortLongText_component_1_1;
@@ -32,18 +32,26 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
             }],
         execute: function() {
             SheetDetailComponent = (function () {
-                function SheetDetailComponent(_routeParams, _sheetFactory, _sheetWeightAdjuster) {
+                function SheetDetailComponent(_routeParams, _sheetBackEnd, _sheetWeightAdjuster) {
                     this._routeParams = _routeParams;
-                    this._sheetFactory = _sheetFactory;
+                    this._sheetBackEnd = _sheetBackEnd;
                     this._sheetWeightAdjuster = _sheetWeightAdjuster;
                     this.shortDescriptionTextLength = 250;
                     this.editStatus = false;
                     this.startOfScaleRelative = false; // if false, all sliders start from ZERO, otherwise their starting position increases based on the sum of the range of the previous assets
+                    this._isNew = true; //just to check if the component is new or not
                 }
                 SheetDetailComponent.prototype.ngOnInit = function () {
+                    if (this._isNew) {
+                        console.log('new SheetDetailComponent');
+                        this._isNew = false;
+                    }
+                    else {
+                        console.log('existing SheetDetailComponent');
+                    }
                     var id = +this._routeParams.get('id');
-                    this.sheet = this._sheetFactory.getSheet(id);
-                    this._sheetFactory.fillDetails(this.sheet);
+                    this.sheet = this._sheetBackEnd.getSheet(id);
+                    this._sheetBackEnd.fillDetails(this.sheet);
                 };
                 SheetDetailComponent.prototype.onAssetGroupClick = function (inAssetGroup) {
                     inAssetGroup.show = !inAssetGroup.show;
@@ -67,15 +75,13 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                 };
                 SheetDetailComponent.prototype.getRelativeScaleButtonText = function () {
                     var ret;
-                    var ret1;
                     if (this.startOfScaleRelative) {
-                        ret1 = 'Scala assoluta';
+                        ret = 'Scala assoluta';
                     }
                     else {
-                        ret1 = 'Scala relativa';
+                        ret = 'Scala relativa';
                     }
-                    ret = ret1;
-                    return ret1;
+                    return ret;
                 };
                 SheetDetailComponent.prototype.onToggleLock = function (inAsset) {
                     inAsset.setLocked(!inAsset.locked);
@@ -108,7 +114,7 @@ System.register(['angular2/core', 'angular2/router', './sheetFactory', '../utili
                         directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider],
                         inputs: ['sheet'],
                     }), 
-                    __metadata('design:paramtypes', [router_1.RouteParams, sheetFactory_1.SheetFactory, sheetWeightAdjuster_service_1.SheetWeightAdjuster])
+                    __metadata('design:paramtypes', [router_1.RouteParams, sheetBackEnd_service_1.SheetBackEnd, sheetWeightAdjuster_service_1.SheetWeightAdjuster])
                 ], SheetDetailComponent);
                 return SheetDetailComponent;
             })();

@@ -1,4 +1,4 @@
-System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.component', './sheetFactory'], function(exports_1) {
+System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.component', './sheetBackEnd.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.com
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, sheetSearchCriteria_1, searchCriteria_component_1, sheetFactory_1;
+    var core_1, sheetSearchCriteria_1, searchCriteria_component_1, sheetBackEnd_service_1;
     var SheetSearchCmp;
     return {
         setters:[
@@ -21,14 +21,15 @@ System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.com
             function (searchCriteria_component_1_1) {
                 searchCriteria_component_1 = searchCriteria_component_1_1;
             },
-            function (sheetFactory_1_1) {
-                sheetFactory_1 = sheetFactory_1_1;
+            function (sheetBackEnd_service_1_1) {
+                sheetBackEnd_service_1 = sheetBackEnd_service_1_1;
             }],
         execute: function() {
             SheetSearchCmp = (function () {
-                function SheetSearchCmp(inSheetService) {
+                function SheetSearchCmp(_backEnd) {
+                    this._backEnd = _backEnd;
                     this.sheetsRetrieved = new core_1.EventEmitter();
-                    this.sheetSearchCriteria = new sheetSearchCriteria_1.SheetSearchCriteria(inSheetService);
+                    this.sheetSearchCriteria = new sheetSearchCriteria_1.SheetSearchCriteria(_backEnd);
                 }
                 SheetSearchCmp.prototype.ngOnInit = function () {
                     this.sheetSearchCriteria.initializeSearchCriteria();
@@ -52,8 +53,7 @@ System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.com
                     this.retrieveSelectedCriteria(criteria, sectorsTags);
                     console.log('sectorsTags');
                     console.log(sectorsTags);
-                    var fact = new sheetFactory_1.SheetFactory();
-                    this.searchResult = fact.fetchSheets(null, generalTags, valueBasedTags, sectorsTags);
+                    this.searchResult = this._backEnd.fetchSheets(null, generalTags, valueBasedTags, sectorsTags);
                     this.sheetsRetrieved.next(this.searchResult);
                 };
                 SheetSearchCmp.prototype.retrieveSelectedCriteria = function (inCriteria, inTags) {
@@ -75,7 +75,7 @@ System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.com
                         styleUrls: ['../styles/sheetSearch.css'],
                         directives: [searchCriteria_component_1.SearchCriteriaComponent],
                     }), 
-                    __metadata('design:paramtypes', [sheetFactory_1.SheetFactory])
+                    __metadata('design:paramtypes', [sheetBackEnd_service_1.SheetBackEnd])
                 ], SheetSearchCmp);
                 return SheetSearchCmp;
             })();
@@ -83,4 +83,4 @@ System.register(['angular2/core', './sheetSearchCriteria', './searchCriteria.com
         }
     }
 });
-//# sourceMappingURL=sheetSearchCmp.js.map
+//# sourceMappingURL=sheetSearch.component.js.map

@@ -2,7 +2,7 @@ import {Component, OnInit} from 'angular2/core';
 import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Sheet} from './sheet';
-import {SheetFactory} from './sheetFactory';
+import {SheetBackEnd} from './sheetBackEnd.service';
 import {SheetDetailComponent} from './sheetDetail.component';
 
 @Component({
@@ -16,12 +16,12 @@ import {SheetDetailComponent} from './sheetDetail.component';
 export class SheetSummaryComponent implements OnInit { 
     public sheet: Sheet;
     //public sheetId: number;
-    private _service: SheetFactory;
+    private _backEnd: SheetBackEnd;
     private _router: Router;
     private _routeParams: RouteParams;
     
-    constructor(inService: SheetFactory, inRouter: Router, inRouteParams: RouteParams) {
-        this._service = inService;
+    constructor(inBackEnd: SheetBackEnd, inRouter: Router, inRouteParams: RouteParams) {
+        this._backEnd = inBackEnd;
         this._router = inRouter;
         this._routeParams = inRouteParams;
     }
@@ -33,7 +33,7 @@ export class SheetSummaryComponent implements OnInit {
         // this is because if the routeParameter is not null, it means we have been called via routing (or url on the browser)
         // if id is null it means we have been called within the single-page (and we hope we have been passed the full Sheet instance)
         if (id) {
-            this.sheet = this._service.getSomeSheets(id, 1)[0];
+            this.sheet = this._backEnd.getSomeSheets(id, 1)[0];
             console.log(this.sheet);
         }
     }

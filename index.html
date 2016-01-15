@@ -20,19 +20,28 @@
           utilities: {
             format: 'register',
             defaultExtension: 'js'
+          },
+          externalServicesClientMock: {
+            format: 'register',
+            defaultExtension: 'js'
+          },
+          charts: {
+            format: 'register',
+            defaultExtension: 'js'
           }
         }
       });
       System.import('app/boot')
             .then(null, console.error.bind(console));
     </script>
-    <!-- Load NoUiSlider specific stuff -->
+    <!-- Load specific css -->
     <link href="./lib/NoUISlider/nouislider.min.css" rel="stylesheet">
     </head>
   <!-- 3. Display the application -->
   <body>
     <my-app>Loading...</my-app>
-    <!-- Load NoUiSlider specific stuff -->
-    <script src="./lib/NoUISlider/nouislider.min.js"></script>
+    <!-- Load specific js lib -->
+    <script src="./lib/NoUISlider/nouislider.js"></script>
+    <script src="./lib/chart.js/chart2013.js"></script>
   </body>
 </html>

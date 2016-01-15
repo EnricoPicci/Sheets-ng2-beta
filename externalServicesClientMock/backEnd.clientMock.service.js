@@ -1,35 +1,39 @@
-System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
-    var sheet_1, asset_1, assetGroup_1;
-    var SheetFactory;
+System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', '../app/assetGroup', '../app/returnPeriod'], function(exports_1) {
+    var __extends = (this && this.__extends) || function (d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+    var sheet_1, sheetBackEnd_service_1, asset_1, assetGroup_1, returnPeriod_1;
+    var BackEndClientMock;
     return {
         setters:[
             function (sheet_1_1) {
                 sheet_1 = sheet_1_1;
+            },
+            function (sheetBackEnd_service_1_1) {
+                sheetBackEnd_service_1 = sheetBackEnd_service_1_1;
             },
             function (asset_1_1) {
                 asset_1 = asset_1_1;
             },
             function (assetGroup_1_1) {
                 assetGroup_1 = assetGroup_1_1;
+            },
+            function (returnPeriod_1_1) {
+                returnPeriod_1 = returnPeriod_1_1;
             }],
         execute: function() {
-            SheetFactory = (function () {
-                function SheetFactory() {
+            BackEndClientMock = (function (_super) {
+                __extends(BackEndClientMock, _super);
+                function BackEndClientMock() {
+                    _super.apply(this, arguments);
                     this.description = 'The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad.';
                 }
-                SheetFactory.prototype.getSheet = function (inId) {
+                BackEndClientMock.prototype.getSheet = function (inId) {
                     return this.getSomeSheets(inId, 1)[0];
                 };
-                SheetFactory.prototype.fillDetails = function (inSheet) {
-                    // for the moment fills the Sheet with fixed data regardless the Sheet received as input
-                    inSheet.oneYearReturn = '11%';
-                    inSheet.oneMonthReturn = '6%';
-                    inSheet.dailyChange = '1%';
-                    inSheet.description = this.description;
-                    inSheet.assetGroups = this.getAssetGroups(inSheet);
-                    return inSheet;
-                };
-                SheetFactory.prototype.getSomeSheets = function (inFromPosition, inMaxNumberOfSheets) {
+                BackEndClientMock.prototype.getSomeSheets = function (inFromPosition, inMaxNumberOfSheets) {
                     var sheets = new Array();
                     var sheetsCreated = this.createSheets();
                     if (inMaxNumberOfSheets >= sheetsCreated.length) {
@@ -40,7 +44,17 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     }
                     return sheets;
                 };
-                SheetFactory.prototype.fetchSheets = function (searchString, generalTags, valueBasedTags, sectorsTags) {
+                BackEndClientMock.prototype.fillDetails = function (inSheet) {
+                    // for the moment fills the Sheet with fixed data regardless the Sheet received as input
+                    inSheet.oneYearReturn = '11%';
+                    inSheet.oneMonthReturn = '6%';
+                    inSheet.dailyChange = '1%';
+                    inSheet.description = this.description;
+                    inSheet.assetGroups = this.getAssetGroups(inSheet);
+                    this.fillReturnData(inSheet, returnPeriod_1.ReturnPeriod.lastMonth);
+                    return inSheet;
+                };
+                BackEndClientMock.prototype.fetchSheets = function (searchString, generalTags, valueBasedTags, sectorsTags) {
                     var ret = new Array();
                     var sheets = this.createSheets();
                     var tempArr = {};
@@ -73,7 +87,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     }
                     return ret;
                 };
-                SheetFactory.prototype.getGeneralSearchCriteriaDomain = function () {
+                BackEndClientMock.prototype.getGeneralSearchCriteriaDomain = function () {
                     var ret = new Array();
                     ret[0] = 'New';
                     ret[1] = 'Popular';
@@ -81,7 +95,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     return ret;
                 };
                 ;
-                SheetFactory.prototype.getValueBasedSearchCriteriaDomain = function () {
+                BackEndClientMock.prototype.getValueBasedSearchCriteriaDomain = function () {
                     var ret = new Array();
                     ret[0] = 'Green';
                     ret[1] = 'Social';
@@ -90,7 +104,7 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     return ret;
                 };
                 ;
-                SheetFactory.prototype.getSectorsSearchCriteriaDomain = function () {
+                BackEndClientMock.prototype.getSectorsSearchCriteriaDomain = function () {
                     var ret = new Array();
                     ret[0] = 'Energy';
                     ret[1] = 'Health';
@@ -100,7 +114,18 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     return ret;
                 };
                 ;
-                SheetFactory.prototype.createSheets = function () {
+                BackEndClientMock.prototype.setRelativeStartOfScale = function (inAssetGroups) {
+                    var relativeStartOfScale = 0;
+                    for (var i = 0; i < inAssetGroups.length; i++) {
+                        var assets = inAssetGroups[i].assets;
+                        for (var j = 0; j < assets.length; j++) {
+                            var asset = assets[j];
+                            asset.relativeStartOfScale = relativeStartOfScale;
+                            relativeStartOfScale = relativeStartOfScale + asset.range.max;
+                        }
+                    }
+                };
+                BackEndClientMock.prototype.createSheets = function () {
                     var createdBY = 'CocoonTechies';
                     var sheets = new Array();
                     sheets[0] = new sheet_1.Sheet(0, null, null, null, null);
@@ -258,67 +283,150 @@ System.register(['./sheet', './asset', './assetGroup'], function(exports_1) {
                     sheets[16].createdBy = createdBY;
                     return sheets;
                 };
-                SheetFactory.prototype.getAssetGroups = function (inSheet) {
-                    // for the moment create a fixed array of AssetGroup regardless the Sheet received as input
+                BackEndClientMock.prototype.getAssetGroups = function (inSheet) {
+                    var id = inSheet.id;
                     var ret = new Array();
                     var assetGroup;
                     var assets1 = new Array();
-                    assets1[0] = new asset_1.Asset('Diamond Inc.', 'SAD', 5, '6%', '42%', 0, 10);
-                    assets1[1] = new asset_1.Asset('Indian African Co.', 'IAC', 8, '2%', '12%', 5, 15);
-                    assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 10, 20);
-                    assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 15, 30);
-                    assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 30, 75);
-                    assetGroup.sheet = inSheet;
-                    assets1[0].assetGroup = assetGroup;
-                    assets1[1].assetGroup = assetGroup;
-                    assets1[2].assetGroup = assetGroup;
-                    assets1[3].assetGroup = assetGroup;
-                    ret[0] = assetGroup;
                     var assets2 = new Array();
-                    assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 6, '12%', '32%', 0, 10);
-                    assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 10, 25);
-                    assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 5, 7);
-                    assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 15, 42);
-                    assetGroup.sheet = inSheet;
-                    assets2[0].assetGroup = assetGroup;
-                    assets2[1].assetGroup = assetGroup;
-                    assets2[2].assetGroup = assetGroup;
-                    ret[1] = assetGroup;
                     var assets3 = new Array();
-                    assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 6, '6%', '2%', 5, 25);
-                    assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
-                    assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 10);
-                    assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 5, 50);
-                    assetGroup.sheet = inSheet;
-                    assets3[0].assetGroup = assetGroup;
-                    assets3[1].assetGroup = assetGroup;
-                    assets3[2].assetGroup = assetGroup;
-                    ret[2] = assetGroup;
                     var assets4 = new Array();
-                    assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 5, 30);
-                    assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 20);
-                    assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 5, 50);
-                    assetGroup.sheet = inSheet;
-                    assets4[0].assetGroup = assetGroup;
-                    assets4[1].assetGroup = assetGroup;
-                    ret[3] = assetGroup;
+                    if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
+                        assets1[0] = new asset_1.Asset('Diamond Inc.', 'SAD', 5, '6%', '42%', 0, 10);
+                        assets1[1] = new asset_1.Asset('Indian African Co.', 'IAC', 8, '2%', '12%', 5, 15);
+                        assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 10, 20);
+                        assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 15, 30);
+                        assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 30, 75);
+                        assetGroup.sheet = inSheet;
+                        assets1[0].assetGroup = assetGroup;
+                        assets1[1].assetGroup = assetGroup;
+                        assets1[2].assetGroup = assetGroup;
+                        assets1[3].assetGroup = assetGroup;
+                        ret[0] = assetGroup;
+                        assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 6, '12%', '32%', 0, 10);
+                        assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 10, 25);
+                        assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 5, 7);
+                        assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 15, 42);
+                        assetGroup.sheet = inSheet;
+                        assets2[0].assetGroup = assetGroup;
+                        assets2[1].assetGroup = assetGroup;
+                        assets2[2].assetGroup = assetGroup;
+                        ret[1] = assetGroup;
+                        assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 6, '6%', '2%', 5, 25);
+                        assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
+                        assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 10);
+                        assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 5, 50);
+                        assetGroup.sheet = inSheet;
+                        assets3[0].assetGroup = assetGroup;
+                        assets3[1].assetGroup = assetGroup;
+                        assets3[2].assetGroup = assetGroup;
+                        ret[2] = assetGroup;
+                        assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 5, 30);
+                        assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 20);
+                        assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 5, 50);
+                        assetGroup.sheet = inSheet;
+                        assets4[0].assetGroup = assetGroup;
+                        assets4[1].assetGroup = assetGroup;
+                        ret[3] = assetGroup;
+                    }
+                    else {
+                        assets1[0] = new asset_1.Asset('Diamond Inc.', 'SAD', 5, '6%', '42%', 0, 10);
+                        assets1[1] = new asset_1.Asset('Indian African Co.', 'IAC', 8, '2%', '12%', 0, 45);
+                        assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 0, 20);
+                        assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 0, 30);
+                        assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 0, 100);
+                        assetGroup.sheet = inSheet;
+                        assets1[0].assetGroup = assetGroup;
+                        assets1[1].assetGroup = assetGroup;
+                        assets1[2].assetGroup = assetGroup;
+                        assets1[3].assetGroup = assetGroup;
+                        ret[0] = assetGroup;
+                        assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 6, '12%', '32%', 0, 30);
+                        assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 0, 25);
+                        assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 0, 45);
+                        assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 0, 100);
+                        assetGroup.sheet = inSheet;
+                        assets2[0].assetGroup = assetGroup;
+                        assets2[1].assetGroup = assetGroup;
+                        assets2[2].assetGroup = assetGroup;
+                        ret[1] = assetGroup;
+                        assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 6, '6%', '2%', 0, 45);
+                        assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
+                        assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 40);
+                        assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 0, 100);
+                        assetGroup.sheet = inSheet;
+                        assets3[0].assetGroup = assetGroup;
+                        assets3[1].assetGroup = assetGroup;
+                        assets3[2].assetGroup = assetGroup;
+                        ret[2] = assetGroup;
+                        assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 0, 30);
+                        assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 70);
+                        assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 0, 100);
+                        assetGroup.sheet = inSheet;
+                        assets4[0].assetGroup = assetGroup;
+                        assets4[1].assetGroup = assetGroup;
+                        ret[3] = assetGroup;
+                    }
                     return ret;
                 };
-                SheetFactory.prototype.setRelativeStartOfScale = function (inAssetGroups) {
-                    var relativeStartOfScale = 0;
-                    for (var i = 0; i < inAssetGroups.length; i++) {
-                        var assets = inAssetGroups[i].assets;
-                        for (var j = 0; j < assets.length; j++) {
-                            var asset = assets[j];
-                            asset.relativeStartOfScale = relativeStartOfScale;
-                            relativeStartOfScale = relativeStartOfScale + asset.range.max;
-                        }
+                BackEndClientMock.prototype.fillReturnData = function (inSheet, inPeriod) {
+                    switch (inPeriod) {
+                        case returnPeriod_1.ReturnPeriod.lastMonth:
+                            this.fillReturnDataLastMonth(inSheet);
+                            break;
+                        case returnPeriod_1.ReturnPeriod.lastYear:
+                            this.fillReturnDataLastYear(inSheet);
+                            break;
+                        case returnPeriod_1.ReturnPeriod.lastFiveYears:
+                            this.fillReturnDataLast5years(inSheet);
+                            break;
+                        default:
+                            console.error('Return period for Sheets not supported -- Return period input: ' + inPeriod);
                     }
                 };
-                return SheetFactory;
-            })();
-            exports_1("SheetFactory", SheetFactory);
+                BackEndClientMock.prototype.fillReturnDataLastMonth = function (inSheet) {
+                    var id = inSheet.id;
+                    if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
+                        inSheet.returnData.data = [
+                            [3.62, 1.45, 1.24, 1.20, 3.67, 6.26, 7.87, 8.79, 9.34, 9.96, 10.3, 10.6, 10.6, 10.7, 11.1, 11.2, 11.6, 12.0, 12.2, 12.3, 12.5, 12.6, 12.7, 12.8, 13.1, 13.3, 13.4, 13.7, 14.1, 14.4],
+                            [7.24, 2.91, 1.13, 1.04, 7.29, 9.49, 9.81, 12.1, 12.8, 14.8, 13.9, 13.4, 10.5, 12.0, 14.5, 12.4, 15.7, 16.6, 14.5, 13.7, 14.8, 13.5, 13.9, 13.9, 17.7, 15.1, 14.6, 18.1, 18.9, 19.2]
+                        ];
+                        inSheet.returnData.series = [inSheet.title, 'S&P 1312'];
+                    }
+                    else if (id == 2 || id == 5 || id == 8 || id == 11 || id == 14) {
+                        inSheet.returnData.data = [
+                            [0.5, 1.08, 2.15, 1.78, 2.87, 3.39, 3.76, 4.38, 4.34, 4.70, 4.85, 4.77, 5.04, 4.99, 5.39, 5.67, 6.00, 5.94, 6.09, 6.06, 6.19, 6.28, 6.48, 6.64, 6.79, 6.88, 6.85, 7.01, 7.20, 7.48],
+                            [1, 2.16, 3.23, 1.59, 4.05, 4.51, 4.41, 6.17, 4.22, 6.02, 5.55, 4.43, 6.30, 4.74, 7.32, 7.05, 7.69, 5.56, 6.93, 5.94, 6.96, 6.80, 7.68, 7.65, 7.72, 7.46, 6.69, 8.06, 8.52, 9.43]
+                        ];
+                        inSheet.returnData.series = [inSheet.title, 'Best Dream Index'];
+                    }
+                    else {
+                        inSheet.returnData.data = [
+                            [-0.2, -0.0, -0.1, 0.82, 0.99, 1.20, 2.12, 1.72, 1.52, 1.32, 1.18, 1.74, 2.30, 3.13, 2.92, 3.14, 3.37, 3.59, 3.79, 4.03, 4.28, 4.27, 4.18, 4.38, 4.61, 4.84, 4.95, 5.15, 5.06, 5.26],
+                            [-0.4, -0.1, -0.2, 0.63, 0.98, 1.18, 2.88, 1.32, 1.27, 0.91, 0.93, 2.59, 3.05, 4.12, 2.55, 3.64, 4.10, 4.22, 4.42, 4.84, 5.18, 4.22, 3.80, 5.26, 5.61, 5.78, 5.45, 6.04, 4.67, 6.25]
+                        ];
+                        inSheet.returnData.series = [inSheet.title, 'Worst Nitghmare Index'];
+                    }
+                    this.fillLastMonthLabel(inSheet);
+                };
+                BackEndClientMock.prototype.fillReturnDataLastYear = function (inSheet) {
+                    var id = inSheet.id;
+                };
+                BackEndClientMock.prototype.fillReturnDataLast5years = function (inSheet) {
+                    var id = inSheet.id;
+                };
+                BackEndClientMock.prototype.fillLastMonthLabel = function (inSheet) {
+                    var today = Date.now();
+                    for (var i = 31; i > 0; i--) {
+                        var day = new Date(today - 1000 * 60 * 60 * 24 * i);
+                        console.log(day);
+                        inSheet.returnData.labels.push(day);
+                    }
+                };
+                return BackEndClientMock;
+            })(sheetBackEnd_service_1.SheetBackEnd);
+            exports_1("BackEndClientMock", BackEndClientMock);
         }
     }
 });
-//# sourceMappingURL=sheetFactory.js.map
+//# sourceMappingURL=backEnd.clientMock.service.js.map

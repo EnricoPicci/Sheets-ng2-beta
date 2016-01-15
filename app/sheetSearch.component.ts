@@ -5,7 +5,7 @@ import {SearchCriteriaComponent} from './searchCriteria.component';
 import {SearchCriteria} from './searchCriteria';
 import {SearchSelection} from './searchSelection';
 import {SheetService} from './sheetService';
-import {SheetFactory} from './sheetFactory';
+import {SheetBackEnd} from './sheetBackEnd.service';
 import {Sheet} from './sheet';
 
 @Component({
@@ -20,8 +20,8 @@ export class SheetSearchCmp implements OnInit {
 	public searchResult: Sheet[];
 	@Output() sheetsRetrieved: EventEmitter<any> = new EventEmitter();
 
-	constructor(inSheetService: SheetFactory) {
-		this.sheetSearchCriteria = new SheetSearchCriteria(inSheetService);
+	constructor(private _backEnd: SheetBackEnd) {
+        this.sheetSearchCriteria = new SheetSearchCriteria(_backEnd);
 	}
     
     ngOnInit() {
@@ -50,8 +50,7 @@ export class SheetSearchCmp implements OnInit {
 		console.log('sectorsTags');
 		console.log(sectorsTags);
 		
-		var fact: SheetFactory = new SheetFactory();
-		this.searchResult = fact.fetchSheets(null, generalTags, valueBasedTags, sectorsTags);
+		this.searchResult = this._backEnd.fetchSheets(null, generalTags, valueBasedTags, sectorsTags);
 		this.sheetsRetrieved.next(this.searchResult);
 	}
 	

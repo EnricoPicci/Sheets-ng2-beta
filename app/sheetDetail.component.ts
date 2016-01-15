@@ -5,7 +5,7 @@ import {Sheet} from './sheet';
 import {AssetGroup} from './assetGroup';
 import {Asset} from './asset';
 import {AssetAbstract} from './assetAbstract';
-import {SheetFactory} from './sheetFactory';
+import {SheetBackEnd} from './sheetBackEnd.service';
 
 import {ShortLongTextComponent} from '../utilities/shortLongText.component';
 import {Slider} from '../utilities/slider.component'
@@ -26,16 +26,25 @@ export class SheetDetailComponent implements OnInit {
     public editStatus = false;
     public startOfScaleRelative = false;  // if false, all sliders start from ZERO, otherwise their starting position increases based on the sum of the range of the previous assets
     
+    private _isNew: boolean = true; //just to check if the component is new or not
+    
     constructor(
         private _routeParams: RouteParams,
-        private _sheetFactory: SheetFactory,
+        private _sheetBackEnd: SheetBackEnd,
         private _sheetWeightAdjuster: SheetWeightAdjuster
     ) { }
     
     ngOnInit() {
+        if (this._isNew) {
+            console.log('new SheetDetailComponent');
+            this._isNew = false;
+        } else {
+            console.log('existing SheetDetailComponent');
+        }
+        
         let id = +this._routeParams.get('id');
-        this.sheet = this._sheetFactory.getSheet(id);
-        this._sheetFactory.fillDetails(this.sheet);
+        this.sheet = this._sheetBackEnd.getSheet(id);
+        this._sheetBackEnd.fillDetails(this.sheet);
     }
     
     onAssetGroupClick(inAssetGroup: AssetGroup) {
@@ -63,14 +72,12 @@ export class SheetDetailComponent implements OnInit {
     
     getRelativeScaleButtonText() {
         let ret: string;
-        let ret1: string;
         if (this.startOfScaleRelative) {
-            ret1 = 'Scala assoluta';
+            ret = 'Scala assoluta';
         } else {
-            ret1 = 'Scala relativa';
+            ret = 'Scala relativa';
         }
-        ret = ret1;
-        return ret1;        
+        return ret;        
     }
     
     onToggleLock(inAsset: AssetAbstract) {

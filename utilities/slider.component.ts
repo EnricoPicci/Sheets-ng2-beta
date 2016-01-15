@@ -17,7 +17,7 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
 
 export class Slider { 
     @ViewChild('sliderDomElement') sliderDomElement;
-    noUiSlider: any;
+    myNoUiSlider: any;
     @Input() start: number[];
     @Input() range: any;  //e.g. {'min': 0,'max': 100}
     @Input() pips: any; //e.g. {mode: 'values', values: [10, 20, 30, 40, 50, 60, 70, 80, 90], density: 10}
@@ -40,14 +40,14 @@ export class Slider {
            range: this.range,
            pips: this.pips
         });
-        this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
-        this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
+        this.myNoUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
+        this.myNoUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
     }
     
     ngOnChanges() {
-        if (this.noUiSlider != null) {
+        if (this.myNoUiSlider != null) {
             if(this.newValue != null) {
-                this.noUiSlider.set(this.newValue.newWeight);
+                this.myNoUiSlider.set(this.newValue.newWeight);
             }
             if (this.locked) {
                 this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -55,6 +55,10 @@ export class Slider {
                 this.sliderDomElement.nativeElement.removeAttribute('disabled');
             } 
         }
+    }
+    
+    ngOnDestroy() {
+        this.myNoUiSlider.destroy();
     }
     
     getLeft() {

@@ -11,14 +11,14 @@ System.register(['./searchCriteria', './searchSelection'], function(exports_1) {
             }],
         execute: function() {
             SheetSearchCriteria = (function () {
-                function SheetSearchCriteria(inSheetService) {
+                function SheetSearchCriteria(inSheetBackEnd) {
                     this.searchCriteria = new Array();
                     this.open = false;
-                    this.sheetService = inSheetService;
+                    this._sheetBackEnd = inSheetBackEnd;
                 }
                 SheetSearchCriteria.prototype.initializeSearchCriteria = function () {
                     if (SheetSearchCriteria.generalDomain == null) {
-                        SheetSearchCriteria.generalDomain = this.sheetService.getGeneralSearchCriteriaDomain();
+                        SheetSearchCriteria.generalDomain = this._sheetBackEnd.getGeneralSearchCriteriaDomain();
                     }
                     var general = new Array();
                     for (var i = 0; i < SheetSearchCriteria.generalDomain.length; i++) {
@@ -26,7 +26,7 @@ System.register(['./searchCriteria', './searchSelection'], function(exports_1) {
                     }
                     this.searchCriteria[0] = new searchCriteria_1.SearchCriteria('General', general);
                     if (SheetSearchCriteria.valueBasedDomain == null) {
-                        SheetSearchCriteria.valueBasedDomain = this.sheetService.getValueBasedSearchCriteriaDomain();
+                        SheetSearchCriteria.valueBasedDomain = this._sheetBackEnd.getValueBasedSearchCriteriaDomain();
                     }
                     var valueBased = new Array();
                     for (var i = 0; i < SheetSearchCriteria.valueBasedDomain.length; i++) {
@@ -34,7 +34,7 @@ System.register(['./searchCriteria', './searchSelection'], function(exports_1) {
                     }
                     this.searchCriteria[1] = new searchCriteria_1.SearchCriteria('Value Based', valueBased);
                     if (SheetSearchCriteria.sectorsDomain == null) {
-                        SheetSearchCriteria.sectorsDomain = this.sheetService.getSectorsSearchCriteriaDomain();
+                        SheetSearchCriteria.sectorsDomain = this._sheetBackEnd.getSectorsSearchCriteriaDomain();
                     }
                     var sectors = new Array();
                     for (var i = 0; i < SheetSearchCriteria.sectorsDomain.length; i++) {

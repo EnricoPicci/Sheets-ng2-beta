@@ -1,10 +1,10 @@
-import {Sheet} from './sheet';
-import {SheetService} from './sheetService';
+import {Sheet} from '../app/sheet';
+import {SheetBackEnd} from '../app/sheetBackEnd.service';
 
-import{Asset} from './asset';
-import {AssetGroup} from './assetGroup';
+import{Asset} from '../app/asset';
+import {AssetGroup} from '../app/assetGroup';
 
-export class SheetFactory implements SheetService {
+export class SheetFactory extends SheetBackEnd {
 	getSheet(inId: number) {
 		return this.getSomeSheets(inId, 1)[0];
 	}

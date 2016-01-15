@@ -35,13 +35,13 @@ System.register(['angular2/core'], function(exports_1) {
                         range: this.range,
                         pips: this.pips
                     });
-                    this.noUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
-                    this.noUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
+                    this.myNoUiSlider = this.sliderDomElement.nativeElement.noUiSlider;
+                    this.myNoUiSlider.on('change', this.onEnd); // register function onEnd() as callback for NoUiSlider
                 };
                 Slider.prototype.ngOnChanges = function () {
-                    if (this.noUiSlider != null) {
+                    if (this.myNoUiSlider != null) {
                         if (this.newValue != null) {
-                            this.noUiSlider.set(this.newValue.newWeight);
+                            this.myNoUiSlider.set(this.newValue.newWeight);
                         }
                         if (this.locked) {
                             this.sliderDomElement.nativeElement.setAttribute('disabled', true);
@@ -50,6 +50,9 @@ System.register(['angular2/core'], function(exports_1) {
                             this.sliderDomElement.nativeElement.removeAttribute('disabled');
                         }
                     }
+                };
+                Slider.prototype.ngOnDestroy = function () {
+                    this.myNoUiSlider.destroy();
                 };
                 Slider.prototype.getLeft = function () {
                     var ret = this.relativeStartOfScale + this.range.min;
