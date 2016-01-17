@@ -18,7 +18,13 @@ export class Sheet {
     public dailyChange: string;
     public assetGroups: AssetGroup[];
     
-    public returnData: ReturnData = new ReturnData();
+    public benchmark: string;
+    public returnDataLastMonth: ReturnData = new ReturnData();
+    public returnDataLastYear: ReturnData = new ReturnData();
+    public returnDataAll: ReturnData = new ReturnData();
+    public returnDataBenchmarkLastMonth: ReturnData = new ReturnData();
+    public returnDataBenchmarkLastYear: ReturnData = new ReturnData();
+    public returnDataBenchmarkAll: ReturnData = new ReturnData();
 
 	// tags used as filter in search
 	public general: string;

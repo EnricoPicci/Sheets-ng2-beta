@@ -9,7 +9,12 @@ System.register(['./returnData'], function(exports_1) {
         execute: function() {
             Sheet = (function () {
                 function Sheet(inId, inTitle, inLongTitle, inImageUrl, inOneMonthReturn) {
-                    this.returnData = new returnData_1.ReturnData();
+                    this.returnDataLastMonth = new returnData_1.ReturnData();
+                    this.returnDataLastYear = new returnData_1.ReturnData();
+                    this.returnDataAll = new returnData_1.ReturnData();
+                    this.returnDataBenchmarkLastMonth = new returnData_1.ReturnData();
+                    this.returnDataBenchmarkLastYear = new returnData_1.ReturnData();
+                    this.returnDataBenchmarkAll = new returnData_1.ReturnData();
                     this.id = inId;
                     this.title = inTitle;
                     this.longTitle = inLongTitle;

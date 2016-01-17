@@ -28,16 +28,16 @@ System.register(['angular2/core', './sheetBackEnd.service', './collectionOfSheet
             SheetDashboardComponent = (function () {
                 function SheetDashboardComponent(inSheetService) {
                     this.title = 'Sheets';
-                    this.sheetService = inSheetService;
+                    //this.sheetService = inSheetService;
                     this.sheets = inSheetService.getSomeSheets(0, 16);
                 }
                 SheetDashboardComponent.prototype.getSheets = function () {
                     return this.sheets;
                 };
-                SheetDashboardComponent.prototype.load = function () {
-                    this.sheets = this.sheetService.getSomeSheets(4, 7);
+                /*load() {
+                    this.sheets = this.sheetService.getSomeSheets(4, 7)
                     console.log(this.sheets[1].longTitle);
-                };
+                }*/
                 SheetDashboardComponent.prototype.updateSheets = function (searchResult) {
                     this.sheets = searchResult;
                 };

@@ -1,10 +1,10 @@
-System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', '../app/assetGroup', '../app/returnPeriod'], function(exports_1) {
+System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', '../app/assetGroup', '../app/returnPeriod', './mockData'], function(exports_1) {
     var __extends = (this && this.__extends) || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var sheet_1, sheetBackEnd_service_1, asset_1, assetGroup_1, returnPeriod_1;
+    var sheet_1, sheetBackEnd_service_1, asset_1, assetGroup_1, returnPeriod_1, mockData_1;
     var BackEndClientMock;
     return {
         setters:[
@@ -22,12 +22,16 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
             },
             function (returnPeriod_1_1) {
                 returnPeriod_1 = returnPeriod_1_1;
+            },
+            function (mockData_1_1) {
+                mockData_1 = mockData_1_1;
             }],
         execute: function() {
             BackEndClientMock = (function (_super) {
                 __extends(BackEndClientMock, _super);
                 function BackEndClientMock() {
                     _super.apply(this, arguments);
+                    this.mockData = new mockData_1.MockData();
                     this.description = 'The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. The morning has the sun in its mouth. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad. So much goes the cat to the lard that she looses the pad.';
                 }
                 BackEndClientMock.prototype.getSheet = function (inId) {
@@ -377,8 +381,8 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                         case returnPeriod_1.ReturnPeriod.lastYear:
                             this.fillReturnDataLastYear(inSheet);
                             break;
-                        case returnPeriod_1.ReturnPeriod.lastFiveYears:
-                            this.fillReturnDataLast5years(inSheet);
+                        case returnPeriod_1.ReturnPeriod.all:
+                            this.fillReturnDataLastAll(inSheet);
                             break;
                         default:
                             console.error('Return period for Sheets not supported -- Return period input: ' + inPeriod);
@@ -387,40 +391,55 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                 BackEndClientMock.prototype.fillReturnDataLastMonth = function (inSheet) {
                     var id = inSheet.id;
                     if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
-                        inSheet.returnData.data = [
-                            [3.62, 1.45, 1.24, 1.20, 3.67, 6.26, 7.87, 8.79, 9.34, 9.96, 10.3, 10.6, 10.6, 10.7, 11.1, 11.2, 11.6, 12.0, 12.2, 12.3, 12.5, 12.6, 12.7, 12.8, 13.1, 13.3, 13.4, 13.7, 14.1, 14.4],
-                            [7.24, 2.91, 1.13, 1.04, 7.29, 9.49, 9.81, 12.1, 12.8, 14.8, 13.9, 13.4, 10.5, 12.0, 14.5, 12.4, 15.7, 16.6, 14.5, 13.7, 14.8, 13.5, 13.9, 13.9, 17.7, 15.1, 14.6, 18.1, 18.9, 19.2]
-                        ];
-                        inSheet.returnData.series = [inSheet.title, 'S&P 1312'];
+                        inSheet.benchmark = 'S&P 1312';
+                        inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth1();
+                        inSheet.returnDataBenchmarkLastMonth.data = this.mockData.getReturnDataLastMonth2(); // take the second series as benchmark
                     }
                     else if (id == 2 || id == 5 || id == 8 || id == 11 || id == 14) {
-                        inSheet.returnData.data = [
-                            [0.5, 1.08, 2.15, 1.78, 2.87, 3.39, 3.76, 4.38, 4.34, 4.70, 4.85, 4.77, 5.04, 4.99, 5.39, 5.67, 6.00, 5.94, 6.09, 6.06, 6.19, 6.28, 6.48, 6.64, 6.79, 6.88, 6.85, 7.01, 7.20, 7.48],
-                            [1, 2.16, 3.23, 1.59, 4.05, 4.51, 4.41, 6.17, 4.22, 6.02, 5.55, 4.43, 6.30, 4.74, 7.32, 7.05, 7.69, 5.56, 6.93, 5.94, 6.96, 6.80, 7.68, 7.65, 7.72, 7.46, 6.69, 8.06, 8.52, 9.43]
-                        ];
-                        inSheet.returnData.series = [inSheet.title, 'Best Dream Index'];
+                        inSheet.benchmark = 'Best Dream Index';
+                        inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth2();
+                        inSheet.returnDataBenchmarkLastMonth.data = this.mockData.getReturnDataLastMonth3(); // take the third series as benchmark
                     }
                     else {
-                        inSheet.returnData.data = [
-                            [-0.2, -0.0, -0.1, 0.82, 0.99, 1.20, 2.12, 1.72, 1.52, 1.32, 1.18, 1.74, 2.30, 3.13, 2.92, 3.14, 3.37, 3.59, 3.79, 4.03, 4.28, 4.27, 4.18, 4.38, 4.61, 4.84, 4.95, 5.15, 5.06, 5.26],
-                            [-0.4, -0.1, -0.2, 0.63, 0.98, 1.18, 2.88, 1.32, 1.27, 0.91, 0.93, 2.59, 3.05, 4.12, 2.55, 3.64, 4.10, 4.22, 4.42, 4.84, 5.18, 4.22, 3.80, 5.26, 5.61, 5.78, 5.45, 6.04, 4.67, 6.25]
-                        ];
-                        inSheet.returnData.series = [inSheet.title, 'Worst Nitghmare Index'];
+                        inSheet.benchmark = 'Worst Nitghmare Index';
+                        inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth3();
+                        inSheet.returnDataBenchmarkLastMonth.data = this.mockData.getReturnDataLastMonth1(); // take the first series as benchmark            
                     }
-                    this.fillLastMonthLabel(inSheet);
                 };
                 BackEndClientMock.prototype.fillReturnDataLastYear = function (inSheet) {
                     var id = inSheet.id;
+                    if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
+                        inSheet.benchmark = 'S&P 1312';
+                        inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear1();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataLastYear2(); // take the second series as benchmark
+                    }
+                    else if (id == 2 || id == 5 || id == 8 || id == 11 || id == 14) {
+                        inSheet.benchmark = 'Best Dream Index';
+                        inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear2();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataLastYear3(); // take the third series as benchmark
+                    }
+                    else {
+                        inSheet.benchmark = 'Worst Nitghmare Index';
+                        inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear3();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataLastYear1(); // take the first series as benchmark      
+                    }
                 };
-                BackEndClientMock.prototype.fillReturnDataLast5years = function (inSheet) {
+                BackEndClientMock.prototype.fillReturnDataLastAll = function (inSheet) {
                     var id = inSheet.id;
-                };
-                BackEndClientMock.prototype.fillLastMonthLabel = function (inSheet) {
-                    var today = Date.now();
-                    for (var i = 31; i > 0; i--) {
-                        var day = new Date(today - 1000 * 60 * 60 * 24 * i);
-                        console.log(day);
-                        inSheet.returnData.labels.push(day);
+                    if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
+                        inSheet.benchmark = 'S&P 1312';
+                        inSheet.returnDataAll.data = this.mockData.getReturnDataAll1();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll2(); // take the second series as benchmark
+                    }
+                    else if (id == 2 || id == 5 || id == 8 || id == 11 || id == 14) {
+                        inSheet.benchmark = 'Best Dream Index';
+                        inSheet.returnDataAll.data = this.mockData.getReturnDataAll2();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll3(); // take the third series as benchmark
+                    }
+                    else {
+                        inSheet.benchmark = 'Worst Nitghmare Index';
+                        inSheet.returnDataAll.data = this.mockData.getReturnDataAll3();
+                        inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll1(); // take the first series as benchmark
                     }
                 };
                 return BackEndClientMock;

@@ -6,8 +6,6 @@ System.register([], function(exports_1) {
             ReturnData = (function () {
                 function ReturnData() {
                     this.data = new Array();
-                    this.labels = new Array();
-                    this.series = new Array();
                 }
                 return ReturnData;
             })();

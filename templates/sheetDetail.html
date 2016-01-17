@@ -33,7 +33,9 @@
             <!--span id="desc">{{sheet.description}}</span-->
             <short-long-text [longText]="sheet.description" [shortTextLength]="shortDescriptionTextLength"></short-long-text>
         </div>
-        <div id="performnaceChart"></div>
+        <div id="performanceChart">
+            <sheet-returnData id="returnData" [sheet]="sheet"></sheet-returnData>
+        </div>
         <div id="assetComposition">
             <div id="assetTable">
                 <button id="customizeButton" type="button" (click)="onClickOverCustomizeButton()">{{getCustomizeButtonText()}}</button>

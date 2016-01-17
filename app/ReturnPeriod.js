@@ -6,7 +6,7 @@ System.register([], function(exports_1) {
             (function (ReturnPeriod) {
                 ReturnPeriod[ReturnPeriod["lastMonth"] = 0] = "lastMonth";
                 ReturnPeriod[ReturnPeriod["lastYear"] = 1] = "lastYear";
-                ReturnPeriod[ReturnPeriod["lastFiveYears"] = 2] = "lastFiveYears";
+                ReturnPeriod[ReturnPeriod["all"] = 2] = "all";
             })(ReturnPeriod || (ReturnPeriod = {}));
             exports_1("ReturnPeriod", ReturnPeriod);
             ;

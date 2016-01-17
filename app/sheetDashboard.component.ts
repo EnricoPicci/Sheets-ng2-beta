@@ -1,6 +1,5 @@
 import {Component} from 'angular2/core';
 
-import {SheetService} from './sheetService';
 import {SheetBackEnd} from './sheetBackEnd.service';
 import {SheetCmp} from './sheet.component';
 import {Sheet} from './sheet';
@@ -21,10 +20,9 @@ export class SheetDashboardComponent {
 	public title: string = 'Sheets';
 	public firstSheet: Sheet;
 	public sheets: Sheet[];
-	sheetService: SheetService;
 
 	constructor(inSheetService: SheetBackEnd) {
-		this.sheetService = inSheetService;
+		//this.sheetService = inSheetService;
 		this.sheets = inSheetService.getSomeSheets(0, 16);
 	}
 
@@ -32,10 +30,10 @@ export class SheetDashboardComponent {
 		return this.sheets;
 	}
 
-	load() {
+	/*load() {
 		this.sheets = this.sheetService.getSomeSheets(4, 7)
 		console.log(this.sheets[1].longTitle);
-	}
+	}*/
 
 	updateSheets(searchResult: Sheet[]) {
 		this.sheets = searchResult;

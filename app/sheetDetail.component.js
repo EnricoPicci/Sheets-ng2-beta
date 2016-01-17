@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service', './sheetReturnData.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sheetBackEnd_service_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1;
+    var core_1, router_1, sheetBackEnd_service_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1, sheetReturnData_component_1;
     var SheetDetailComponent;
     return {
         setters:[
@@ -29,6 +29,9 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
             },
             function (sheetWeightAdjuster_service_1_1) {
                 sheetWeightAdjuster_service_1 = sheetWeightAdjuster_service_1_1;
+            },
+            function (sheetReturnData_component_1_1) {
+                sheetReturnData_component_1 = sheetReturnData_component_1_1;
             }],
         execute: function() {
             SheetDetailComponent = (function () {
@@ -39,19 +42,13 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
                     this.shortDescriptionTextLength = 250;
                     this.editStatus = false;
                     this.startOfScaleRelative = false; // if false, all sliders start from ZERO, otherwise their starting position increases based on the sum of the range of the previous assets
-                    this._isNew = true; //just to check if the component is new or not
                 }
                 SheetDetailComponent.prototype.ngOnInit = function () {
-                    if (this._isNew) {
-                        console.log('new SheetDetailComponent');
-                        this._isNew = false;
-                    }
-                    else {
-                        console.log('existing SheetDetailComponent');
-                    }
                     var id = +this._routeParams.get('id');
                     this.sheet = this._sheetBackEnd.getSheet(id);
                     this._sheetBackEnd.fillDetails(this.sheet);
+                };
+                SheetDetailComponent.prototype.ngAfterViewInit = function () {
                 };
                 SheetDetailComponent.prototype.onAssetGroupClick = function (inAssetGroup) {
                     inAssetGroup.show = !inAssetGroup.show;
@@ -111,7 +108,7 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
                         providers: [],
                         templateUrl: '../templates/sheetDetail.html',
                         styleUrls: ['../styles/common.css', '../styles/sheetDetail.css'],
-                        directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider],
+                        directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider, sheetReturnData_component_1.SheetReturnData],
                         inputs: ['sheet'],
                     }), 
                     __metadata('design:paramtypes', [router_1.RouteParams, sheetBackEnd_service_1.SheetBackEnd, sheetWeightAdjuster_service_1.SheetWeightAdjuster])

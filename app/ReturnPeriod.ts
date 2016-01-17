@@ -1,1 +1,1 @@
-export enum ReturnPeriod {lastMonth, lastYear, lastFiveYears};
+export enum ReturnPeriod {lastMonth, lastYear, all};

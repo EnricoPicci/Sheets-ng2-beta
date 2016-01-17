@@ -1,4 +1,3 @@
-import {SheetService} from './sheetService';
 import {SheetBackEnd} from './sheetBackEnd.service';
 import {SearchCriteria} from './searchCriteria';
 import {SearchSelection} from './searchSelection';
