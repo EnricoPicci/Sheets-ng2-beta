@@ -23,7 +23,15 @@ System.register(['angular2/core', '../ng2Highcharts/src/directives/ng2-highchart
                 function SheetCompositionCharts() {
                 }
                 SheetCompositionCharts.prototype.ngOnInit = function () {
-                    this.highchartsOptionsForGroups = {
+                    this.highchartsOptionsForGroups = this.createNewHighstocksOptions('Composizione per Gruppi', 'Distribuzione percentuale sui vari gruppi');
+                    this.highchartsOptionsForGroups.series = this.getSeriesForAssetGroups();
+                    this.highchartsOptionsForAssets = this.createNewHighstocksOptions('Composizione per Asset', 'Distribuzione percentuale sui vari gruppi');
+                    this.highchartsOptionsForAssets.series = this.getSeriesForAssets();
+                    console.log(this.highchartsOptionsForGroups);
+                    console.log(this.highchartsOptionsForAssets);
+                };
+                SheetCompositionCharts.prototype.createNewHighstocksOptions = function (inTitle, inSubtitle) {
+                    return {
                         chart: {
                             plotBackgroundColor: null,
                             plotBorderWidth: null,
@@ -31,11 +39,11 @@ System.register(['angular2/core', '../ng2Highcharts/src/directives/ng2-highchart
                             type: 'pie'
                         },
                         title: {
-                            text: 'Composizione per Gruppi',
+                            text: inTitle,
                             style: { "fontSize": "12px" }
                         },
                         subtitle: {
-                            text: 'Distribuzione percentuale sui vari gruppi',
+                            text: inSubtitle,
                             style: { "fontSize": "10px" }
                         },
                         tooltip: {
@@ -50,65 +58,42 @@ System.register(['angular2/core', '../ng2Highcharts/src/directives/ng2-highchart
                                 },
                                 showInLegend: true
                             }
-                        },
-                        series: [{
-                                name: 'Percentuale',
-                                data: [
-                                    ['Bananas', 8],
-                                    ['Kiwi', 3],
-                                    ['Mixed nuts', 1],
-                                    ['Oranges', 6],
-                                    ['Apples', 8],
-                                    ['Pears', 4],
-                                    ['Clementines', 4],
-                                    ['Reddish (bag)', 1],
-                                    ['Grapes (bunch)', 1]
-                                ]
-                            }]
+                        }
                     };
-                    this.highchartsOptionsForAssets = {
-                        chart: {
-                            plotBackgroundColor: null,
-                            plotBorderWidth: null,
-                            plotShadow: false,
-                            type: 'pie'
-                        },
-                        title: {
-                            text: 'Composizione per Asset',
-                            style: { "fontSize": "12px" }
-                        },
-                        subtitle: {
-                            text: 'Distribuzione percentuale sui vari asset',
-                            style: { "fontSize": "10px" }
-                        },
-                        tooltip: {
-                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        },
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: false
-                                },
-                                showInLegend: true
-                            }
-                        },
-                        series: [{
-                                name: 'Percentuale per Gruppi',
-                                data: [
-                                    ['Bananas', 8],
-                                    ['Kiwi', 3],
-                                    ['Mixed nuts', 1],
-                                    ['Oranges', 6],
-                                    ['Apples', 8],
-                                    ['Pears', 4],
-                                    ['Clementines', 4],
-                                    ['Reddish (bag)', 1],
-                                    ['Grapes (bunch)', 1]
-                                ]
-                            }]
+                };
+                SheetCompositionCharts.prototype.getSeriesForAssetGroups = function () {
+                    var seriesData = new Array();
+                    this._primFillSeriesForAssetAbstract(this.sheet.assetGroups, seriesData);
+                    var ret = new Array();
+                    var series = {
+                        name: 'Percentuale',
+                        data: seriesData
                     };
+                    ret.push(series);
+                    return ret;
+                };
+                SheetCompositionCharts.prototype.getSeriesForAssets = function () {
+                    var seriesData = new Array();
+                    for (var i = 0; i < this.sheet.assetGroups.length; i++) {
+                        var assetGroup = this.sheet.assetGroups[i];
+                        this._primFillSeriesForAssetAbstract(assetGroup.assets, seriesData);
+                    }
+                    var ret = new Array();
+                    var series = {
+                        name: 'Percentuale',
+                        data: seriesData
+                    };
+                    ret.push(series);
+                    return ret;
+                };
+                SheetCompositionCharts.prototype._primFillSeriesForAssetAbstract = function (inAssetAbstract, inSeries) {
+                    for (var i = 0; i < inAssetAbstract.length; i++) {
+                        var abstractAsset = inAssetAbstract[i];
+                        var data = new Array();
+                        data.push(abstractAsset.name);
+                        data.push(abstractAsset.weight);
+                        inSeries.push(data);
+                    }
                 };
                 SheetCompositionCharts = __decorate([
                     core_1.Component({
