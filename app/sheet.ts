@@ -1,3 +1,5 @@
+import {EventEmitter} from 'angular2/core';
+
 import{AssetGroup} from './assetGroup';
 import{Asset} from './asset';
 
@@ -30,6 +32,9 @@ export class Sheet {
 	public general: string;
 	public valueBased: string;
 	public sector: string;
+    
+    // add en EventEmmiter to communicate when sheet composition changes to all components that may be interested
+    private _changeCompositionEventEmitter: EventEmitter<Sheet> = new EventEmitter();
 
 	public constructor(inId: number, inTitle: string, inLongTitle: string, inImageUrl: string,
                          inOneMonthReturn: string) {
@@ -39,5 +44,12 @@ export class Sheet {
 		this.imageUrl = inImageUrl;
 		this.oneMonthReturn= inOneMonthReturn
 	}
+    
+    emitChangeCompositionEvent() {
+        this._changeCompositionEventEmitter.emit(this);
+    }
+    getChangeCompositionEvent() {
+        return this._changeCompositionEventEmitter;
+    }    
 
 }

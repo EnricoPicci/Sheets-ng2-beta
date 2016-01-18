@@ -21,14 +21,19 @@ System.register(['angular2/core', '../ng2Highcharts/src/directives/ng2-highchart
         execute: function() {
             SheetCompositionCharts = (function () {
                 function SheetCompositionCharts() {
+                    this._isAssetGroupViewShown = true;
                 }
                 SheetCompositionCharts.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.generateCharts();
+                    this._subscriptionToSheetCompositionChange = this.sheet.getChangeCompositionEvent().
+                        subscribe(function (inSheet) { return _this.generateCharts(); });
+                };
+                SheetCompositionCharts.prototype.generateCharts = function () {
                     this.highchartsOptionsForGroups = this.createNewHighstocksOptions('Composizione per Gruppi', 'Distribuzione percentuale sui vari gruppi');
                     this.highchartsOptionsForGroups.series = this.getSeriesForAssetGroups();
-                    this.highchartsOptionsForAssets = this.createNewHighstocksOptions('Composizione per Asset', 'Distribuzione percentuale sui vari gruppi');
+                    this.highchartsOptionsForAssets = this.createNewHighstocksOptions('Composizione per Asset', 'Distribuzione percentuale sui vari asset');
                     this.highchartsOptionsForAssets.series = this.getSeriesForAssets();
-                    console.log(this.highchartsOptionsForGroups);
-                    console.log(this.highchartsOptionsForAssets);
                 };
                 SheetCompositionCharts.prototype.createNewHighstocksOptions = function (inTitle, inSubtitle) {
                     return {
@@ -95,11 +100,25 @@ System.register(['angular2/core', '../ng2Highcharts/src/directives/ng2-highchart
                         inSeries.push(data);
                     }
                 };
+                SheetCompositionCharts.prototype.toggleView = function () {
+                    this._isAssetGroupViewShown = !this._isAssetGroupViewShown;
+                };
+                SheetCompositionCharts.prototype.getToggleViewText = function () {
+                    var ret;
+                    if (this._isAssetGroupViewShown) {
+                        ret = 'Vista per Assets';
+                    }
+                    else {
+                        ret = 'Vista per Asset Group';
+                    }
+                    ;
+                    return ret;
+                };
                 SheetCompositionCharts = __decorate([
                     core_1.Component({
                         selector: 'sheet-compositionCharts',
                         providers: [],
-                        template: "\n        <div [ng2-highcharts]=\"highchartsOptionsForGroups\" class=\"compositionChart\"></div>\n        <div [ng2-highcharts]=\"highchartsOptionsForAssets\" class=\"compositionChart\"></div>\n    ",
+                        template: "\n        <div [ng2-highcharts]=\"highchartsOptionsForGroups\" class=\"compositionChart\" [style.display]=\"_isAssetGroupViewShown ? 'block' : 'none'\"></div>\n        <div [ng2-highcharts]=\"highchartsOptionsForAssets\" class=\"compositionChart\" [style.display]=\"_isAssetGroupViewShown ? 'none' : 'block'\"></div>\n        <div><span id=\"toggleViewText\" (click)=\"toggleView()\">{{getToggleViewText()}}</span></div>\n    ",
                         styleUrls: ['../styles/common.css', '../styles/sheetCompositionCharts.css'],
                         directives: [ng2_highcharts_1.Ng2Highcharts],
                         inputs: ['sheet'],

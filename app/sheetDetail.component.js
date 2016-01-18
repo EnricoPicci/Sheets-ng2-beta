@@ -99,11 +99,13 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
                     var newWeightValue = inEvent[0];
                     this._sheetWeightAdjuster.adjustAfterChangeInAssetGroupWeight(newWeightValue, inAssetGroup);
                     this._sheetWeightAdjuster.setRelativeStartOfScale(this.sheet.assetGroups);
+                    this.sheet.emitChangeCompositionEvent();
                 };
                 SheetDetailComponent.prototype.onEndOnAsset = function (inEvent, inAsset) {
                     var newWeightValue = inEvent[0];
                     this._sheetWeightAdjuster.adjustAfterChangeInAssetWeight(newWeightValue, inAsset);
                     this._sheetWeightAdjuster.setRelativeStartOfScale(this.sheet.assetGroups);
+                    this.sheet.emitChangeCompositionEvent();
                 };
                 SheetDetailComponent = __decorate([
                     core_1.Component({

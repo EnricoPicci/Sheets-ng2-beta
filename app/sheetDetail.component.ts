@@ -97,12 +97,14 @@ export class SheetDetailComponent {
         let newWeightValue = inEvent[0];
         this._sheetWeightAdjuster.adjustAfterChangeInAssetGroupWeight(newWeightValue, inAssetGroup);
         this._sheetWeightAdjuster.setRelativeStartOfScale(this.sheet.assetGroups);
+        this.sheet.emitChangeCompositionEvent();
     }
     
     onEndOnAsset(inEvent: number[], inAsset: Asset) {
         let newWeightValue = inEvent[0];
         this._sheetWeightAdjuster.adjustAfterChangeInAssetWeight(newWeightValue, inAsset);
         this._sheetWeightAdjuster.setRelativeStartOfScale(this.sheet.assetGroups);
+        this.sheet.emitChangeCompositionEvent();
      }
      
 }

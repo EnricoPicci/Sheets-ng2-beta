@@ -11,8 +11,9 @@ import {Ng2Highcharts} from '../ng2Highcharts/src/directives/ng2-highcharts';
     selector: 'sheet-compositionCharts',
 	providers: [],
     template: `
-        <div [ng2-highcharts]="highchartsOptionsForGroups" class="compositionChart"></div>
-        <div [ng2-highcharts]="highchartsOptionsForAssets" class="compositionChart"></div>
+        <div [ng2-highcharts]="highchartsOptionsForGroups" class="compositionChart" [style.display]="_isAssetGroupViewShown ? 'block' : 'none'"></div>
+        <div [ng2-highcharts]="highchartsOptionsForAssets" class="compositionChart" [style.display]="_isAssetGroupViewShown ? 'none' : 'block'"></div>
+        <div><span id="toggleViewText" (click)="toggleView()">{{getToggleViewText()}}</span></div>
     `,
     styleUrls: ['../styles/common.css', '../styles/sheetCompositionCharts.css'],
 	directives: [Ng2Highcharts],
@@ -22,17 +23,24 @@ export class SheetCompositionCharts {
     public sheet: Sheet;
     public highchartsOptionsForGroups: HighchartsOptions;
     public highchartsOptionsForAssets: HighchartsOptions;
+    private _isAssetGroupViewShown = true;
+    
+    private _subscriptionToSheetCompositionChange: any;
     
     ngOnInit() {
+        this.generateCharts();
+        this._subscriptionToSheetCompositionChange = this.sheet.getChangeCompositionEvent().
+                                                        subscribe(inSheet => this.generateCharts());
+    }
+    
+    generateCharts() {
         this.highchartsOptionsForGroups = this.createNewHighstocksOptions('Composizione per Gruppi', 
                                                                             'Distribuzione percentuale sui vari gruppi');
         this.highchartsOptionsForGroups.series = this.getSeriesForAssetGroups();
         
         this.highchartsOptionsForAssets = this.createNewHighstocksOptions('Composizione per Asset', 
-                                                                            'Distribuzione percentuale sui vari gruppi');
+                                                                            'Distribuzione percentuale sui vari asset');
         this.highchartsOptionsForAssets.series = this.getSeriesForAssets();
-        console.log(this.highchartsOptionsForGroups);
-        console.log(this.highchartsOptionsForAssets);
     }
     
     createNewHighstocksOptions(inTitle: string, inSubtitle: string) {
@@ -103,4 +111,19 @@ export class SheetCompositionCharts {
             inSeries.push(data);
         }
     }
+    
+    toggleView() {
+        this._isAssetGroupViewShown = !this._isAssetGroupViewShown;
+    }
+    
+    getToggleViewText() {
+        let ret: string;
+        if (this._isAssetGroupViewShown) {
+            ret = 'Vista per Assets';
+        } else {
+            ret = 'Vista per Asset Group';
+        };
+        return ret;
+    }
+
 }

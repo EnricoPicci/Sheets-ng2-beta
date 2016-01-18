@@ -3,3 +3,9 @@
     width: 150px;
     float: right;
 }
+
+#toggleViewText {
+    cursor: pointer;
+    color: blue;
+    margin-left: 20px;
+}
