@@ -36,7 +36,8 @@ System.register(['angular2/core'], function(exports_1) {
                             if (this.chart) {
                                 this.chart.destroy();
                             }
-                            opt = Object.assign(opt, this.renderTo);
+                            //opt = Object.assign(opt, this.renderTo);
+                            opt.chart.renderTo = this.hostElement.nativeElement;
                             this.chart = new Highcharts.Chart(opt);
                         }
                         else {

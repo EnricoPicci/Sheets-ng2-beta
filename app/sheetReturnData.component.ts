@@ -6,36 +6,92 @@ import {ReturnPeriod} from './returnPeriod';
 
 import {Ng2Highstocks} from '../ng2Highcharts/src/directives/ng2-highstocks';
 
-
 @Component({
     selector: 'sheet-returnData',
 	providers: [],
-    template: `
-        <div [ng2-highstocks]="highstocksOptions" class="graph"></div>
-    `,
-    //styleUrls: ['../styles/common.css', '../styles/sheetReturnData.css'],
+    templateUrl: '../templates/sheetReturnData.html',
+    styleUrls: ['../styles/common.css'],
 	directives: [Ng2Highstocks],
     //inputs: ['sheet'],
 })
 export class SheetReturnData { 
     public mySheet: Sheet;
-    public highstocksOptions: Object;
+    public highstocksOptions: any;
+    
+    isLastMonthPeriod: boolean = false;
+    isLastYearPeriod: boolean = false;
+    isAllPeriod: boolean = false;
+    periodText: string;
     
     @Input('sheet') set options(inSheet: Sheet) {
         this.mySheet = inSheet;
-        if (this.mySheet.returnDataLastMonth == null) {
+        this.setLastMonthSeries();
+    }
+        
+    constructor(
+        private _sheetBackEnd: SheetBackEnd
+    ) { }
+    
+    setLastMonthSeries() {
+        if (this.mySheet.returnDataLastMonth.isEmpty) {
             this._sheetBackEnd.fillReturnData(this.mySheet, ReturnPeriod.lastMonth);
         }
-        let seriesOptions = new Array<any>();
-        seriesOptions[0] = {
+        let series = new Array<any>();
+        series[0] = {
             name: this.mySheet.title,
             data: this.mySheet.returnDataLastMonth.data
         };
-        seriesOptions[1] = {
+        series[1] = {
             name: this.mySheet.benchmark,
             data: this.mySheet.returnDataBenchmarkLastMonth.data
         };
-        this.highstocksOptions = {
+        this.resetPeriodState();
+        this.isLastMonthPeriod = true;
+        this.periodText = 'Ultimo mese';
+        this.setSeriesIntHighstocksOptions(series);
+    }
+    
+    setLastYearSeries() {
+        if (this.mySheet.returnDataLastYear.isEmpty) {
+            this._sheetBackEnd.fillReturnData(this.mySheet, ReturnPeriod.lastYear);
+        }
+        let series = new Array<any>();
+        series[0] = {
+            name: this.mySheet.title,
+            data: this.mySheet.returnDataLastYear.data
+        };
+        series[1] = {
+            name: this.mySheet.benchmark,
+            data: this.mySheet.returnDataBenchmarkLastYear.data
+        };
+        this.resetPeriodState();
+        this.isLastYearPeriod = true;
+        this.periodText = 'Ultimo anno';
+        this.setSeriesIntHighstocksOptions(series);
+    }
+    
+    setAllSeries() {
+        if (this.mySheet.returnDataAll.isEmpty) {
+            this._sheetBackEnd.fillReturnData(this.mySheet, ReturnPeriod.all);
+        }
+        let series = new Array<any>();
+        series[0] = {
+            name: this.mySheet.title,
+            data: this.mySheet.returnDataAll.data
+        };
+        series[1] = {
+            name: this.mySheet.benchmark,
+            data: this.mySheet.returnDataBenchmarkAll.data
+        };
+        this.resetPeriodState();
+        this.isAllPeriod = true;
+        this.periodText = 'Da inizio';
+        this.setSeriesIntHighstocksOptions(series);
+    }
+    
+    createNewHighstocksOptions() {
+        return {
+            title: {text: "Performance vs Benchmark (" + this.periodText + ")"},
             rangeSelector: {
                 selected: 4},
             yAxis: {
@@ -54,14 +110,18 @@ export class SheetReturnData {
             },
             tooltip: {
                 pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                valueDecimals: 2},
-            series: seriesOptions
-        }
+                valueDecimals: 2}
+        };
     }
-        
-    constructor(
-        private _sheetBackEnd: SheetBackEnd
-    ) { }
-   
     
+    setSeriesIntHighstocksOptions(inSeries: Array<any>) {
+        this.highstocksOptions = this.createNewHighstocksOptions();
+        this.highstocksOptions.series = inSeries;
+    }
+    
+    resetPeriodState() {
+        this.isLastMonthPeriod = false;
+        this.isLastYearPeriod = false;
+        this.isAllPeriod = false;        
+    }
 }

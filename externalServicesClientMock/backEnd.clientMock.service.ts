@@ -322,15 +322,15 @@ private description: string = 'The morning has the sun in its mouth. The morning
         if (id == 1 || id == 4 || id == 7 || id == 10 || id == 13 || id == 16) {
             inSheet.benchmark = 'S&P 1312';
             inSheet.returnDataAll.data = this.mockData.getReturnDataAll1();
-            inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll2(); // take the second series as benchmark
+            inSheet.returnDataBenchmarkAll.data = this.mockData.getReturnDataAll2(); // take the second series as benchmark
         } else if (id == 2 || id == 5 || id == 8 || id == 11 || id == 14) {
             inSheet.benchmark = 'Best Dream Index';
             inSheet.returnDataAll.data = this.mockData.getReturnDataAll2();
-            inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll3(); // take the third series as benchmark
+            inSheet.returnDataBenchmarkAll.data = this.mockData.getReturnDataAll3(); // take the third series as benchmark
         } else {
             inSheet.benchmark = 'Worst Nitghmare Index';
             inSheet.returnDataAll.data = this.mockData.getReturnDataAll3();
-            inSheet.returnDataBenchmarkLastYear.data = this.mockData.getReturnDataAll1(); // take the first series as benchmark
+            inSheet.returnDataBenchmarkAll.data = this.mockData.getReturnDataAll1(); // take the first series as benchmark
         }
     }
     

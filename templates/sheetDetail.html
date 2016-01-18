@@ -38,8 +38,8 @@
         </div>
         <div id="assetComposition">
             <div id="assetTable">
-                <button id="customizeButton" type="button" (click)="onClickOverCustomizeButton()">{{getCustomizeButtonText()}}</button>
-                <button id="relativeScaleButton" type="button" (click)="onClickOverRelativeScaleButton()" [style.display]="editStatus ? 'block' : 'none'">{{getRelativeScaleButtonText()}}</button>
+                <button id="customizeButton" class="basicButton" type="button" (click)="onClickOverCustomizeButton()">{{getCustomizeButtonText()}}</button>
+                <button id="relativeScaleButton" class="basicButton" type="button" (click)="onClickOverRelativeScaleButton()" [style.display]="editStatus ? 'block' : 'none'">{{getRelativeScaleButtonText()}}</button>
                 <table class="overviewAssetTable">
                     <thead>
                         <tr>
@@ -112,7 +112,9 @@
                     </tbody>
                 </table>
             </div>
-            <div id="assetChart"></div>
+            <div id="assetChart">
+                <sheet-compositionCharts id="sheetCharts" [sheet]="sheet"></sheet-compositionCharts>
+            </div>
         </div>
     </div>
     <div id="pageFooter"></div>

@@ -27,3 +27,13 @@
 .arrow.open {
     background-position: 0 -72px;
 }
+
+.basicButton {
+    height: 20px;
+    width: 110px;
+    float: left;
+    /*position: absolute;*/
+    bottom: 0;
+    left: 0;
+    background-color: azure;
+}

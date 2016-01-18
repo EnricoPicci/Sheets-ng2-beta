@@ -31,49 +31,106 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
             SheetReturnData = (function () {
                 function SheetReturnData(_sheetBackEnd) {
                     this._sheetBackEnd = _sheetBackEnd;
+                    this.isLastMonthPeriod = false;
+                    this.isLastYearPeriod = false;
+                    this.isAllPeriod = false;
                 }
                 Object.defineProperty(SheetReturnData.prototype, "options", {
                     set: function (inSheet) {
                         this.mySheet = inSheet;
-                        if (this.mySheet.returnDataLastMonth == null) {
-                            this._sheetBackEnd.fillReturnData(this.mySheet, returnPeriod_1.ReturnPeriod.lastMonth);
-                        }
-                        var seriesOptions = new Array();
-                        seriesOptions[0] = {
-                            name: this.mySheet.title,
-                            data: this.mySheet.returnDataLastMonth.data
-                        };
-                        seriesOptions[1] = {
-                            name: this.mySheet.benchmark,
-                            data: this.mySheet.returnDataBenchmarkLastMonth.data
-                        };
-                        this.highstocksOptions = {
-                            rangeSelector: {
-                                selected: 4 },
-                            yAxis: {
-                                labels: {
-                                    formatter: function () {
-                                        return (this.value > 0 ? ' + ' : '') + this.value + '%';
-                                    }
-                                },
-                                plotLines: [{
-                                        value: 0,
-                                        width: 2,
-                                        color: 'silver' }]
-                            },
-                            plotOptions: {
-                                series: {
-                                    compare: 'percent' }
-                            },
-                            tooltip: {
-                                pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-                                valueDecimals: 2 },
-                            series: seriesOptions
-                        };
+                        this.setLastMonthSeries();
                     },
                     enumerable: true,
                     configurable: true
                 });
+                SheetReturnData.prototype.setLastMonthSeries = function () {
+                    if (this.mySheet.returnDataLastMonth.isEmpty) {
+                        this._sheetBackEnd.fillReturnData(this.mySheet, returnPeriod_1.ReturnPeriod.lastMonth);
+                    }
+                    var series = new Array();
+                    series[0] = {
+                        name: this.mySheet.title,
+                        data: this.mySheet.returnDataLastMonth.data
+                    };
+                    series[1] = {
+                        name: this.mySheet.benchmark,
+                        data: this.mySheet.returnDataBenchmarkLastMonth.data
+                    };
+                    this.resetPeriodState();
+                    this.isLastMonthPeriod = true;
+                    this.periodText = 'Ultimo mese';
+                    this.setSeriesIntHighstocksOptions(series);
+                };
+                SheetReturnData.prototype.setLastYearSeries = function () {
+                    if (this.mySheet.returnDataLastYear.isEmpty) {
+                        this._sheetBackEnd.fillReturnData(this.mySheet, returnPeriod_1.ReturnPeriod.lastYear);
+                    }
+                    var series = new Array();
+                    series[0] = {
+                        name: this.mySheet.title,
+                        data: this.mySheet.returnDataLastYear.data
+                    };
+                    series[1] = {
+                        name: this.mySheet.benchmark,
+                        data: this.mySheet.returnDataBenchmarkLastYear.data
+                    };
+                    this.resetPeriodState();
+                    this.isLastYearPeriod = true;
+                    this.periodText = 'Ultimo anno';
+                    this.setSeriesIntHighstocksOptions(series);
+                };
+                SheetReturnData.prototype.setAllSeries = function () {
+                    if (this.mySheet.returnDataAll.isEmpty) {
+                        this._sheetBackEnd.fillReturnData(this.mySheet, returnPeriod_1.ReturnPeriod.all);
+                    }
+                    var series = new Array();
+                    series[0] = {
+                        name: this.mySheet.title,
+                        data: this.mySheet.returnDataAll.data
+                    };
+                    series[1] = {
+                        name: this.mySheet.benchmark,
+                        data: this.mySheet.returnDataBenchmarkAll.data
+                    };
+                    this.resetPeriodState();
+                    this.isAllPeriod = true;
+                    this.periodText = 'Da inizio';
+                    this.setSeriesIntHighstocksOptions(series);
+                };
+                SheetReturnData.prototype.createNewHighstocksOptions = function () {
+                    return {
+                        title: { text: "Performance vs Benchmark (" + this.periodText + ")" },
+                        rangeSelector: {
+                            selected: 4 },
+                        yAxis: {
+                            labels: {
+                                formatter: function () {
+                                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                                }
+                            },
+                            plotLines: [{
+                                    value: 0,
+                                    width: 2,
+                                    color: 'silver' }]
+                        },
+                        plotOptions: {
+                            series: {
+                                compare: 'percent' }
+                        },
+                        tooltip: {
+                            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+                            valueDecimals: 2 }
+                    };
+                };
+                SheetReturnData.prototype.setSeriesIntHighstocksOptions = function (inSeries) {
+                    this.highstocksOptions = this.createNewHighstocksOptions();
+                    this.highstocksOptions.series = inSeries;
+                };
+                SheetReturnData.prototype.resetPeriodState = function () {
+                    this.isLastMonthPeriod = false;
+                    this.isLastYearPeriod = false;
+                    this.isAllPeriod = false;
+                };
                 __decorate([
                     core_1.Input('sheet'), 
                     __metadata('design:type', sheet_1.Sheet), 
@@ -83,8 +140,8 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                     core_1.Component({
                         selector: 'sheet-returnData',
                         providers: [],
-                        template: "\n        <div [ng2-highstocks]=\"highstocksOptions\" class=\"graph\"></div>\n    ",
-                        //styleUrls: ['../styles/common.css', '../styles/sheetReturnData.css'],
+                        templateUrl: '../templates/sheetReturnData.html',
+                        styleUrls: ['../styles/common.css'],
                         directives: [ng2_highstocks_1.Ng2Highstocks],
                     }), 
                     __metadata('design:paramtypes', [sheetBackEnd_service_1.SheetBackEnd])

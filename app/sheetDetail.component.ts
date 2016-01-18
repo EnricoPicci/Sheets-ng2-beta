@@ -11,13 +11,14 @@ import {ShortLongTextComponent} from '../utilities/shortLongText.component';
 import {Slider} from '../utilities/slider.component'
 import {SheetWeightAdjuster} from './sheetWeightAdjuster.service';
 import {SheetReturnData} from './sheetReturnData.component'
+import {SheetCompositionCharts} from './sheetCompositionCharts.component'
 
 @Component({
     selector: 'sheet-detail',
 	providers: [],
     templateUrl: '../templates/sheetDetail.html',
     styleUrls: ['../styles/common.css', '../styles/sheetDetail.css'],
-	directives: [ShortLongTextComponent, Slider, SheetReturnData],
+	directives: [ShortLongTextComponent, Slider, SheetReturnData, SheetCompositionCharts],
     inputs: ['sheet'],
 })
 export class SheetDetailComponent { 

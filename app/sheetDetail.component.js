@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service', './sheetReturnData.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '../utilities/shortLongText.component', '../utilities/slider.component', './sheetWeightAdjuster.service', './sheetReturnData.component', './sheetCompositionCharts.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sheetBackEnd_service_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1, sheetReturnData_component_1;
+    var core_1, router_1, sheetBackEnd_service_1, shortLongText_component_1, slider_component_1, sheetWeightAdjuster_service_1, sheetReturnData_component_1, sheetCompositionCharts_component_1;
     var SheetDetailComponent;
     return {
         setters:[
@@ -32,6 +32,9 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
             },
             function (sheetReturnData_component_1_1) {
                 sheetReturnData_component_1 = sheetReturnData_component_1_1;
+            },
+            function (sheetCompositionCharts_component_1_1) {
+                sheetCompositionCharts_component_1 = sheetCompositionCharts_component_1_1;
             }],
         execute: function() {
             SheetDetailComponent = (function () {
@@ -108,7 +111,7 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service', '
                         providers: [],
                         templateUrl: '../templates/sheetDetail.html',
                         styleUrls: ['../styles/common.css', '../styles/sheetDetail.css'],
-                        directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider, sheetReturnData_component_1.SheetReturnData],
+                        directives: [shortLongText_component_1.ShortLongTextComponent, slider_component_1.Slider, sheetReturnData_component_1.SheetReturnData, sheetCompositionCharts_component_1.SheetCompositionCharts],
                         inputs: ['sheet'],
                     }), 
                     __metadata('design:paramtypes', [router_1.RouteParams, sheetBackEnd_service_1.SheetBackEnd, sheetWeightAdjuster_service_1.SheetWeightAdjuster])
