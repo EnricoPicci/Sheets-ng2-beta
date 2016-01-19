@@ -35,7 +35,6 @@ System.register(['angular2/core'], function(exports_1) {
                         }
                         if (opt.series) {
                             if (this.chart) {
-                                this.chart.destroy();
                             }
                             //opt = Object.assign(opt, this.renderTo);
                             //this.chart = new Highcharts.Chart(opt);
@@ -43,9 +42,14 @@ System.register(['angular2/core'], function(exports_1) {
                             var nativeEl = hostEl.nativeElement;
                             var jQ = jQuery(nativeEl);
                             //this.chart = jQ.highcharts('StockChart', opt);
-                            opt = Object.assign(opt, this.renderTo);
+                            //opt = Object.assign(opt, this.renderTo);
                             //this.chart = new Highcharts.Chart('StockChart', opt);
-                            this.chart = new Highcharts.Chart(opt);
+                            /*if (!opt.chart) {
+                                opt.chart = new Object();
+                            }
+                            opt.chart.renderTo = jQ;
+                            this.chart = new Highcharts.Chart('StockChart', opt);*/
+                            this.chart = jQ.highcharts('StockChart', opt);
                         }
                         else {
                             console.log('No valid options...');

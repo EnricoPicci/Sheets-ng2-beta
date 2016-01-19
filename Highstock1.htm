@@ -24,7 +24,7 @@ $(function () {
      */
     function createChart() {
 		var cont = $('#container');
-        cont.highcharts('StockChart', {
+		var opt = {
 
             rangeSelector: {
                 selected: 4
@@ -55,7 +55,13 @@ $(function () {
             },
 
             series: seriesOptions
-        });
+        };
+			/*if (!opt.chart) {
+                opt.chart = new Object();
+            }
+            opt.chart.renderTo = cont;
+            new Highcharts.Chart('StockChart', opt);*/
+        cont.highcharts('StockChart', opt);
     }
 
     $.each(names, function (i, name) {
@@ -85,7 +91,7 @@ $(function () {
     <script src="./lib/NoUISlider/nouislider.js"></script>
     <!--script src="./lib/chart.js/chart2013.js"></script-->
     <script src="./lib/jquery/dist/jquery.js"></script>
-    <script src="./lib/highcharts/highstock.js"></script>
+    <script src="./lib/highcharts/highstock.src.js"></script>
     <script src="./lib/highcharts/modules/exporting.js"></script>
     <script src="./lib/highcharts/highcharts-more.js"></script>
 
