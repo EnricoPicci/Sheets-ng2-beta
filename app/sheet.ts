@@ -27,6 +27,9 @@ export class Sheet {
     public returnDataBenchmarkLastMonth: ReturnData = new ReturnData();
     public returnDataBenchmarkLastYear: ReturnData = new ReturnData();
     public returnDataBenchmarkAll: ReturnData = new ReturnData();
+    
+    public valueAtRisk: number;
+    public volatility: number;
 
 	// tags used as filter in search
 	public general: string;
@@ -36,13 +39,25 @@ export class Sheet {
     // add en EventEmmiter to communicate when sheet composition changes to all components that may be interested
     private _changeCompositionEventEmitter: EventEmitter<Sheet> = new EventEmitter();
 
-	public constructor(inId: number, inTitle: string, inLongTitle: string, inImageUrl: string,
-                         inOneMonthReturn: string) {
-		this.id = inId;
+	public constructor(inId: number, 
+                        inTitle: string, 
+                        inLongTitle: string, 
+                        inImageUrl: string,
+                        inOneMonthReturn: string, 
+                        inValueAtRisk: number, 
+                        inVolatility: number,
+                        inGeneral: string, 
+                        inValueBased: string, 
+                        inSector: string) {
         this.title = inTitle;
-		this.longTitle = inLongTitle;
-		this.imageUrl = inImageUrl;
-		this.oneMonthReturn= inOneMonthReturn
+        this.longTitle = inLongTitle;
+        this.imageUrl = inImageUrl;
+        this.oneMonthReturn = inOneMonthReturn;
+        this.valueAtRisk = inValueAtRisk;
+        this.volatility = inVolatility;
+        this.general = inGeneral;
+        this.valueBased = inValueBased;
+        this.sector = inSector;
 	}
     
     emitChangeCompositionEvent() {

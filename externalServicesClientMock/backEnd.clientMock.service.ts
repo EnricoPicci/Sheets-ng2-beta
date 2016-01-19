@@ -14,7 +14,6 @@ export class BackEndClientMock extends SheetBackEnd {
 		return this.getSomeSheets(inId, 1)[0];
 	}
 
-
 	getSomeSheets(inFromPosition: number, inMaxNumberOfSheets: number) {
 		var sheets: Sheet[] = new Array<Sheet>();
 		var sheetsCreated: Sheet[] = this.createSheets();
@@ -99,9 +98,8 @@ export class BackEndClientMock extends SheetBackEnd {
 		return ret;
 	};
 
-
-    
-    setRelativeStartOfScale(inAssetGroups: AssetGroup[]) {
+    // when
+    /*setRelativeStartOfScale(inAssetGroups: AssetGroup[]) {
         let relativeStartOfScale = 0;
         for (var i = 0; i < inAssetGroups.length; i++) {
             let assets = inAssetGroups[i].assets;
@@ -111,64 +109,28 @@ export class BackEndClientMock extends SheetBackEnd {
                 relativeStartOfScale = relativeStartOfScale + asset.range.max;
             }
         }
-    }
-
+    }*/
 
 		createSheets() {
             let createdBY = 'CocoonTechies';
 		var sheets: Sheet[] = new Array<Sheet>();
-sheets[0] = new Sheet(0, null, null, null, null);
-sheets[0].title = 'Bear Int Market';  sheets[0].longTitle = 'International bears move on';  sheets[0].imageUrl = '../images/bears.jpg';  sheets[0].oneMonthReturn = '26.1';  sheets[0].general = 'Brands u know';  sheets[0].valueBased = 'Green';  sheets[0].sector = 'Energy';
-sheets[0].createdBy = createdBY;
-sheets[1] = new Sheet(1, null, null, null, null);
-sheets[1].title = 'Bear US Sectors';  sheets[1].longTitle = 'US bears roars in several sectors';  sheets[1].imageUrl = '../images/cyclingBear.jpg';  sheets[1].oneMonthReturn = '14.0';  sheets[1].general = 'Popular';  sheets[1].valueBased = 'Current';  sheets[1].sector = 'Health'; 
-sheets[1].createdBy = createdBY;
-sheets[2] = new Sheet(2, null, null, null, null);
-sheets[2].title = 'Enengia Pulita';  sheets[2].longTitle = 'Clean energy from italian gymns';  sheets[2].imageUrl = '../images/windMills.jpg';  sheets[2].oneMonthReturn = '12.4';  sheets[2].general = 'Popular';  sheets[2].valueBased = 'Green';  sheets[2].sector = 'FS'; 
-sheets[2].createdBy = createdBY;
-sheets[3] = new Sheet(3, null, null, null, null);
-sheets[3].title = 'China internet';  sheets[3].longTitle = 'Many chines will shop online soon';  sheets[3].imageUrl = '../images/chinaInternet.jpg';  sheets[3].oneMonthReturn = '11.2';  sheets[3].general = 'New';  sheets[3].valueBased = 'Political';  sheets[3].sector = 'Real Estate'; 
-sheets[3].createdBy = createdBY;
-sheets[4] = new Sheet(4, null, null, null, null);
-sheets[4].title = 'Mercati Orso USA';  sheets[4].longTitle = 'Orso americano non ruggisce solo a UCLA';  sheets[4].imageUrl = '../images/usBear.jpg';  sheets[4].oneMonthReturn = '10.7';  sheets[4].general = 'New';  sheets[4].valueBased = 'Political';  sheets[4].sector = 'Retail'; 
-sheets[4].createdBy = createdBY;
-sheets[5] = new Sheet(5, null, null, null, null);
-sheets[5].title = 'Slot Machines and Casino';  sheets[5].longTitle = 'Everybody hopes tomorrow will be her/his/its luck day';  sheets[5].imageUrl = '../images/games.jpg';  sheets[5].oneMonthReturn = '8.6';  sheets[5].general = 'Popular';  sheets[5].valueBased = 'Green';  sheets[5].sector = 'FS'; 
-sheets[5].createdBy = createdBY;
-sheets[6] = new Sheet(6, null, null, null, null);
-sheets[6].title = 'IPO recenti';  sheets[6].longTitle = 'Molti imprenditori tentano la fortuna';  sheets[6].imageUrl = '../images/ipos.jpg';  sheets[6].oneMonthReturn = '7.5';  sheets[6].general = 'Popular';  sheets[6].valueBased = 'Social';  sheets[6].sector = 'FS'; 
-sheets[6].createdBy = createdBY;
-sheets[7] = new Sheet(7, null, null, null, null);
-sheets[7].title = 'Sci su erba';  sheets[7].longTitle = 'Fa troppo caldo, non si vede neve, sciamo con in cingoli';  sheets[7].imageUrl = '../images/2Hot.jpg';  sheets[7].oneMonthReturn = '5.5';  sheets[7].general = 'New';  sheets[7].valueBased = 'Social';  sheets[7].sector = 'Energy'; 
-sheets[7].createdBy = createdBY;
-sheets[8] = new Sheet(8, null, null, null, null);
-sheets[8].title = 'Vanity Fair';  sheets[8].longTitle = 'Gli uomini sono diventati più vanitosi delle donne';  sheets[8].imageUrl = '../images/vanity.jpg';  sheets[8].oneMonthReturn = '5.3';  sheets[8].general = 'New';  sheets[8].valueBased = 'Current';  sheets[8].sector = 'Health'; 
-sheets[8].createdBy = createdBY;
-sheets[9] = new Sheet(9, null, null, null, null);
-sheets[9].title = 'Caffe e tea';  sheets[9].longTitle = 'Il te verde fa specialmente bene';  sheets[9].imageUrl = '../images/coffe.jpg';  sheets[9].oneMonthReturn = '4.9';  sheets[9].general = 'Popular';  sheets[9].valueBased = 'Social';  sheets[9].sector = 'Health'; 
-sheets[9].createdBy = createdBY;
-sheets[10] = new Sheet(10, null, null, null, null);
-sheets[10].title = 'Hot Retail';  sheets[10].longTitle = 'Tezinis, Benetton, Autostrade';  sheets[10].imageUrl = '../images/shopping.jpg';  sheets[10].oneMonthReturn = '2.0';  sheets[10].general = 'New';  sheets[10].valueBased = 'Current';  sheets[10].sector = 'Retail'; 
-sheets[10].createdBy = createdBY;
-sheets[11] = new Sheet(11, null, null, null, null);
-sheets[11].title = 'Deflazione';  sheets[11].longTitle = 'Domani le tue banconote hanno più valore di oggi';  sheets[11].imageUrl = '../images/deflation.jpg';  sheets[11].oneMonthReturn = '1.1';  sheets[11].general = 'Popular';  sheets[11].valueBased = 'Social';  sheets[11].sector = 'FS'; 
-sheets[11].createdBy = createdBY;
-sheets[12] = new Sheet(12, null, null, null, null);
-sheets[12].title = 'Stagflazione';  sheets[12].longTitle = 'Non so cosa voglia dire';  sheets[12].imageUrl = '../images/office.jpg';  sheets[12].oneMonthReturn = '1.0';  sheets[12].general = 'New';  sheets[12].valueBased = 'Green';  sheets[12].sector = 'FS'; 
-sheets[11].createdBy = createdBY;
-sheets[13] = new Sheet(13, null, null, null, null);
-sheets[13].title = 'Ebola';  sheets[13].longTitle = 'Su questo non si scherza';  sheets[13].imageUrl = '../images/ebola.jpg';  sheets[13].oneMonthReturn = '0.9';  sheets[13].general = 'Popular';  sheets[13].valueBased = 'Current';  sheets[13].sector = 'Retail'; 
-sheets[13].createdBy = createdBY;
-sheets[14] = new Sheet(14, null, null, null, null);
-sheets[14].title = 'Foodies';  sheets[14].longTitle = 'The last frontier of our beloved western world';  sheets[14].imageUrl = '../images/foodies.jpg';  sheets[14].oneMonthReturn = '0.8';  sheets[14].general = 'Popular';  sheets[14].valueBased = 'Social';  sheets[14].sector = 'Retail'; 
-sheets[14].createdBy = createdBY;
-sheets[15] = new Sheet(15, null, null, null, null);
-sheets[15].title = 'RIP';  sheets[15].longTitle = 'Investire in una cosa sicura';  sheets[15].imageUrl = '../images/forRent.jpg';  sheets[15].oneMonthReturn = '0.7';  sheets[15].general = 'Popular';  sheets[15].valueBased = 'Political';  sheets[15].sector = 'Health'; 
-sheets[15].createdBy = createdBY;
-sheets[16] = new Sheet(16, null, null, null, null);
-sheets[16].title = 'Bye Bye Baby';  sheets[16].longTitle = 'The last opportunity for us';  sheets[16].imageUrl = '../images/shopFromHome.jpg';  sheets[16].oneMonthReturn = '0.6';  sheets[16].general = 'New';  sheets[16].valueBased = 'Current';  sheets[16].sector = 'Retail'; 
-sheets[16].createdBy = createdBY;
-
+sheets[0] = new Sheet(0,'Bear Int Market','International bears move on','../images/bears.jpg','26.1',4.0,12.2,'Brands u know','Green','Energy');
+sheets[1] = new Sheet(1,'Bear US Sectors','US bears roars in several sectors','../images/cyclingBear.jpg','14.0',5.3,11.3,'Popular','Current','Health');
+sheets[2] = new Sheet(2,'Enengia Pulita','Clean energy from italian gymns','../images/windMills.jpg','12.4',0.3,8.8,'Popular','Green','FS');
+sheets[3] = new Sheet(3,'China internet','Many chines will shop online soon','../images/chinaInternet.jpg','11.2',8.8,25.5,'New','Political','Real Estate');
+sheets[4] = new Sheet(4,'Mercati Orso USA','Orso americano non ruggisce solo a UCLA','../images/usBear.jpg','10.7',4.3,15.5,'New','Political','Retail');
+sheets[5] = new Sheet(5,'Slot Machines and Casino','Everybody hopes tomorrow will be their luck day','../images/games.jpg','8.6',5.0,14.3,'Popular','Green','FS');
+sheets[6] = new Sheet(6,'IPO recenti','Molti imprenditori tentano la fortuna','../images/ipos.jpg','7.5',2.2,3.4,'Popular','Social','FS');
+sheets[7] = new Sheet(7,'Sci su erba','Fa troppo caldo, non si vede neve, sciamo con in cingoli','../images/2Hot.jpg','5.5',2.1,2.2,'New','Social','Energy');
+sheets[8] = new Sheet(8,'Vanity Fair','Gli uomini sono diventati più vanitosi delle donne','../images/vanity.jpg','5.3',7.1,23.3,'New','Current','Health');
+sheets[9] = new Sheet(9,'Caffe e tea','Il te verde fa specialmente bene','../images/coffe.jpg','4.9',3.2,8.9,'Popular','Social','Health');
+sheets[10] = new Sheet(10,'Hot Retail','Tezinis, Benetton, Autostrade','../images/shopping.jpg','2.0',5.1,12.2,'New','Current','Retail');
+sheets[11] = new Sheet(11,'Deflazione','Domani le tue banconote hanno più valore di oggi','../images/deflation.jpg','1.1',2.2,4.0,'Popular','Social','FS');
+sheets[12] = new Sheet(12,'Stagflazione','Non so cosa voglia dire','../images/office.jpg','1.0',0.2,1.1,'New','Green','FS');
+sheets[13] = new Sheet(13,'Ebola','Su questo non si scherza','../images/ebola.jpg','0.9',0.3,0.9,'Popular','Current','Retail');
+sheets[14] = new Sheet(14,'Foodies','The last frontier of our beloved western world','../images/foodies.jpg','0.8',1.1,2.5,'Popular','Social','Retail');
+sheets[15] = new Sheet(15,'RIP','Investire in una cosa sicura','../images/forRent.jpg','0.7',6.2,14.4,'Popular','Political','Health');
+sheets[16] = new Sheet(16,'Bye Bye Baby','The last opportunity for us','../images/shopFromHome.jpg','0.6',2.2,4.5,'New','Current','Retail');
 		return sheets;
 	}
 
@@ -331,6 +293,47 @@ private description: string = 'The morning has the sun in its mouth. The morning
             inSheet.benchmark = 'Worst Nitghmare Index';
             inSheet.returnDataAll.data = this.mockData.getReturnDataAll3();
             inSheet.returnDataBenchmarkAll.data = this.mockData.getReturnDataAll1(); // take the first series as benchmark
+        }
+    }
+    
+    updateValueAtRisk(inSheet: Sheet) {
+        let max = 10;
+        let min = 0;
+        let newVaR = Math.random() * (max - min) + min;
+        inSheet.valueAtRisk = newVaR;
+    };
+    
+    updateVolatility(inSheet: Sheet) {
+        let max = 25;
+        let min = 0;
+        let newVaR = Math.random() * (max - min) + min;
+        inSheet.volatility = newVaR;        
+    };
+    
+        
+    updateReturnData(inSheet: Sheet, inPeriod: ReturnPeriod) {
+        // return data are updated randomly using one of the series available
+        let max = 3;
+        let min = 1;
+        let randomIdForReturnDataSeries = Math.floor(Math.random() * (max - min + 1)) + min;
+        switch(randomIdForReturnDataSeries) {
+            case 1:
+                inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth1();
+                inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear1();
+                inSheet.returnDataAll.data = this.mockData.getReturnDataAll1();
+                break;
+            case 2:
+                inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth2();
+                inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear2();
+                inSheet.returnDataAll.data = this.mockData.getReturnDataAll2();
+                break;
+            case 3:
+                inSheet.returnDataLastMonth.data = this.mockData.getReturnDataLastMonth3();
+                inSheet.returnDataLastYear.data = this.mockData.getReturnDataLastYear3();
+                inSheet.returnDataAll.data = this.mockData.getReturnDataAll3();
+                break;                
+            default:
+                console.error('Series of return data not present in local mock -- Series Id requested: ' + randomIdForReturnDataSeries);
         }
     }
     

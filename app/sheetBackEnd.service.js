@@ -14,6 +14,11 @@ System.register([], function(exports_1) {
                 SheetBackEnd.prototype.fetchSheets = function (searchString, generalTags, valueBasedTags, sectorsTags) { return null; };
                 SheetBackEnd.prototype.fillDetails = function (inSheet) { return null; };
                 SheetBackEnd.prototype.fillReturnData = function (inSheet, inPeriod) { };
+                SheetBackEnd.prototype.updateReturnData = function (inSheet, inPeriod) { };
+                SheetBackEnd.prototype.updateValueAtRisk = function (inSheet) { };
+                ;
+                SheetBackEnd.prototype.updateVolatility = function (inSheet) { };
+                ;
                 return SheetBackEnd;
             })();
             exports_1("SheetBackEnd", SheetBackEnd);

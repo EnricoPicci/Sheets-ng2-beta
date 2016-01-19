@@ -39,15 +39,9 @@ System.register(['angular2/core'], function(exports_1) {
                             }
                             //opt = Object.assign(opt, this.renderTo);
                             //this.chart = new Highcharts.Chart(opt);
-                            console.log(opt);
                             var hostEl = this.hostElement;
                             var nativeEl = hostEl.nativeElement;
                             var jQ = jQuery(nativeEl);
-                            console.log(hostEl);
-                            console.log(nativeEl);
-                            console.log('start');
-                            console.log(jQ);
-                            console.log(opt);
                             //this.chart = jQ.highcharts('StockChart', opt);
                             opt = Object.assign(opt, this.renderTo);
                             //this.chart = new Highcharts.Chart('StockChart', opt);

@@ -13,4 +13,8 @@ export abstract class SheetBackEnd {
 	fillDetails(inSheet: Sheet) : Sheet {return null}
     
     fillReturnData(inSheet: Sheet, inPeriod: ReturnPeriod) {}
+    updateReturnData(inSheet: Sheet, inPeriod: ReturnPeriod) {}
+    
+    updateValueAtRisk(inSheet: Sheet) {};
+    updateVolatility(inSheet: Sheet) {};
 }

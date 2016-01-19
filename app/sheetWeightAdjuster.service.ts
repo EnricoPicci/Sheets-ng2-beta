@@ -120,7 +120,6 @@ export class SheetWeightAdjuster {
                     totalSpaceAvailableForDecrease = totalSpaceAvailableForDecrease + spaceAboveMinAvailabelForDecrease;
                 }
             }  
-            console.log('totalSpaceAvailableForDecrease -- ' + totalSpaceAvailableForDecrease);
             if (totalSpaceAvailableForDecrease == 0) {
                 inAsset.setWeight(inAsset.weight);
             } else {
@@ -128,17 +127,11 @@ export class SheetWeightAdjuster {
                 if (totalSpaceAvailableForDecrease < change) {
                     decreaseCorrectionFactor = change - totalSpaceAvailableForDecrease;
                 }
-                console.log('decreaseCorrectionFactor -- ' + decreaseCorrectionFactor);
                 let decreaseOveraAvailableSpaceRatio = (change - decreaseCorrectionFactor) / totalSpaceAvailableForDecrease;
-                console.log('decreaseOveraAvailableSpaceRatio -- ' + decreaseOveraAvailableSpaceRatio);
                 for (var i = 0; i < assetsOfGroup.length; i++) {
                     if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
                         let spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
                         let variation = spaceAboveMinAvailabelForDecrease*decreaseOveraAvailableSpaceRatio;
-                        console.log('spaceAboveMinAvailabelForDecrease -- ' + i + ' - ' + spaceAboveMinAvailabelForDecrease);
-                        console.log('variation -- ' + i + ' - '  + variation);
-                        console.log('assetsOfGroup[i].weight -- ' + i + ' - '  + assetsOfGroup[i].weight);
-                        console.log('new weight -- ' + i + ' - '  + (assetsOfGroup[i].weight - variation));
                         assetsOfGroup[i].setWeight(assetsOfGroup[i].weight - variation);
                     }
                 }
