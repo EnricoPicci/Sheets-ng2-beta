@@ -1,4 +1,4 @@
-System.register(['angular2/core', './sheet', './sheetBackEnd.service', './returnPeriod', '../ng2Highcharts/src/directives/ng2-highstocks'], function(exports_1) {
+System.register(['angular2/core', './sheet', './sheetBackEnd.service', './returnPeriod', '../ng2Highcharts/src/directives/ng2-highcharts', '../ng2Highcharts/src/directives/ng2-highstocks'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, sheet_1, sheetBackEnd_service_1, returnPeriod_1, ng2_highstocks_1;
+    var core_1, sheet_1, sheetBackEnd_service_1, returnPeriod_1, ng2_highcharts_1, ng2_highstocks_1;
     var SheetReturnData;
     return {
         setters:[
@@ -24,6 +24,9 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
             function (returnPeriod_1_1) {
                 returnPeriod_1 = returnPeriod_1_1;
             },
+            function (ng2_highcharts_1_1) {
+                ng2_highcharts_1 = ng2_highcharts_1_1;
+            },
             function (ng2_highstocks_1_1) {
                 ng2_highstocks_1 = ng2_highstocks_1_1;
             }],
@@ -32,6 +35,7 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                 function SheetReturnData(_sheetBackEnd) {
                     this._sheetBackEnd = _sheetBackEnd;
                     this.currentPeriod = returnPeriod_1.ReturnPeriod.lastMonth;
+                    this.complexView = false;
                 }
                 Object.defineProperty(SheetReturnData.prototype, "options", {
                     set: function (inSheet) {
@@ -57,11 +61,9 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                         name: this.sheet.benchmark,
                         data: this.sheet.returnDataBenchmarkLastMonth.data
                     };
-                    //this.resetPeriodState();
-                    //this.isLastMonthPeriod = true;
                     this.currentPeriod = returnPeriod_1.ReturnPeriod.lastMonth;
                     this.periodText = 'Ultimo mese';
-                    this.setSeriesIntHighstocksOptions(series);
+                    this.setSeriesInChartOptions(series);
                 };
                 SheetReturnData.prototype.setLastYearSeries = function () {
                     if (this.sheet.returnDataLastYear.isEmpty()) {
@@ -76,11 +78,9 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                         name: this.sheet.benchmark,
                         data: this.sheet.returnDataBenchmarkLastYear.data
                     };
-                    //this.resetPeriodState();
-                    //this.isLastYearPeriod = true;
                     this.currentPeriod = returnPeriod_1.ReturnPeriod.lastYear;
                     this.periodText = 'Ultimo anno';
-                    this.setSeriesIntHighstocksOptions(series);
+                    this.setSeriesInChartOptions(series);
                 };
                 SheetReturnData.prototype.setAllSeries = function () {
                     if (this.sheet.returnDataAll.isEmpty()) {
@@ -95,17 +95,18 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                         name: this.sheet.benchmark,
                         data: this.sheet.returnDataBenchmarkAll.data
                     };
-                    //this.resetPeriodState();
-                    //this.isAllPeriod = true;
                     this.currentPeriod = returnPeriod_1.ReturnPeriod.all;
                     this.periodText = 'Da inizio';
-                    this.setSeriesIntHighstocksOptions(series);
+                    this.setSeriesInChartOptions(series);
                 };
-                SheetReturnData.prototype.createNewHighstocksOptions = function () {
+                SheetReturnData.prototype.createNewchartOptions = function () {
                     return {
                         title: { text: "Performance vs Benchmark (" + this.periodText + ")" },
                         rangeSelector: {
                             selected: 4 },
+                        xAxis: {
+                            type: 'datetime'
+                        },
                         yAxis: {
                             labels: {
                                 formatter: function () {
@@ -126,15 +127,10 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                             valueDecimals: 2 }
                     };
                 };
-                SheetReturnData.prototype.setSeriesIntHighstocksOptions = function (inSeries) {
-                    this.highstocksOptions = this.createNewHighstocksOptions();
-                    this.highstocksOptions.series = inSeries;
+                SheetReturnData.prototype.setSeriesInChartOptions = function (inSeries) {
+                    this.chartOptions = this.createNewchartOptions();
+                    this.chartOptions.series = inSeries;
                 };
-                /*resetPeriodState() {
-                    this.isLastMonthPeriod = false;
-                    this.isLastYearPeriod = false;
-                    this.isAllPeriod = false;
-                }*/
                 SheetReturnData.prototype.updateReturnData = function () {
                     this._sheetBackEnd.updateReturnData(this.sheet, this.currentPeriod);
                     switch (this.currentPeriod) {
@@ -149,6 +145,26 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                             break;
                     }
                 };
+                SheetReturnData.prototype.simpleComplexViewToggle = function () {
+                    this.complexView = !this.complexView;
+                    if (this.complexView) {
+                        var currentPeriodUsedBySimpleChart = this.currentPeriod; // the following method prepares the data for the 'complex view' (all data) and changes the 'currentPeriod'; 
+                        // I want to keep the old current period since it is used only by the 'simple view' 
+                        // and I want to have the state unchanged when I switch back to the 'simple view'
+                        this.setAllSeries(); // with the complex view it makes sense to have the entire set of data
+                        this.currentPeriod = currentPeriodUsedBySimpleChart;
+                    }
+                };
+                SheetReturnData.prototype.getSimpleComplexViewText = function () {
+                    var text;
+                    if (this.complexView) {
+                        text = 'Grafico semplice';
+                    }
+                    else {
+                        text = 'Grafico sofisticato';
+                    }
+                    return text;
+                };
                 SheetReturnData.prototype.isLastMonthPeriod = function () { return this.currentPeriod == returnPeriod_1.ReturnPeriod.lastMonth; };
                 SheetReturnData.prototype.isLastYearPeriod = function () { return this.currentPeriod == returnPeriod_1.ReturnPeriod.lastYear; };
                 SheetReturnData.prototype.isAllPeriod = function () { return this.currentPeriod == returnPeriod_1.ReturnPeriod.all; };
@@ -162,8 +178,8 @@ System.register(['angular2/core', './sheet', './sheetBackEnd.service', './return
                         selector: 'sheet-returnData',
                         providers: [],
                         templateUrl: '../templates/sheetReturnData.html',
-                        styleUrls: ['../styles/common.css'],
-                        directives: [ng2_highstocks_1.Ng2Highstocks],
+                        styleUrls: ['../styles/common.css', '../styles/sheetReturnData.css'],
+                        directives: [ng2_highstocks_1.Ng2Highstocks, ng2_highcharts_1.Ng2Highcharts],
                     }), 
                     __metadata('design:paramtypes', [sheetBackEnd_service_1.SheetBackEnd])
                 ], SheetReturnData);

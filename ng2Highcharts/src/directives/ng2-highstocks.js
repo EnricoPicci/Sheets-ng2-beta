@@ -20,11 +20,6 @@ System.register(['angular2/core'], function(exports_1) {
             Ng2Highstocks = (function () {
                 function Ng2Highstocks(ele) {
                     this.hostElement = ele;
-                    this.renderTo = {
-                        chart: {
-                            renderTo: this.hostElement.nativeElement
-                        }
-                    };
                 }
                 Object.defineProperty(Ng2Highstocks.prototype, "options", {
                     set: function (opt) {
@@ -34,21 +29,8 @@ System.register(['angular2/core'], function(exports_1) {
                             return;
                         }
                         if (opt.series) {
-                            if (this.chart) {
-                            }
-                            //opt = Object.assign(opt, this.renderTo);
-                            //this.chart = new Highcharts.Chart(opt);
-                            var hostEl = this.hostElement;
-                            var nativeEl = hostEl.nativeElement;
+                            var nativeEl = this.hostElement.nativeElement;
                             var jQ = jQuery(nativeEl);
-                            //this.chart = jQ.highcharts('StockChart', opt);
-                            //opt = Object.assign(opt, this.renderTo);
-                            //this.chart = new Highcharts.Chart('StockChart', opt);
-                            /*if (!opt.chart) {
-                                opt.chart = new Object();
-                            }
-                            opt.chart.renderTo = jQ;
-                            this.chart = new Highcharts.Chart('StockChart', opt);*/
                             this.chart = jQ.highcharts('StockChart', opt);
                         }
                         else {

@@ -1,3 +1,4 @@
+/// <reference path="../../typings/highcharts/highcharts.d.ts" />
 System.register(['angular2/core'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -19,11 +20,6 @@ System.register(['angular2/core'], function(exports_1) {
             Ng2Highcharts = (function () {
                 function Ng2Highcharts(ele) {
                     this.hostElement = ele;
-                    this.renderTo = {
-                        chart: {
-                            renderTo: this.hostElement.nativeElement
-                        }
-                    };
                 }
                 Object.defineProperty(Ng2Highcharts.prototype, "options", {
                     set: function (opt) {
@@ -33,12 +29,9 @@ System.register(['angular2/core'], function(exports_1) {
                             return;
                         }
                         if (opt.series || opt.data) {
-                            if (this.chart) {
-                                this.chart.destroy();
-                            }
-                            //opt = Object.assign(opt, this.renderTo);
-                            opt.chart.renderTo = this.hostElement.nativeElement;
-                            this.chart = new Highcharts.Chart(opt);
+                            var nativeEl = this.hostElement.nativeElement;
+                            var jQ = jQuery(nativeEl);
+                            this.chart = jQ.highcharts(opt);
                         }
                         else {
                             console.log('No valid options...');

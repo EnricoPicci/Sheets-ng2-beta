@@ -1,4 +1,7 @@
 /// <reference path="../../typings/highcharts/highcharts.d.ts" />
+
+declare var jQuery: any;
+
 import {Directive, ElementRef, Input} from 'angular2/core';
 
 @Directive({
@@ -7,14 +10,9 @@ import {Directive, ElementRef, Input} from 'angular2/core';
 export class Ng2Highcharts {
 	hostElement: ElementRef;
 	chart: HighchartsChartObject;
-	renderTo: HighchartsOptions;
+
 	constructor(ele: ElementRef) {
 		this.hostElement = ele;
-		this.renderTo = {
-			chart: {
-				renderTo: this.hostElement.nativeElement
-			}
-		};
 	}
 
 	@Input('ng2-highcharts') set options(opt:HighchartsOptions) {
@@ -24,12 +22,9 @@ export class Ng2Highcharts {
 			return;
 		}
 		if(opt.series || opt.data) {
-			if(this.chart) {
-				this.chart.destroy();
-			}
-			//opt = Object.assign(opt, this.renderTo);
-            opt.chart.renderTo = this.hostElement.nativeElement;
-			this.chart = new Highcharts.Chart(opt);
+            let nativeEl = this.hostElement.nativeElement;
+            let jQ = jQuery(nativeEl);
+            this.chart = jQ.highcharts(opt);
 		} else {
 			console.log('No valid options...');
 			console.dir(opt);

@@ -4,24 +4,23 @@ import {Sheet} from './sheet';
 import {SheetBackEnd} from './sheetBackEnd.service';
 import {ReturnPeriod} from './returnPeriod';
 
+import {Ng2Highcharts} from '../ng2Highcharts/src/directives/ng2-highcharts';
 import {Ng2Highstocks} from '../ng2Highcharts/src/directives/ng2-highstocks';
 
 @Component({
     selector: 'sheet-returnData',
 	providers: [],
     templateUrl: '../templates/sheetReturnData.html',
-    styleUrls: ['../styles/common.css'],
-	directives: [Ng2Highstocks],
+    styleUrls: ['../styles/common.css', '../styles/sheetReturnData.css'],
+	directives: [Ng2Highstocks, Ng2Highcharts],
     //inputs: ['sheet'],
 })
 export class SheetReturnData { 
     public sheet: Sheet;
-    public highstocksOptions: any;
+    public chartOptions: any;
     public currentPeriod: ReturnPeriod = ReturnPeriod.lastMonth;
+    public complexView: boolean = false;
     
-    /*isLastMonthPeriod: boolean = false;
-    isLastYearPeriod: boolean = false;
-    isAllPeriod: boolean = false;*/
     periodText: string;
     
     private _subscriptionToSheetCompositionChange: any;
@@ -50,11 +49,9 @@ export class SheetReturnData {
             name: this.sheet.benchmark,
             data: this.sheet.returnDataBenchmarkLastMonth.data
         };
-        //this.resetPeriodState();
-        //this.isLastMonthPeriod = true;
         this.currentPeriod = ReturnPeriod.lastMonth;
         this.periodText = 'Ultimo mese';
-        this.setSeriesIntHighstocksOptions(series);
+        this.setSeriesInChartOptions(series);
     }
     
     setLastYearSeries() {
@@ -70,11 +67,9 @@ export class SheetReturnData {
             name: this.sheet.benchmark,
             data: this.sheet.returnDataBenchmarkLastYear.data
         };
-        //this.resetPeriodState();
-        //this.isLastYearPeriod = true;
         this.currentPeriod = ReturnPeriod.lastYear;
         this.periodText = 'Ultimo anno';
-        this.setSeriesIntHighstocksOptions(series);
+        this.setSeriesInChartOptions(series);
     }
     
     setAllSeries() {
@@ -90,18 +85,19 @@ export class SheetReturnData {
             name: this.sheet.benchmark,
             data: this.sheet.returnDataBenchmarkAll.data
         };
-        //this.resetPeriodState();
-        //this.isAllPeriod = true;
         this.currentPeriod = ReturnPeriod.all;
         this.periodText = 'Da inizio';
-        this.setSeriesIntHighstocksOptions(series);
+        this.setSeriesInChartOptions(series);
     }
     
-    createNewHighstocksOptions() {
+    createNewchartOptions() {
         return {
             title: {text: "Performance vs Benchmark (" + this.periodText + ")"},
             rangeSelector: {
                 selected: 4},
+            xAxis: {
+                type: 'datetime'
+            },
             yAxis: {
                 labels: {
                     formatter: function () {
@@ -122,16 +118,10 @@ export class SheetReturnData {
         };
     }
     
-    setSeriesIntHighstocksOptions(inSeries: Array<any>) {
-        this.highstocksOptions = this.createNewHighstocksOptions();
-        this.highstocksOptions.series = inSeries;
+    setSeriesInChartOptions(inSeries: Array<any>) {
+        this.chartOptions = this.createNewchartOptions();
+        this.chartOptions.series = inSeries;
     }
-    
-    /*resetPeriodState() {
-        this.isLastMonthPeriod = false;
-        this.isLastYearPeriod = false;
-        this.isAllPeriod = false;        
-    }*/
     
     updateReturnData() {
         this._sheetBackEnd.updateReturnData(this.sheet, this.currentPeriod);
@@ -146,6 +136,27 @@ export class SheetReturnData {
                 this.setAllSeries();
                 break;                
         }
+    }
+    
+    simpleComplexViewToggle() {
+        this.complexView = !this.complexView;
+        if (this.complexView) {
+            let currentPeriodUsedBySimpleChart = this.currentPeriod;  // the following method prepares the data for the 'complex view' (all data) and changes the 'currentPeriod'; 
+                                                                        // I want to keep the old current period since it is used only by the 'simple view' 
+                                                                        // and I want to have the state unchanged when I switch back to the 'simple view'
+            this.setAllSeries();  // with the complex view it makes sense to have the entire set of data
+            this.currentPeriod = currentPeriodUsedBySimpleChart;
+        }
+    }
+    
+    getSimpleComplexViewText() {
+        let text: string;
+        if (this.complexView) {
+            text = 'Grafico semplice';
+        } else {
+            text = 'Grafico sofisticato';
+        }
+        return text;
     }
     
     isLastMonthPeriod() {return this.currentPeriod == ReturnPeriod.lastMonth}
