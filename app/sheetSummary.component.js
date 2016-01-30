@@ -23,10 +23,11 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service'], 
             }],
         execute: function() {
             SheetSummaryComponent = (function () {
-                function SheetSummaryComponent(inBackEnd, inRouter, inRouteParams) {
-                    this._backEnd = inBackEnd;
-                    this._router = inRouter;
-                    this._routeParams = inRouteParams;
+                function SheetSummaryComponent(_router, _routeParams, _sheetBackEnd) {
+                    this._router = _router;
+                    this._routeParams = _routeParams;
+                    this._sheetBackEnd = _sheetBackEnd;
+                    this.selectionCriteriaChanged = new core_1.EventEmitter();
                 }
                 SheetSummaryComponent.prototype.ngOnInit = function () {
                     var id = +this._routeParams.get('id');
@@ -35,14 +36,23 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service'], 
                     // this is because if the routeParameter is not null, it means we have been called via routing (or url on the browser)
                     // if id is null it means we have been called within the single-page (and we hope we have been passed the full Sheet instance)
                     if (id) {
-                        this.sheet = this._backEnd.getSomeSheets(id, 1)[0];
+                        this.sheet = this._sheetBackEnd.getSomeSheets(id, 1)[0];
                         console.log(this.sheet);
                     }
                 };
-                SheetSummaryComponent.prototype.onMouseDown = function () {
+                /*onMouseDown() {
                     console.log(this.sheet);
-                    this._router.navigate(['SheetDetail', { id: this.sheet.id }]);
+                    this._router.navigate( ['SheetDetail', { id: this.sheet.id }]  );
+                }*/
+                SheetSummaryComponent.prototype.onChangeSelection = function (inSelected) {
+                    console.log('selected? ' + inSelected + '  id: ' + this.sheet.id);
+                    this.sheet.isSelectedForComparison = inSelected;
+                    this.selectionCriteriaChanged.next(this.sheet);
                 };
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', core_1.EventEmitter)
+                ], SheetSummaryComponent.prototype, "selectionCriteriaChanged", void 0);
                 SheetSummaryComponent = __decorate([
                     core_1.Component({
                         selector: 'sheet-summary',
@@ -52,7 +62,7 @@ System.register(['angular2/core', 'angular2/router', './sheetBackEnd.service'], 
                         directives: [router_1.ROUTER_DIRECTIVES],
                         inputs: ['sheet', 'sheetId'],
                     }), 
-                    __metadata('design:paramtypes', [sheetBackEnd_service_1.SheetBackEnd, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [router_1.Router, router_1.RouteParams, sheetBackEnd_service_1.SheetBackEnd])
                 ], SheetSummaryComponent);
                 return SheetSummaryComponent;
             })();

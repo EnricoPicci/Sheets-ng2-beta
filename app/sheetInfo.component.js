@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../app/sheet'], function(exports_1) {
+System.register(['angular2/core'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,36 +8,32 @@ System.register(['angular2/core', '../app/sheet'], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, sheet_1;
-    var SheetCmp;
+    var core_1;
+    var SheetInfoComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (sheet_1_1) {
-                sheet_1 = sheet_1_1;
             }],
         execute: function() {
-            SheetCmp = (function () {
-                function SheetCmp() {
+            SheetInfoComponent = (function () {
+                function SheetInfoComponent() {
                 }
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', sheet_1.Sheet)
-                ], SheetCmp.prototype, "sheet", void 0);
-                SheetCmp = __decorate([
+                SheetInfoComponent = __decorate([
                     core_1.Component({
-                        selector: 'sheetCmp',
+                        selector: 'sheet-info',
                         providers: [],
-                        template: "\n    \t<div>\n\t\t\t<h1>{{sheet.title}}</h1>\n\t\t\t<h2>{{sheet.longTitle}}</h2>\n\t\t\t<image src= {{sheet.imageUrl}}></image>\n\t\t</div>\n\t\t",
+                        templateUrl: '../templates/sheetInfo.html',
+                        styleUrls: ['../styles/common.css', '../styles/sheetDetail.css'],
+                        directives: [],
+                        inputs: ['sheet'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], SheetCmp);
-                return SheetCmp;
+                ], SheetInfoComponent);
+                return SheetInfoComponent;
             })();
-            exports_1("SheetCmp", SheetCmp);
+            exports_1("SheetInfoComponent", SheetInfoComponent);
         }
     }
 });
-//# sourceMappingURL=sheet.component.js.map
+//# sourceMappingURL=sheetInfo.component.js.map

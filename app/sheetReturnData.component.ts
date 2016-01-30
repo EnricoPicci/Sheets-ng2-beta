@@ -16,7 +16,7 @@ import {Ng2Highstocks} from '../ng2Highcharts/src/directives/ng2-highstocks';
     //inputs: ['sheet'],
 })
 export class SheetReturnData { 
-    public sheet: Sheet;
+    public sheets: Sheet[];
     public chartOptions: any;
     public currentPeriod: ReturnPeriod = ReturnPeriod.lastMonth;
     public complexView: boolean = false;
@@ -25,11 +25,13 @@ export class SheetReturnData {
     
     private _subscriptionToSheetCompositionChange: any;
         
-    @Input('sheet') set options(inSheet: Sheet) {
-        this.sheet = inSheet;
+    @Input('sheets') set setSheets(inSheets: Sheet[]) {
+        this.sheets = inSheets;
         this.setLastMonthSeries();
-        this._subscriptionToSheetCompositionChange = this.sheet.getChangeCompositionEvent().
-                                                        subscribe(inSheet => this.updateReturnData());
+        for (var i = 0; i < this.sheets.length; i++) {
+            this._subscriptionToSheetCompositionChange = this.sheets[i].getChangeCompositionEvent().
+                                                        subscribe(inSheet => this.updateReturnData(inSheet));
+        }
     }
         
     constructor(
@@ -37,54 +39,63 @@ export class SheetReturnData {
     ) { }
     
     setLastMonthSeries() {
-        if (this.sheet.returnDataLastMonth.isEmpty()) {
-            this._sheetBackEnd.fillReturnData(this.sheet, ReturnPeriod.lastMonth);
-        }
         let series = new Array<any>();
-        series[0] = {
-            name: this.sheet.title,
-            data: this.sheet.returnDataLastMonth.data
-        };
-        series[1] = {
-            name: this.sheet.benchmark,
-            data: this.sheet.returnDataBenchmarkLastMonth.data
-        };
+        for (var i = 0; i < this.sheets.length; i++) {
+            let oneSheet = this.sheets[i];
+            if (oneSheet.returnDataLastMonth.isEmpty()) {
+                this._sheetBackEnd.fillReturnData(oneSheet, ReturnPeriod.lastMonth);
+            }
+            series.push({
+                name: oneSheet.title,
+                data: oneSheet.returnDataLastMonth.data
+            });
+            series.push({
+                name: oneSheet.benchmark,
+                data: oneSheet.returnDataBenchmarkLastMonth.data
+            });
+        }
         this.currentPeriod = ReturnPeriod.lastMonth;
         this.periodText = 'Ultimo mese';
         this.setSeriesInChartOptions(series);
     }
     
     setLastYearSeries() {
-        if (this.sheet.returnDataLastYear.isEmpty()) {
-            this._sheetBackEnd.fillReturnData(this.sheet, ReturnPeriod.lastYear);
-        }
         let series = new Array<any>();
-        series[0] = {
-            name: this.sheet.title,
-            data: this.sheet.returnDataLastYear.data
-        };
-        series[1] = {
-            name: this.sheet.benchmark,
-            data: this.sheet.returnDataBenchmarkLastYear.data
-        };
+        for (var i = 0; i < this.sheets.length; i++) {
+            let oneSheet = this.sheets[i];
+            if (oneSheet.returnDataLastYear.isEmpty()) {
+                this._sheetBackEnd.fillReturnData(oneSheet, ReturnPeriod.lastYear);
+            }
+            series.push({
+                name: oneSheet.title,
+                data: oneSheet.returnDataLastYear.data
+            });
+            series.push({
+                name: oneSheet.benchmark,
+                data: oneSheet.returnDataBenchmarkLastYear.data
+            });
+        }
         this.currentPeriod = ReturnPeriod.lastYear;
         this.periodText = 'Ultimo anno';
         this.setSeriesInChartOptions(series);
     }
     
     setAllSeries() {
-        if (this.sheet.returnDataAll.isEmpty()) {
-            this._sheetBackEnd.fillReturnData(this.sheet, ReturnPeriod.all);
-        }
         let series = new Array<any>();
-        series[0] = {
-            name: this.sheet.title,
-            data: this.sheet.returnDataAll.data
-        };
-        series[1] = {
-            name: this.sheet.benchmark,
-            data: this.sheet.returnDataBenchmarkAll.data
-        };
+        for (var i = 0; i < this.sheets.length; i++) {
+            let oneSheet = this.sheets[i];
+            if (oneSheet.returnDataAll.isEmpty()) {
+                this._sheetBackEnd.fillReturnData(oneSheet, ReturnPeriod.all);
+            }
+            series.push({
+                name: oneSheet.title,
+                data: oneSheet.returnDataAll.data
+            });
+            series.push({
+                name: oneSheet.benchmark,
+                data: oneSheet.returnDataBenchmarkAll.data
+            });
+        }
         this.currentPeriod = ReturnPeriod.all;
         this.periodText = 'Da inizio';
         this.setSeriesInChartOptions(series);
@@ -123,8 +134,8 @@ export class SheetReturnData {
         this.chartOptions.series = inSeries;
     }
     
-    updateReturnData() {
-        this._sheetBackEnd.updateReturnData(this.sheet, this.currentPeriod);
+    updateReturnData(inSheet: Sheet) {
+        this._sheetBackEnd.updateReturnData(inSheet, this.currentPeriod);
         switch(this.currentPeriod) {
             case ReturnPeriod.lastMonth:
                 this.setLastMonthSeries();

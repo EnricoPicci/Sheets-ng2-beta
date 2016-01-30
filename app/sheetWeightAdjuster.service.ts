@@ -1,9 +1,10 @@
 import {AssetGroup} from './assetGroup';
 import {Asset} from './asset';
+import {Sheet} from './sheet';
 
 export class SheetWeightAdjuster {
     
-    public adjustAfterChangeInAssetGroupWeight(inNewWeightValue: number, inAssetGroup: AssetGroup) {
+    public adjustAfterChangeInAssetGroupWeight(inNewWeightValue: number, inAssetGroup: AssetGroup, inSheet: Sheet) {
         let change = 0;
         let requestedChange = inNewWeightValue - inAssetGroup.weight;
         let availableSpaceForChange = 0;
@@ -23,7 +24,7 @@ export class SheetWeightAdjuster {
                 change = availableSpaceForChange;
             }
         }
-        let assetGroups = inAssetGroup.sheet.assetGroups;        
+        let assetGroups = inSheet.assetGroups;        
         if (change == 0) { // there is no space available for change and therefore change is zero
             inAssetGroup.setWeight(this.calculateWeight(inAssetGroup)); // we recalculate the weight to override what has been set by the change input by the user
         }
@@ -109,11 +110,11 @@ export class SheetWeightAdjuster {
         }        
     }
     
-    public adjustAfterChangeInAssetWeight(inNewWeightValue: number, inAsset: Asset) {
+    public adjustAfterChangeInAssetWeight(inNewWeightValue: number, inAsset: Asset, inAssetGroup: AssetGroup) {
         let change = inNewWeightValue - inAsset.weight;
         if (change > 0) {  // the difference is positive; we are increasing the weight of one asset change and need to decrease the weight of the others to maintain Asset Group total weight unchanged
             let totalSpaceAvailableForDecrease = 0;
-            let assetsOfGroup = inAsset.assetGroup.assets;
+            let assetsOfGroup = inAssetGroup.assets;
             for (var i = 0; i < assetsOfGroup.length; i++) {
                 if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
                     let spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
@@ -139,7 +140,7 @@ export class SheetWeightAdjuster {
             }
         } else {  // the difference is negative; we are decreasing the weight of one asset change and need to increase the weight of the others to maintain Asset Group total weight unchanged
             let totalSpaceAvailabelForIncrease = 0;
-            let assetsOfGroup = inAsset.assetGroup.assets;
+            let assetsOfGroup = inAssetGroup.assets;
             for (var i = 0; i < assetsOfGroup.length; i++) {
                 if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {  // assets locked are not considered as well as the asset whose weight has been changed
                     let spaceBelowMaxAvailabelForIncrease = assetsOfGroup[i].maxWeight - assetsOfGroup[i].weight;
@@ -164,7 +165,7 @@ export class SheetWeightAdjuster {
                 inAsset.setWeight(inAsset.weight + change + increaseCorrectionFactor);                
             }
         }
-        inAsset.assetGroup.checkConsistency();        
+        inAssetGroup.checkConsistency();        
     }
     
     private calculateSpaceBelowMaxAvailabelForIncrease(inAssetGroup: AssetGroup) {

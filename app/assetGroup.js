@@ -14,6 +14,7 @@ System.register(['./assetAbstract'], function(exports_1) {
         execute: function() {
             AssetGroup = (function (_super) {
                 __extends(AssetGroup, _super);
+                //public sheet: Sheet;
                 function AssetGroup(inName, inWeight, inOneMonthRet, inOneYearRet, inAssets, inMinWeigth, inMaxWeigth) {
                     _super.call(this, inName, inWeight, inOneMonthRet, inOneYearRet, inMinWeigth, inMaxWeigth);
                     this.assets = inAssets;

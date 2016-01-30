@@ -38,6 +38,10 @@ export class Sheet {
     
     // add en EventEmmiter to communicate when sheet composition changes to all components that may be interested
     private _changeCompositionEventEmitter: EventEmitter<Sheet> = new EventEmitter();
+    
+    // variable to store states that I use to drive the view as far as comparison functionalities are required
+    public isSelectedForComparison: boolean = false;
+    public isComparisonCheckboxToBeDisplayed: boolean = false;
 
 	public constructor(inId: number, 
                         inTitle: string, 
@@ -49,6 +53,7 @@ export class Sheet {
                         inGeneral: string, 
                         inValueBased: string, 
                         inSector: string) {
+        this.id = inId;
         this.title = inTitle;
         this.longTitle = inLongTitle;
         this.imageUrl = inImageUrl;
@@ -65,6 +70,6 @@ export class Sheet {
     }
     getChangeCompositionEvent() {
         return this._changeCompositionEventEmitter;
-    }    
+    }
 
 }

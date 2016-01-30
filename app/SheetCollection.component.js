@@ -9,7 +9,7 @@ System.register(['angular2/core', './sheetSummary.component'], function(exports_
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, sheetSummary_component_1;
-    var CollectionOfSheetsCmp;
+    var SheetCollection;
     return {
         setters:[
             function (core_1_1) {
@@ -19,28 +19,37 @@ System.register(['angular2/core', './sheetSummary.component'], function(exports_
                 sheetSummary_component_1 = sheetSummary_component_1_1;
             }],
         execute: function() {
-            CollectionOfSheetsCmp = (function () {
-                function CollectionOfSheetsCmp() {
+            SheetCollection = (function () {
+                function SheetCollection() {
+                    this.sheetSelectedChanged = new core_1.EventEmitter();
                 }
+                SheetCollection.prototype.selectionCriteriaChanged = function (inSheet) {
+                    console.log(inSheet);
+                    this.sheetSelectedChanged.next(inSheet);
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Array)
-                ], CollectionOfSheetsCmp.prototype, "sheets", void 0);
-                CollectionOfSheetsCmp = __decorate([
+                ], SheetCollection.prototype, "sheets", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', core_1.EventEmitter)
+                ], SheetCollection.prototype, "sheetSelectedChanged", void 0);
+                SheetCollection = __decorate([
                     core_1.Component({
-                        selector: 'collection-of-sheets-cmp',
+                        selector: 'sheetCollectionCmp',
                         providers: [],
-                        templateUrl: '../templates/collectionOfSheets.html',
+                        templateUrl: '../templates/sheetCollection.html',
                         styleUrls: ['../styles/table.css'],
                         directives: [sheetSummary_component_1.SheetSummaryComponent],
                         inputs: ['sheets'],
                     }), 
                     __metadata('design:paramtypes', [])
-                ], CollectionOfSheetsCmp);
-                return CollectionOfSheetsCmp;
+                ], SheetCollection);
+                return SheetCollection;
             })();
-            exports_1("CollectionOfSheetsCmp", CollectionOfSheetsCmp);
+            exports_1("SheetCollection", SheetCollection);
         }
     }
 });
-//# sourceMappingURL=collectionOfSheetsCmp.js.map
+//# sourceMappingURL=SheetCollection.component.js.map

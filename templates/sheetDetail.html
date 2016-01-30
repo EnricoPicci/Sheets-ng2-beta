@@ -4,7 +4,10 @@
         <div id="banner"></div>
     </div>
     <div id="details">
-        <div id="info">
+        <div id="assetInfo">
+            <sheet-info id="assetInfo" [sheet]="sheet"></sheet-info>
+        </div>
+        <!--div id="info">
             <div id="image">
                 <img height="146" width="146" src={{sheet.imageUrl}}>
             </div>
@@ -27,16 +30,20 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div-->
         <div id="description">
             <h2>{{sheet.longTitle}}</h2>
             <!--span id="desc">{{sheet.description}}</span-->
             <short-long-text [longText]="sheet.description" [shortTextLength]="shortDescriptionTextLength"></short-long-text>
         </div>
+        <button id="compareButton" class="basicButton" type="button" (click)="onClickOverCompareButton()">Confronta</button>
         <div id="performanceChart">
-            <sheet-returnData id="returnData" [sheet]="sheet"></sheet-returnData>
+            <sheet-returnData id="returnData" [sheets]="sheets"></sheet-returnData>
         </div>
         <div id="assetComposition">
+            <sheet-assetComposition id="assetComposition" [sheet]="sheet"></sheet-assetComposition>
+        </div>
+        <!--div id="assetComposition">
             <div id="assetTable">
                 <button id="customizeButton" class="basicButton" type="button" (click)="onClickOverCustomizeButton()">{{getCustomizeButtonText()}}</button>
                 <button id="relativeScaleButton" class="basicButton" type="button" (click)="onClickOverRelativeScaleButton()" [style.display]="editStatus ? 'block' : 'none'">{{getRelativeScaleButtonText()}}</button>
@@ -101,7 +108,7 @@
                                     <table width=100%>
                                         <tr class="assetClass">
                                             <td class="newWeightSliderClass">
-                                                <my-slider [start]="getStart(asset)" [range]="getRange(asset)" [pips]="getPips(asset)" (end)="onEndOnAsset($event, asset)"  [newValue]="asset.newWeight" [locked]="asset.locked" [relativeStartOfScale]="startOfScaleRelative ? asset.relativeStartOfScale : '0'"></my-slider>
+                                                <my-slider [start]="getStart(asset)" [range]="getRange(asset)" [pips]="getPips(asset)" (end)="onEndOnAsset($event, asset, assetGroup)"  [newValue]="asset.newWeight" [locked]="asset.locked" [relativeStartOfScale]="startOfScaleRelative ? asset.relativeStartOfScale : '0'"></my-slider>
                                             </td>
                                             <td [class]="asset.locked ? 'lockClass locked' : 'lockClass unlocked'" (click)="onToggleLock(asset)"></td>                                            
                                         </tr>                                        
@@ -115,7 +122,7 @@
             <div id="assetChart">
                 <sheet-compositionCharts id="sheetCharts" [sheet]="sheet"></sheet-compositionCharts>
             </div>
-        </div>
+        </div-->
     </div>
     <div id="pageFooter"></div>
 </div>

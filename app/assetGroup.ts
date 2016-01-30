@@ -4,7 +4,7 @@ import{Sheet} from './sheet';
 
 export class AssetGroup extends AssetAbstract {
     public assets: Asset[];
-    public sheet: Sheet;
+    //public sheet: Sheet;
     
     public constructor(inName: string, 
                         inWeight: number, 

@@ -4,6 +4,8 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {SheetDashboardComponent} from './sheetDashboard.component';
 import {SheetSummaryComponent} from './sheetSummary.component';
 import {SheetDetailComponent} from './sheetDetail.component';
+import {SheetComparatorComponent} from './SheetComparator.component';
+import {UserLoginComponent} from './userLogin.component';
 
 @Component({
     selector: 'my-app',
@@ -14,8 +16,11 @@ import {SheetDetailComponent} from './sheetDetail.component';
 	directives: [ROUTER_DIRECTIVES],
 })
 @RouteConfig([
-    {path: '/Dashboard/', name: 'SheetDashboard', component: SheetDashboardComponent, useAsDefault: true},
+    {path: '/Login/', name: 'UserLogin', component: UserLoginComponent, useAsDefault: true},
+    {path: '/Dashboard/', name: 'SheetDashboard', component: SheetDashboardComponent},
+    {path: '/Dashboard/:idOfFirstSheetToCompare', name: 'SheetDashboard', component: SheetDashboardComponent},
     {path: '/Sheet/:id', name: 'SheetSummary', component: SheetSummaryComponent},
     {path: '/SheetDetail/:id', name: 'SheetDetail', component: SheetDetailComponent},
+    {path: '/SheetComparator/', name: 'SheetComparator', component: SheetComparatorComponent},
 ])
 export class AppComponent { }

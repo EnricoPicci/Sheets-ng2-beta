@@ -5,7 +5,6 @@ import {Component, ViewChild, AfterViewInit, OnChanges, Input, Output, EventEmit
 @Component({
   selector: 'my-slider',
   template: `
-    <!--div id="preSlider" class="slider back noUi-base" [style.width]="getWidthFromZero()" [style.display]="displayPreDiv() ? 'block' : 'none'"-->
     <div id="preSlider" class="slider back noUi-base" [style.width]="getWidthFromZero()" [style.left]="getLeftForPreDiv()">
         <div class="noUi-marker noUi-marker-horizontal noUi-marker-large"></div>
         <div class="noUi-value noUi-value-horizontal noUi-value-large">0</div>
@@ -77,11 +76,20 @@ export class Slider {
     }    
     
     getWidthFromZero() {
-        let ret = this.range.max + '%';
+        // ret = this.range.max + '%';
+        let ret: string;
+        let widthFromZero = this.relativeStartOfScale + this.range.max;
+        if (widthFromZero < 100) {
+            ret = this.range.max + '%';
+        } else {  // we want to set a limit of 100 to the width from zero so that the html component does not expand outside its width
+            ret = (100 - this.relativeStartOfScale) + '%';
+        }
         return ret;
     }
     
     displayPreDiv() {
+        // show the PreDiv html component only if we are NOT in the 'relative scale' mode, i.e. if
+        // relativeStartOfScale is zero
         return (this.relativeStartOfScale == 0);
     }
     

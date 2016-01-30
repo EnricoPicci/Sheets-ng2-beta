@@ -3,7 +3,7 @@ import{AssetGroup} from './assetGroup';
 
 export class Asset extends AssetAbstract {
     public symbol: string;
-    public assetGroup: AssetGroup;
+    //public assetGroup: AssetGroup;
 
     public constructor(inName: string, 
                         inSymbol: string,

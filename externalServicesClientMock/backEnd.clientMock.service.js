@@ -1,15 +1,18 @@
-System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', '../app/assetGroup', '../app/returnPeriod', './mockData'], function(exports_1) {
+System.register(['../app/sheet', '../app/sheetJSON', '../app/sheetBackEnd.service', '../app/asset', '../app/assetGroup', '../app/returnPeriod', './mockData'], function(exports_1) {
     var __extends = (this && this.__extends) || function (d, b) {
         for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    var sheet_1, sheetBackEnd_service_1, asset_1, assetGroup_1, returnPeriod_1, mockData_1;
+    var sheet_1, sheetJSON_1, sheetBackEnd_service_1, asset_1, assetGroup_1, returnPeriod_1, mockData_1;
     var BackEndClientMock;
     return {
         setters:[
             function (sheet_1_1) {
                 sheet_1 = sheet_1_1;
+            },
+            function (sheetJSON_1_1) {
+                sheetJSON_1 = sheetJSON_1_1;
             },
             function (sheetBackEnd_service_1_1) {
                 sheetBackEnd_service_1 = sheetBackEnd_service_1_1;
@@ -45,15 +48,18 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                     }
                     for (var i = 0; i < inMaxNumberOfSheets; i++) {
                         sheets[i] = sheetsCreated[i + inFromPosition];
+                        // for the moment fills the Sheet with fixed data regardless the Sheet received as input
+                        sheets[i].oneYearReturn = '11%';
+                        sheets[i].oneMonthReturn = '6%';
+                        sheets[i].dailyChange = '2%';
+                        sheets[i].description = this.description;
+                        this.fillDetails(sheets[i]);
                     }
+                    // call the stringify() method if you want to print on the console the list of Sheets as JSON strings
+                    //this.stringifyToJSON(sheets);
                     return sheets;
                 };
                 BackEndClientMock.prototype.fillDetails = function (inSheet) {
-                    // for the moment fills the Sheet with fixed data regardless the Sheet received as input
-                    inSheet.oneYearReturn = '11%';
-                    inSheet.oneMonthReturn = '6%';
-                    inSheet.dailyChange = '1%';
-                    inSheet.description = this.description;
                     inSheet.assetGroups = this.getAssetGroups(inSheet);
                     this.fillReturnData(inSheet, returnPeriod_1.ReturnPeriod.lastMonth);
                     return inSheet;
@@ -65,7 +71,6 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                     for (var i = 0; i < sheets.length; i++) {
                         for (var j = 0; j < generalTags.length; j++) {
                             if (sheets[i].general === generalTags[j]) {
-                                //console.log(sheets[i].title);
                                 tempArr[sheets[i].title] = sheets[i];
                             }
                         }
@@ -118,18 +123,6 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                     return ret;
                 };
                 ;
-                // when
-                /*setRelativeStartOfScale(inAssetGroups: AssetGroup[]) {
-                    let relativeStartOfScale = 0;
-                    for (var i = 0; i < inAssetGroups.length; i++) {
-                        let assets = inAssetGroups[i].assets;
-                        for (var j = 0; j < assets.length; j++) {
-                            let asset = assets[j];
-                            asset.relativeStartOfScale = relativeStartOfScale;
-                            relativeStartOfScale = relativeStartOfScale + asset.range.max;
-                        }
-                    }
-                }*/
                 BackEndClientMock.prototype.createSheets = function () {
                     var createdBY = 'CocoonTechies';
                     var sheets = new Array();
@@ -166,74 +159,74 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                         assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 10, 20);
                         assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 15, 30);
                         assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 30, 75);
-                        assetGroup.sheet = inSheet;
-                        assets1[0].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets1[0].assetGroup = assetGroup;
                         assets1[1].assetGroup = assetGroup;
                         assets1[2].assetGroup = assetGroup;
-                        assets1[3].assetGroup = assetGroup;
+                        assets1[3].assetGroup = assetGroup;*/
                         ret[0] = assetGroup;
                         assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 6, '12%', '32%', 0, 10);
                         assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 10, 25);
                         assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 5, 7);
                         assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 15, 42);
-                        assetGroup.sheet = inSheet;
-                        assets2[0].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets2[0].assetGroup = assetGroup;
                         assets2[1].assetGroup = assetGroup;
-                        assets2[2].assetGroup = assetGroup;
+                        assets2[2].assetGroup = assetGroup;*/
                         ret[1] = assetGroup;
                         assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 6, '6%', '2%', 5, 25);
                         assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
                         assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 10);
                         assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 5, 50);
-                        assetGroup.sheet = inSheet;
-                        assets3[0].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets3[0].assetGroup = assetGroup;
                         assets3[1].assetGroup = assetGroup;
-                        assets3[2].assetGroup = assetGroup;
+                        assets3[2].assetGroup = assetGroup;*/
                         ret[2] = assetGroup;
                         assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 5, 30);
                         assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 20);
                         assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 5, 50);
-                        assetGroup.sheet = inSheet;
-                        assets4[0].assetGroup = assetGroup;
-                        assets4[1].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets4[0].assetGroup = assetGroup;
+                        assets4[1].assetGroup = assetGroup;*/
                         ret[3] = assetGroup;
                     }
                     else {
-                        assets1[0] = new asset_1.Asset('Diamond Inc.', 'SAD', 5, '6%', '42%', 0, 10);
-                        assets1[1] = new asset_1.Asset('Indian African Co.', 'IAC', 8, '2%', '12%', 0, 45);
-                        assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 12, '1%', '15%', 0, 20);
+                        assets1[0] = new asset_1.Asset('Diamond Inc.', 'SAD', 10, '6%', '42%', 0, 10);
+                        assets1[1] = new asset_1.Asset('Indian African Co.', 'IAC', 10, '2%', '12%', 0, 45);
+                        assets1[2] = new asset_1.Asset('Plutonion International', 'PLI', 15, '1%', '15%', 0, 20);
                         assets1[3] = new asset_1.Asset('Cape Wineries Plc', 'CWN', 20, '1%', '15%', 0, 30);
-                        assetGroup = new assetGroup_1.AssetGroup('South Africa', 45, '11%', '4%', assets1, 0, 100);
-                        assetGroup.sheet = inSheet;
-                        assets1[0].assetGroup = assetGroup;
-                        assets1[1].assetGroup = assetGroup;
-                        assets1[2].assetGroup = assetGroup;
-                        assets1[3].assetGroup = assetGroup;
+                        assetGroup = new assetGroup_1.AssetGroup('South Africa', 55, '11%', '4%', assets1, 0, 100);
+                        //assetGroup.sheet = inSheet;
+                        /* assets1[0].assetGroup = assetGroup;
+                         assets1[1].assetGroup = assetGroup;
+                         assets1[2].assetGroup = assetGroup;
+                         assets1[3].assetGroup = assetGroup;*/
                         ret[0] = assetGroup;
-                        assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 6, '12%', '32%', 0, 30);
-                        assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 24, '12%', '22%', 0, 25);
+                        assets2[0] = new asset_1.Asset('Tea and Coffee Inc.', 'TCI', 5, '12%', '32%', 0, 30);
+                        assets2[1] = new asset_1.Asset('Caribe Banana Co.', 'CBC', 15, '12%', '22%', 0, 25);
                         assets2[2] = new asset_1.Asset('Rasta Co', 'RCO', 5, '2%', '20%', 0, 45);
-                        assetGroup = new assetGroup_1.AssetGroup('Jamaica', 35, '21%', '2%', assets2, 0, 100);
-                        assetGroup.sheet = inSheet;
-                        assets2[0].assetGroup = assetGroup;
+                        assetGroup = new assetGroup_1.AssetGroup('Jamaica', 25, '21%', '2%', assets2, 0, 100);
+                        //assetGroup.sheet = inSheet;
+                        /*assets2[0].assetGroup = assetGroup;
                         assets2[1].assetGroup = assetGroup;
-                        assets2[2].assetGroup = assetGroup;
+                        assets2[2].assetGroup = assetGroup;*/
                         ret[1] = assetGroup;
-                        assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 6, '6%', '2%', 0, 45);
-                        assets3[1] = new asset_1.Asset('Monks', 'MNK', 0, '7%', '17%', 0, 15);
-                        assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 4, '7%', '17%', 0, 40);
+                        assets3[0] = new asset_1.Asset('Mekong Lmtd', 'MKL', 2, '6%', '2%', 0, 45);
+                        assets3[1] = new asset_1.Asset('Monks', 'MNK', 2, '7%', '17%', 0, 15);
+                        assets3[2] = new asset_1.Asset('Mangoes Del Monte', 'MDM', 6, '7%', '17%', 0, 40);
                         assetGroup = new assetGroup_1.AssetGroup('Cambodia', 10, '14%', '3%', assets3, 0, 100);
-                        assetGroup.sheet = inSheet;
-                        assets3[0].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets3[0].assetGroup = assetGroup;
                         assets3[1].assetGroup = assetGroup;
-                        assets3[2].assetGroup = assetGroup;
+                        assets3[2].assetGroup = assetGroup;*/
                         ret[2] = assetGroup;
-                        assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 5, '6%', '2%', 0, 30);
-                        assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 5, '7%', '17%', 0, 70);
+                        assets4[0] = new asset_1.Asset('Kim Lmtd', 'KLM', 8, '6%', '2%', 0, 30);
+                        assets4[1] = new asset_1.Asset('Kim Unlimited', 'KUL', 2, '7%', '17%', 0, 70);
                         assetGroup = new assetGroup_1.AssetGroup('North Korea', 10, '14%', '3%', assets4, 0, 100);
-                        assetGroup.sheet = inSheet;
-                        assets4[0].assetGroup = assetGroup;
-                        assets4[1].assetGroup = assetGroup;
+                        //assetGroup.sheet = inSheet;
+                        /*assets4[0].assetGroup = assetGroup;
+                        assets4[1].assetGroup = assetGroup;*/
                         ret[3] = assetGroup;
                     }
                     return ret;
@@ -345,6 +338,15 @@ System.register(['../app/sheet', '../app/sheetBackEnd.service', '../app/asset', 
                         default:
                             console.error('Series of return data not present in local mock -- Series Id requested: ' + randomIdForReturnDataSeries);
                     }
+                };
+                BackEndClientMock.prototype.stringifyToJSON = function (inSheets) {
+                    var sheetJSONs = new Array();
+                    for (var i = 0; i < inSheets.length; i++) {
+                        var sheetJSON = new sheetJSON_1.SheetJSON();
+                        sheetJSON.fill(inSheets[i]);
+                        sheetJSONs.push(sheetJSON);
+                    }
+                    console.log(JSON.stringify(sheetJSONs, null, "    "));
                 };
                 return BackEndClientMock;
             })(sheetBackEnd_service_1.SheetBackEnd);

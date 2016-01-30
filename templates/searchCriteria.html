@@ -6,7 +6,7 @@
 		<div class="sectionBody" [style.display]="open ? 'block' : 'none'">
 			<ul *ngFor="#criterium of searchCriteria.selections">
 				<li>
-					<input #angularcb value={{criterium.name}} type="checkbox" [ngModel]="criterium.selected" 
+                    <input #angularcb value={{criterium.name}} type="checkbox" 
 						(change)="onChange(angularcb.checked, criterium)">
 					<label>{{criterium.name}}</label>
 				</li>

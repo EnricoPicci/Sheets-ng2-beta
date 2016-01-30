@@ -6,7 +6,7 @@ System.register([], function(exports_1) {
             SheetWeightAdjuster = (function () {
                 function SheetWeightAdjuster() {
                 }
-                SheetWeightAdjuster.prototype.adjustAfterChangeInAssetGroupWeight = function (inNewWeightValue, inAssetGroup) {
+                SheetWeightAdjuster.prototype.adjustAfterChangeInAssetGroupWeight = function (inNewWeightValue, inAssetGroup, inSheet) {
                     var change = 0;
                     var requestedChange = inNewWeightValue - inAssetGroup.weight;
                     var availableSpaceForChange = 0;
@@ -29,7 +29,7 @@ System.register([], function(exports_1) {
                             change = availableSpaceForChange;
                         }
                     }
-                    var assetGroups = inAssetGroup.sheet.assetGroups;
+                    var assetGroups = inSheet.assetGroups;
                     if (change == 0) {
                         inAssetGroup.setWeight(this.calculateWeight(inAssetGroup)); // we recalculate the weight to override what has been set by the change input by the user
                     }
@@ -115,11 +115,11 @@ System.register([], function(exports_1) {
                         assetGroups[i].checkConsistency();
                     }
                 };
-                SheetWeightAdjuster.prototype.adjustAfterChangeInAssetWeight = function (inNewWeightValue, inAsset) {
+                SheetWeightAdjuster.prototype.adjustAfterChangeInAssetWeight = function (inNewWeightValue, inAsset, inAssetGroup) {
                     var change = inNewWeightValue - inAsset.weight;
                     if (change > 0) {
                         var totalSpaceAvailableForDecrease = 0;
-                        var assetsOfGroup = inAsset.assetGroup.assets;
+                        var assetsOfGroup = inAssetGroup.assets;
                         for (var i = 0; i < assetsOfGroup.length; i++) {
                             if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {
                                 var spaceAboveMinAvailabelForDecrease = assetsOfGroup[i].weight - assetsOfGroup[i].minWeight;
@@ -147,7 +147,7 @@ System.register([], function(exports_1) {
                     }
                     else {
                         var totalSpaceAvailabelForIncrease = 0;
-                        var assetsOfGroup = inAsset.assetGroup.assets;
+                        var assetsOfGroup = inAssetGroup.assets;
                         for (var i = 0; i < assetsOfGroup.length; i++) {
                             if (!assetsOfGroup[i].locked && !(assetsOfGroup[i] == inAsset)) {
                                 var spaceBelowMaxAvailabelForIncrease = assetsOfGroup[i].maxWeight - assetsOfGroup[i].weight;
@@ -173,7 +173,7 @@ System.register([], function(exports_1) {
                             inAsset.setWeight(inAsset.weight + change + increaseCorrectionFactor);
                         }
                     }
-                    inAsset.assetGroup.checkConsistency();
+                    inAssetGroup.checkConsistency();
                 };
                 SheetWeightAdjuster.prototype.calculateSpaceBelowMaxAvailabelForIncrease = function (inAssetGroup) {
                     var availableSpaceForChange = 0;

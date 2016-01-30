@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit, Output, EventEmitter} from 'angular2/core';
 import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Sheet} from './sheet';
@@ -15,16 +15,14 @@ import {SheetDetailComponent} from './sheetDetail.component';
 })
 export class SheetSummaryComponent implements OnInit { 
     public sheet: Sheet;
-    //public sheetId: number;
-    private _backEnd: SheetBackEnd;
-    private _router: Router;
-    private _routeParams: RouteParams;
+    public selected: boolean;
+    @Output() selectionCriteriaChanged: EventEmitter<any> = new EventEmitter();
     
-    constructor(inBackEnd: SheetBackEnd, inRouter: Router, inRouteParams: RouteParams) {
-        this._backEnd = inBackEnd;
-        this._router = inRouter;
-        this._routeParams = inRouteParams;
-    }
+    constructor(
+        private _router: Router,
+        private _routeParams: RouteParams,
+        private _sheetBackEnd: SheetBackEnd
+    ) { }
     
     ngOnInit() {
         let id = +this._routeParams.get('id');
@@ -33,13 +31,20 @@ export class SheetSummaryComponent implements OnInit {
         // this is because if the routeParameter is not null, it means we have been called via routing (or url on the browser)
         // if id is null it means we have been called within the single-page (and we hope we have been passed the full Sheet instance)
         if (id) {
-            this.sheet = this._backEnd.getSomeSheets(id, 1)[0];
+            this.sheet = this._sheetBackEnd.getSomeSheets(id, 1)[0];
             console.log(this.sheet);
         }
     }
     
-    onMouseDown() {
+    /*onMouseDown() {
         console.log(this.sheet);
         this._router.navigate( ['SheetDetail', { id: this.sheet.id }]  );
+    }*/
+    
+    onChangeSelection(inSelected: boolean) {
+        console.log('selected? '+ inSelected + '  id: ' + this.sheet.id);
+        this.sheet.isSelectedForComparison = inSelected;
+        this.selectionCriteriaChanged.next(this.sheet);
     }
+
 }

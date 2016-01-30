@@ -67,10 +67,20 @@ System.register(['angular2/core'], function(exports_1) {
                     return ret;
                 };
                 Slider.prototype.getWidthFromZero = function () {
-                    var ret = this.range.max + '%';
+                    // ret = this.range.max + '%';
+                    var ret;
+                    var widthFromZero = this.relativeStartOfScale + this.range.max;
+                    if (widthFromZero < 100) {
+                        ret = this.range.max + '%';
+                    }
+                    else {
+                        ret = (100 - this.relativeStartOfScale) + '%';
+                    }
                     return ret;
                 };
                 Slider.prototype.displayPreDiv = function () {
+                    // show the PreDiv html component only if we are NOT in the 'relative scale' mode, i.e. if
+                    // relativeStartOfScale is zero
                     return (this.relativeStartOfScale == 0);
                 };
                 __decorate([
@@ -110,7 +120,7 @@ System.register(['angular2/core'], function(exports_1) {
                 Slider = __decorate([
                     core_1.Component({
                         selector: 'my-slider',
-                        template: "\n    <!--div id=\"preSlider\" class=\"slider back noUi-base\" [style.width]=\"getWidthFromZero()\" [style.display]=\"displayPreDiv() ? 'block' : 'none'\"-->\n    <div id=\"preSlider\" class=\"slider back noUi-base\" [style.width]=\"getWidthFromZero()\" [style.left]=\"getLeftForPreDiv()\">\n        <div class=\"noUi-marker noUi-marker-horizontal noUi-marker-large\"></div>\n        <div class=\"noUi-value noUi-value-horizontal noUi-value-large\">0</div>\n    </div>\n    <div #sliderDomElement id=\"slider\" class=\"slider\" [style.left]=\"getLeft()\" [style.width]=\"getWidth()\"></div>\n    <div id=\"postSlider\"></div>\n  ",
+                        template: "\n    <div id=\"preSlider\" class=\"slider back noUi-base\" [style.width]=\"getWidthFromZero()\" [style.left]=\"getLeftForPreDiv()\">\n        <div class=\"noUi-marker noUi-marker-horizontal noUi-marker-large\"></div>\n        <div class=\"noUi-value noUi-value-horizontal noUi-value-large\">0</div>\n    </div>\n    <div #sliderDomElement id=\"slider\" class=\"slider\" [style.left]=\"getLeft()\" [style.width]=\"getWidth()\"></div>\n    <div id=\"postSlider\"></div>\n  ",
                     }), 
                     __metadata('design:paramtypes', [])
                 ], Slider);

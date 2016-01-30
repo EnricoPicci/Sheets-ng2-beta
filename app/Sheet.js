@@ -20,6 +20,10 @@ System.register(['angular2/core', './returnData'], function(exports_1) {
                     this.returnDataBenchmarkAll = new returnData_1.ReturnData();
                     // add en EventEmmiter to communicate when sheet composition changes to all components that may be interested
                     this._changeCompositionEventEmitter = new core_1.EventEmitter();
+                    // variable to store states that I use to drive the view as far as comparison functionalities are required
+                    this.isSelectedForComparison = false;
+                    this.isComparisonCheckboxToBeDisplayed = false;
+                    this.id = inId;
                     this.title = inTitle;
                     this.longTitle = inLongTitle;
                     this.imageUrl = inImageUrl;
